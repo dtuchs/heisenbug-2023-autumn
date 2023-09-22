@@ -1,0 +1,98 @@
+version: '3.9'
+
+services:
+  rococo-db:
+    container_name: rococo-db
+    image: mysql:8.1.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - rococo-mysql-data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 3s
+      retries: 5
+      interval: 3s
+    ports:
+      - 3306:3306
+    networks:
+      - rococo-network
+    dns_search: .
+
+  zookeeper:
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:7.3.2
+    ports:
+      - 2181:2181
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=2000
+    networks:
+      - rococo-network
+
+  kafka:
+    container_name: kafka
+    image: confluentinc/cp-kafka:7.3.2
+    ports:
+      - 9092:9092
+    depends_on:
+      zookeeper:
+        condition: service_started
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
+    networks:
+      - rococo-network
+
+  auth.rococo.docker:
+    container_name: auth.rococo.docker
+    image: ${PREFIX}/rococo-auth:latest
+    ports:
+      - 9000:9000
+    restart: always
+    depends_on:
+      rococo-db:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    networks:
+      - rococo-network
+    dns_search: .
+
+  api.rococo.docker:
+    container_name: api.rococo.docker
+    image: ${PREFIX}/rococo-api:latest
+    ports:
+      - 8000:8000
+    restart: always
+    depends_on:
+      auth.rococo.docker:
+        condition: service_started
+    networks:
+      - rococo-network
+    dns_search: .
+
+  ui.rococo.docker:
+    container_name: ui.rococo.docker
+    image: ${PREFIX}/rococo-ui:latest
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      api.rococo.docker:
+        condition: service_started
+    networks:
+      - rococo-network
+    dns_search: .
+
+volumes:
+  rococo-mysql-data:
+    external: true
+
+networks:
+  rococo-network:
+    driver: bridge

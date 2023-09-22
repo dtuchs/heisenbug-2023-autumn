@@ -1,6 +1,6 @@
+# front
 **/.DS_Store
 **/node_modules
-**/build
 **/.svelte-kit
 **/package
 **/.env
@@ -8,3 +8,24 @@
 **/!.env.example
 **/vite.config.js.timestamp-*
 **/vite.config.ts.timestamp-*
+
+#back
+HELP.md
+.gradle
+**/build
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+!**/src/main/**/build/
+!**/src/test/**/build/
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/

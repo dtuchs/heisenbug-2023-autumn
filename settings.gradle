@@ -1,0 +1,3 @@
+rootProject.name = 'rococo'
+include 'rococo-api'
+include 'rococo-auth'
