@@ -26,7 +26,7 @@
 	<svelte:fragment slot="header">
 		<AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end" class="px-6">
 			<svelte:fragment slot="lead">
-				<h1 class="text-4xl">
+				<h1 class="text-6xl">
 					<a href="/">
 						Ro<span class="text-primary-500">coco</span>
 					</a>
