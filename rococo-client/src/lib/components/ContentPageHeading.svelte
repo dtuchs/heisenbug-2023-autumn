@@ -1,6 +1,5 @@
 <script lang="ts">
     import { SearchIcon } from '$lib/Icon';
-	import type { SvelteComponent } from 'svelte';
     
     let search = "";
 
@@ -17,13 +16,13 @@
     <button type="button" class="btn variant-filled-primary ml-4" on:click={onAddButtonClick}>{addButtonName}</button>
 </div>
 
-<div class="flex justify-center mb-4 mx-2">
+<div class="flex justify-center mb-4 mx-8">
     <input class="input" bind:value={search} title={searchPlaceholder} type="search" placeholder={searchPlaceholder} on:keypress={(evt) => {
         if(evt.key === "Enter") {
             loadFunction(search);
         }
     }}/>
-    <button type="button" class="btn-icon variant-filled-surface ml-4" on:click={() => loadFunction(search)}>
+    <button type="button" class="btn-icon variant-soft-surface ml-4" on:click={() => loadFunction(search)}>
         <img src={SearchIcon} alt="Иконка поиска"/>
     </button>
 </div>
