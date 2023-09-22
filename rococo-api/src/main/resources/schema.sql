@@ -2,8 +2,8 @@ create table if not exists `user`
 (
     id        binary(16)   unique not null default (UUID_TO_BIN(UUID(), true)),
     username  varchar(50)  unique not null,
-    firstname varchar(255)        not null,
-    lastname  varchar(255)        not null,
+    firstname varchar(255),
+    lastname  varchar(255),
     avatar    longblob,
     primary key (id)
 );
@@ -19,9 +19,9 @@ create table if not exists `museum`
 
 create table if not exists `artist`
 (
-    id        binary(16)   unique not null default (UUID_TO_BIN(UUID(), true)),
-    firstname varchar(255)        not null,
-    lastname  varchar(255)        not null,
+    id        binary(16)    unique not null default (UUID_TO_BIN(UUID(), true)),
+    name      varchar(255)  unique not null,
+    biography varchar(1000) not null,
     photo     longblob,
     primary key (id)
 );

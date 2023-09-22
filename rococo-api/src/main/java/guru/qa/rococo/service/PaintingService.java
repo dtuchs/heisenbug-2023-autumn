@@ -32,7 +32,7 @@ public class PaintingService {
     this.museumRepository = museumRepository;
     this.artistRepository = artistRepository;
   }
-  
+
   @Transactional(readOnly = true)
   public @Nonnull Page<PaintingJson> getAll(@Nonnull Pageable pageable) {
     return paintingRepository.findAll(pageable).map(PaintingJson::fromEntity);

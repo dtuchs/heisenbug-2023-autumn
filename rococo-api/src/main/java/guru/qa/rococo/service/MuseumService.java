@@ -1,7 +1,6 @@
 package guru.qa.rococo.service;
 
 import guru.qa.rococo.data.MuseumEntity;
-import guru.qa.rococo.data.MuseumEntity;
 import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.MuseumJson;

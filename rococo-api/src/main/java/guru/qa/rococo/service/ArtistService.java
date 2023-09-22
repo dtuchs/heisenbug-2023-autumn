@@ -4,7 +4,6 @@ import guru.qa.rococo.data.ArtistEntity;
 import guru.qa.rococo.data.repository.ArtistRepository;
 import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.ArtistJson;
-import guru.qa.rococo.model.UserJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,8 +39,8 @@ public class ArtistService {
   @Transactional
   public @Nonnull ArtistJson update(@Nonnull ArtistJson artist) {
     ArtistEntity artistEntity = getRequiredArtist(artist.id());
-    artistEntity.setFirstname(artist.firstname());
-    artistEntity.setLastname(artist.lastname());
+    artistEntity.setName(artist.name());
+    artistEntity.setBiography(artist.biography());
     artistEntity.setPhoto(artist.photo());
     return ArtistJson.fromEntity(
         artistRepository.save(artistEntity)
