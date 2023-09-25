@@ -1,8 +1,11 @@
+import { apiClient } from "$lib/helpers/apiClient";
 import type { PageLoad } from "./$types";
-import { artists } from '../../mock/artists';
 
-export const load: PageLoad = ({}) => {
-		return {
-			artists,
-		};
+export const load: PageLoad = async () => {
+
+	const artists = await apiClient.loadArtists();
+	
+	return {
+		artists: artists.content,
+	};
 };

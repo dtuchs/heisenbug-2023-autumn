@@ -1,5 +1,6 @@
 import type { ComponentType } from "svelte";
 import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
+import { apiClient } from "./apiClient";
 
 
 export function prepareModal(ref: ComponentType, title: string, body: string): ModalSettings {

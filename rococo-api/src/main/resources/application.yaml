@@ -47,12 +47,12 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://127.0.0.1:9000
+          issuer-uri: http://localhost:9000
   datasource:
     url: jdbc:mysql://localhost:3306/rococo-api?serverTimezone=UTC&createDatabaseIfNotExist=true
 
 rococo-ui:
-  uri: http://127.0.0.1:5173
+  uri: http://localhost:5173
 ---
 spring:
   config:

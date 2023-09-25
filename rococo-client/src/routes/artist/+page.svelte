@@ -6,19 +6,17 @@
 	import { prepareModal } from '$lib/helpers/prepareModal';
 	import EmptyState from '$lib/components/EmptyState.svelte';
 	import EmptySearch from '$lib/components/EmptySearch.svelte';
+	import { apiClient } from '$lib/helpers/apiClient';
 
     export let data: PageData;
     let isSearchNotEmpty = false;
     const modalStore = getModalStore();
 
     const loadAuthors = async (search: string) => {
-		const response = await fetch(`/api/artist?search=${search}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json',
-			},
-		});
-        data.artists = await response.json();
+        const response = await apiClient.loadArtists(search);
+
+        data.artists = response.content;
+
         if (search.length > 0) {
             isSearchNotEmpty = true;
         }
