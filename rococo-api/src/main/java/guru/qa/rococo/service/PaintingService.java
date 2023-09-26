@@ -10,6 +10,7 @@ import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.PaintingJson;
 import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,23 +58,20 @@ public class PaintingService {
             painting.content()
         ).bytes()
     );
+
     if (painting.museum() != null) {
-      if (paintingEntity.getMuseum() == null
-          || !Objects.equals(paintingEntity.getMuseum().getId(), painting.museum().id())) {
-        MuseumEntity museumEntity = museumRepository.findById(painting.museum().id())
-            .orElseThrow(
-                NotFoundException::new
-            );
+      final UUID museumIdFromJson = painting.museum().id();
+      if (isMuseumShouldBeUpdated(paintingEntity, museumIdFromJson)) {
+        MuseumEntity museumEntity = museumRepository.findById(museumIdFromJson)
+            .orElseThrow(NotFoundException::new);
         museumEntity.addPaintings(paintingEntity);
       }
     }
-
     if (painting.artist() != null) {
-      if (paintingEntity.getArtist() == null
-          || !Objects.equals(paintingEntity.getArtist().getId(), painting.artist().id())) {
-        ArtistEntity artistEntity = artistRepository.findById(painting.artist().id()).orElseThrow(
-            NotFoundException::new
-        );
+      final UUID artistIdFromJson = painting.artist().id();
+      if (isArtistShouldBeUpdated(paintingEntity, artistIdFromJson)) {
+        ArtistEntity artistEntity = artistRepository.findById(artistIdFromJson)
+            .orElseThrow(NotFoundException::new);
         artistEntity.addPaintings(paintingEntity);
       }
     }
@@ -95,5 +93,17 @@ public class PaintingService {
     return paintingRepository.findById(id).orElseThrow(
         NotFoundException::new
     );
+  }
+
+  private boolean isMuseumShouldBeUpdated(@Nonnull PaintingEntity paintingEntity,
+                                          @Nullable UUID museumIdFromJson) {
+    return paintingEntity.getMuseum() == null ||
+        !Objects.equals(paintingEntity.getMuseum().getId(), museumIdFromJson);
+  }
+
+  private boolean isArtistShouldBeUpdated(@Nonnull PaintingEntity paintingEntity,
+                                          @Nullable UUID artistIdFromJson) {
+    return paintingEntity.getArtist() == null ||
+        !Objects.equals(paintingEntity.getArtist().getId(), artistIdFromJson);
   }
 }

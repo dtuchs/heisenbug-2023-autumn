@@ -45,7 +45,8 @@ public class MuseumService {
     museumEntity.setPhoto(
         new StringAsBytes(
             museum.photo()
-        ).bytes());
+        ).bytes()
+    );
     return MuseumJson.fromEntity(
         museumRepository.save(museumEntity)
     );
