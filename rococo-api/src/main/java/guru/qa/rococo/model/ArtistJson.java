@@ -2,11 +2,11 @@ package guru.qa.rococo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guru.qa.rococo.data.ArtistEntity;
+import guru.qa.rococo.model.util.BytesAsString;
+import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
 
 import java.util.UUID;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public record ArtistJson(
     @JsonProperty("id")
@@ -23,7 +23,9 @@ public record ArtistJson(
         entity.getId(),
         entity.getName(),
         entity.getBiography(),
-        new String(entity.getPhoto(), UTF_8)
+        new BytesAsString(
+            entity.getPhoto()
+        ).string()
     );
   }
 
@@ -31,7 +33,11 @@ public record ArtistJson(
     ArtistEntity entity = new ArtistEntity();
     entity.setName(name);
     entity.setBiography(biography);
-    entity.setPhoto(photo.getBytes(UTF_8));
+    entity.setPhoto(
+        new StringAsBytes(
+            photo
+        ).bytes()
+    );
     return entity;
   }
 }

@@ -4,6 +4,7 @@ import guru.qa.rococo.data.UserEntity;
 import guru.qa.rococo.data.repository.UserRepository;
 import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.UserJson;
+import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
@@ -17,8 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Service
 public class UserService {
@@ -51,7 +50,11 @@ public class UserService {
     UserEntity userEntity = getRequiredUser(user.username());
     userEntity.setFirstname(user.firstname());
     userEntity.setLastname(user.lastname());
-    userEntity.setAvatar(user.avatar().getBytes(UTF_8));
+    userEntity.setAvatar(
+        new StringAsBytes(
+            user.avatar()
+        ).bytes()
+    );
     return UserJson.fromEntity(
         userRepository.save(userEntity)
     );

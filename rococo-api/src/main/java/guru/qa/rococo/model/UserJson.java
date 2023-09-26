@@ -2,11 +2,11 @@ package guru.qa.rococo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guru.qa.rococo.data.UserEntity;
+import guru.qa.rococo.model.util.BytesAsString;
+import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
 
 import java.util.UUID;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public record UserJson(
     @JsonProperty("id")
@@ -26,7 +26,9 @@ public record UserJson(
         entity.getUsername(),
         entity.getFirstname(),
         entity.getLastname(),
-        new String(entity.getAvatar(), UTF_8)
+        new BytesAsString(
+            entity.getAvatar()
+        ).string()
     );
   }
 
@@ -35,7 +37,11 @@ public record UserJson(
     entity.setUsername(username);
     entity.setFirstname(firstname);
     entity.setLastname(lastname);
-    entity.setAvatar(avatar.getBytes(UTF_8));
+    entity.setAvatar(
+        new StringAsBytes(
+            avatar
+        ).bytes()
+    );
     return entity;
   }
 }

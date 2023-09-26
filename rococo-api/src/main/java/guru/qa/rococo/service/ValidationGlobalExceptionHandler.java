@@ -1,5 +1,6 @@
 package guru.qa.rococo.service;
 
+import jakarta.annotation.Nonnull;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.annotation.Nonnull;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;

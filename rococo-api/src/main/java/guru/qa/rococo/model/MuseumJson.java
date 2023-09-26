@@ -2,11 +2,11 @@ package guru.qa.rococo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guru.qa.rococo.data.MuseumEntity;
+import guru.qa.rococo.model.util.BytesAsString;
+import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
 
 import java.util.UUID;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public record MuseumJson(
     @JsonProperty("id")
@@ -23,7 +23,9 @@ public record MuseumJson(
         entity.getId(),
         entity.getTitle(),
         entity.getAddress(),
-        new String(entity.getPhoto(), UTF_8)
+        new BytesAsString(
+            entity.getPhoto()
+        ).string()
     );
   }
 
@@ -31,7 +33,11 @@ public record MuseumJson(
     MuseumEntity entity = new MuseumEntity();
     entity.setTitle(title);
     entity.setAddress(address);
-    entity.setPhoto(photo.getBytes(UTF_8));
+    entity.setPhoto(
+        new StringAsBytes(
+            photo
+        ).bytes()
+    );
     return entity;
   }
 }

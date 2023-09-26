@@ -8,17 +8,16 @@ import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.data.repository.PaintingRepository;
 import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.PaintingJson;
+import guru.qa.rococo.model.util.StringAsBytes;
+import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.UUID;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Service
 public class PaintingService {
@@ -53,13 +52,18 @@ public class PaintingService {
   public @Nonnull PaintingJson update(@Nonnull PaintingJson painting) {
     PaintingEntity paintingEntity = getRequiredPainting(painting.id());
     paintingEntity.setTitle(painting.title());
-    paintingEntity.setContent(painting.content().getBytes(UTF_8));
+    paintingEntity.setContent(
+        new StringAsBytes(
+            painting.content()
+        ).bytes()
+    );
     if (painting.museum() != null) {
       if (paintingEntity.getMuseum() == null
           || !Objects.equals(paintingEntity.getMuseum().getId(), painting.museum().id())) {
-        MuseumEntity museumEntity = museumRepository.findById(painting.museum().id()).orElseThrow(
-            NotFoundException::new
-        );
+        MuseumEntity museumEntity = museumRepository.findById(painting.museum().id())
+            .orElseThrow(
+                NotFoundException::new
+            );
         museumEntity.addPaintings(paintingEntity);
       }
     }

@@ -4,16 +4,15 @@ import guru.qa.rococo.data.MuseumEntity;
 import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.MuseumJson;
+import guru.qa.rococo.model.util.StringAsBytes;
+import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Nonnull;
 import java.util.UUID;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Service
 public class MuseumService {
@@ -43,7 +42,10 @@ public class MuseumService {
     MuseumEntity museumEntity = getRequiredMuseum(museum.id());
     museumEntity.setTitle(museum.title());
     museumEntity.setAddress(museum.address());
-    museumEntity.setPhoto(museum.photo().getBytes(UTF_8));
+    museumEntity.setPhoto(
+        new StringAsBytes(
+            museum.photo()
+        ).bytes());
     return MuseumJson.fromEntity(
         museumRepository.save(museumEntity)
     );
