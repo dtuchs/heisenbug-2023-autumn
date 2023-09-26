@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 @Service
 public class MuseumService {
   private final MuseumRepository museumRepository;
@@ -41,7 +43,7 @@ public class MuseumService {
     MuseumEntity museumEntity = getRequiredMuseum(museum.id());
     museumEntity.setTitle(museum.title());
     museumEntity.setAddress(museum.address());
-    museumEntity.setPhoto(museum.photo());
+    museumEntity.setPhoto(museum.photo().getBytes(UTF_8));
     return MuseumJson.fromEntity(
         museumRepository.save(museumEntity)
     );

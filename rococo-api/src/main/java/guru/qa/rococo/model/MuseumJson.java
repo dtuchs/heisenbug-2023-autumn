@@ -6,6 +6,8 @@ import jakarta.annotation.Nonnull;
 
 import java.util.UUID;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public record MuseumJson(
     @JsonProperty("id")
     UUID id,
@@ -14,14 +16,14 @@ public record MuseumJson(
     @JsonProperty("address")
     String address,
     @JsonProperty("photo")
-    byte[] photo) {
+    String photo) {
 
   public static @Nonnull MuseumJson fromEntity(@Nonnull MuseumEntity entity) {
     return new MuseumJson(
         entity.getId(),
         entity.getTitle(),
         entity.getAddress(),
-        entity.getPhoto()
+        new String(entity.getPhoto(), UTF_8)
     );
   }
 
@@ -29,7 +31,7 @@ public record MuseumJson(
     MuseumEntity entity = new MuseumEntity();
     entity.setTitle(title);
     entity.setAddress(address);
-    entity.setPhoto(photo);
+    entity.setPhoto(photo.getBytes(UTF_8));
     return entity;
   }
 }

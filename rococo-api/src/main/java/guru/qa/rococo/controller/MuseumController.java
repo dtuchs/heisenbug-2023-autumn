@@ -27,7 +27,7 @@ public class MuseumController {
     this.museumService = museumService;
   }
 
-  @GetMapping("/")
+  @GetMapping()
   public Page<MuseumJson> getAll(@PageableDefault Pageable pageable) {
     return museumService.getAll(pageable);
   }

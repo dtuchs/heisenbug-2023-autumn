@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 @Service
 public class UserService {
 
@@ -49,7 +51,7 @@ public class UserService {
     UserEntity userEntity = getRequiredUser(user.username());
     userEntity.setFirstname(user.firstname());
     userEntity.setLastname(user.lastname());
-    userEntity.setAvatar(user.avatar());
+    userEntity.setAvatar(user.avatar().getBytes(UTF_8));
     return UserJson.fromEntity(
         userRepository.save(userEntity)
     );

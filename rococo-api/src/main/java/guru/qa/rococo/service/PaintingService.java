@@ -18,6 +18,8 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.UUID;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 @Service
 public class PaintingService {
   private final PaintingRepository paintingRepository;
@@ -51,7 +53,7 @@ public class PaintingService {
   public @Nonnull PaintingJson update(@Nonnull PaintingJson painting) {
     PaintingEntity paintingEntity = getRequiredPainting(painting.id());
     paintingEntity.setTitle(painting.title());
-    paintingEntity.setContent(painting.content());
+    paintingEntity.setContent(painting.content().getBytes(UTF_8));
     if (painting.museum() != null) {
       if (paintingEntity.getMuseum() == null
           || !Objects.equals(paintingEntity.getMuseum().getId(), painting.museum().id())) {

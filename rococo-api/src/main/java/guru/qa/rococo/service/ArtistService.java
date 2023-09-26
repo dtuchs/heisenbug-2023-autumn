@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 @Service
 public class ArtistService {
   private final ArtistRepository artistRepository;
@@ -41,7 +43,7 @@ public class ArtistService {
     ArtistEntity artistEntity = getRequiredArtist(artist.id());
     artistEntity.setName(artist.name());
     artistEntity.setBiography(artist.biography());
-    artistEntity.setPhoto(artist.photo());
+    artistEntity.setPhoto(artist.photo().getBytes(UTF_8));
     return ArtistJson.fromEntity(
         artistRepository.save(artistEntity)
     );

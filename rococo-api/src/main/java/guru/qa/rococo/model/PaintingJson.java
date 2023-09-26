@@ -7,13 +7,15 @@ import jakarta.annotation.Nonnull;
 
 import java.util.UUID;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public record PaintingJson(
     @JsonProperty("id")
     UUID id,
     @JsonProperty("title")
     String title,
     @JsonProperty("content")
-    byte[] content,
+    String content,
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("museum")
     MuseumJson museum,
@@ -25,7 +27,7 @@ public record PaintingJson(
     return new PaintingJson(
         entity.getId(),
         entity.getTitle(),
-        entity.getContent(),
+        new String(entity.getContent(), UTF_8),
         MuseumJson.fromEntity(entity.getMuseum()),
         ArtistJson.fromEntity(entity.getArtist())
     );
@@ -34,7 +36,7 @@ public record PaintingJson(
   public @Nonnull PaintingEntity toEntity() {
     PaintingEntity entity = new PaintingEntity();
     entity.setTitle(title);
-    entity.setContent(content);
+    entity.setContent(content.getBytes(UTF_8));
     return entity;
   }
 }

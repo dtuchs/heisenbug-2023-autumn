@@ -26,8 +26,8 @@ public class SecurityConfig {
     corsCustomizer.corsCustomizer(http);
 
     http.authorizeHttpRequests(
-            authorize ->
-                    authorize.anyRequest().permitAll()
+        authorize ->
+            authorize.anyRequest().permitAll()
     ).csrf(AbstractHttpConfigurer::disable);
     return http.build();
   }

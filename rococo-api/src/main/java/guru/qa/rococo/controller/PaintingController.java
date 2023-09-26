@@ -27,7 +27,7 @@ public class PaintingController {
     this.paintingService = paintingService;
   }
 
-  @GetMapping("/")
+  @GetMapping()
   public Page<PaintingJson> getAll(@PageableDefault Pageable pageable) {
     return paintingService.getAll(pageable);
   }
@@ -38,12 +38,12 @@ public class PaintingController {
   }
 
   @PatchMapping("/")
-  public PaintingJson updatePainting(@RequestBody PaintingJson artist) {
-    return paintingService.update(artist);
+  public PaintingJson updatePainting(@RequestBody PaintingJson painting) {
+    return paintingService.update(painting);
   }
 
   @PostMapping("/")
-  public PaintingJson addPainting(@RequestBody PaintingJson artist) {
-    return paintingService.add(artist);
+  public PaintingJson addPainting(@RequestBody PaintingJson painting) {
+    return paintingService.add(painting);
   }
 }
