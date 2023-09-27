@@ -7,6 +7,6 @@ export type ArtistType = {
 
 export type NewArtistType = {
     name: string,
-    photo: File | undefined,
+    photo: string | ArrayBuffer | null,
     biography: string,
 }

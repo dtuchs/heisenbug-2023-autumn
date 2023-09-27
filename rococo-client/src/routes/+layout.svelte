@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.postcss';
-	import { AppShell, AppBar, Avatar, Modal, popup, LightSwitch, initializeStores } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, Avatar, Modal, popup, LightSwitch, initializeStores, Toast } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
 	// Floating UI for Popups
@@ -86,3 +86,5 @@
 	</div>
 	<slot />
 </AppShell>
+<Toast />
+

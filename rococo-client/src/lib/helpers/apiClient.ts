@@ -1,28 +1,51 @@
-import type { ArtistType, NewArtistType } from "$lib/types/Artist";
+import type { NewArtistType } from "$lib/types/Artist";
+import type { NewPaintingType } from "$lib/types/Painting";
 
 const BASE_URL = 'http://localhost:8080/api';
 
 export const apiClient = {
-    loadArtists: async (search?: string) => {
-        return loadItems("artist", search);
+    loadArtists: async ({ page = 0, size = 18, search}
+        : {
+            page?: number,
+            size?: number,
+            search?: string
+        }) => {
+        return loadItems({path: "artist", search, page, size});
     },
     loadArtist: async(id: string) => {
         return loadItem("artist", id);
     },
-    addArtist: async(formData: FormData) => {
-        await fetch(`${BASE_URL}/artist`, {
+    addArtist: async(newArtist: NewArtistType) => {
+        return await fetch(`${BASE_URL}/artist`, {
             method: "POST", 
-            body: formData,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newArtist),
         });
     },
     loadPaintings: async(search?: string) => {
-        return loadItems("painting", search);
+        return loadItems({path: "painting", search});
     },
     loadPainting: async(id: string) => {
        return loadItem("painting", id);
     },
-    loadMuseums: async(search?: string) => {
-        return loadItems("museum", search);
+    addPainting: async(newPainting: NewPaintingType) => {
+        return await fetch(`${BASE_URL}/painting`, {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newPainting),
+        });
+    },
+    loadMuseums: async({ page = 0, size = 4, search}
+        : {
+            page?: number,
+            size?: number,
+            search?: string
+        }) => {
+        return loadItems({path: "museum", search, page, size});
     },
     loadMuseum: async(id: string) => {
         return loadItem("museum", id);
@@ -37,8 +60,14 @@ const loadItem = async (path: string, id: string) => {
     return response.json();
 };
 
-const loadItems = async(path: string, search?: string) => {
-    const query = search ? `?seacrh=${search}` : "";
+const loadItems = async({ path, page = 0, size = 5, search}
+    : {
+        path: string, 
+        page?: number,
+        size?: number,
+        search?: string
+    }) => {
+    const query = search ? `?search=${search}` : `?size=${size}&page=${page}`;
     const response = await fetch(`${BASE_URL}/${path}${query}`);
     if (!response.ok) {
         throw new Error("Failed loading data");

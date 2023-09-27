@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { SearchIcon } from '$lib/Icon';
+	import { SearchIcon } from "$lib/types/Icon";
+
     
     let search = "";
 

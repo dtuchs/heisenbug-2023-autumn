@@ -1,8 +1,21 @@
 <script lang="ts">
-	import { Avatar } from '@skeletonlabs/skeleton';
+	import { Avatar, getModalStore} from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
+	import EmptyState from '$lib/components/EmptyState.svelte';
+    import NewPaintingForm from '$lib/components/forms/NewPaintingForm.svelte';
+    import { prepareModal } from '$lib/helpers/prepareModal';
+
+    const modalStore = getModalStore();
 
     export let data: PageData;
+
+    const clickAddButton = () => {
+		const modal = prepareModal(
+			NewPaintingForm,
+			"Новая картина", 
+            "Заполните форму, чтобы добавить новую картину");
+        modalStore.trigger(modal);
+	};
     
 </script>
 
@@ -14,15 +27,24 @@
         <p class="col-span-2">{data?.artist?.biography}</p>		
     </section>
     <section class="p-4">
-        <h3 class="text-center font-bold text-xl">Картины автора</h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {#each data.paintings as painting}
-                <a href={`/painting/${painting.id}`}>
-                    <img class="h-auto max-w-full rounded-lg object-cover w-full h-80" src={painting.src} alt={painting.title}>
-                    <div class="text-center">{painting.title}, {painting.year}</div>
-                </a>
-            {/each}
-        </div>
+        {#if data?.paintings?.length === 0}
+            <EmptyState
+                text="Пока что список картин этого художника пуст."
+                buttonName="Добавить картину"
+                onButtonClick={clickAddButton}
+                bordered={false}
+                fullPage={false}
+                />
+        {:else}
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {#each data.paintings as painting}
+                    <a href={`/painting/${painting.id}`}>
+                        <img class="h-auto max-w-full rounded-lg object-cover w-full h-80" src={painting.src} alt={painting.title}>
+                        <div class="text-center">{painting.title}</div>
+                    </a>
+                {/each}
+            </div>
+        {/if}     
     </section>
 </article>
 	

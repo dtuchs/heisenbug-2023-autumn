@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getModalStore } from "@skeletonlabs/skeleton";
-	import FormWrapper from "./FormWrapper.svelte";
-	import ModalButtonGroup from "./ModalButtonGroup.svelte";
+	import FormWrapper from "../FormWrapper.svelte";
+	import ModalButtonGroup from "../ModalButtonGroup.svelte";
 	import { onMount } from "svelte";
 	import type { CountryType } from "$lib/types/Country";
 	const modalStore = getModalStore();

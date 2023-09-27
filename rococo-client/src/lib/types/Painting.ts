@@ -1,9 +1,16 @@
 export type PaintingType = {
-    id: number,
-    authorId: number,
+    id: string,
+    authorId: string,
     src: string,
     title: string,
     description: string,
-    museumIds: number[],
-    year: string,
+    museumId: string,
+}
+
+export type NewPaintingType = {
+    authorId: string,
+    src: string,
+    title: string,
+    description: string,
+    museumId?: string,
 }

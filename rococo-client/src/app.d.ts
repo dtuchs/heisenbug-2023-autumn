@@ -7,3 +7,10 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 }
+
+declare namespace svelteHTML {
+    interface HTMLAttributes<T> {
+		'on:viewportenter'?: (event: CustomEvent) => void
+		'on:viewportleave'?: (event: CustomEvent) => void
+    }
+  }

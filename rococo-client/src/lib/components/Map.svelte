@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MuseumIcon } from '$lib/Icon';
+	import { MuseumIcon } from '$lib/types/Icons/Icon';
     import L, { type LatLngExpression } from 'leaflet';
     import 'leaflet/dist/leaflet.css';
 

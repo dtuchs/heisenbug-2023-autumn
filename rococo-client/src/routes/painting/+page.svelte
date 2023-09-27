@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import NewPaintingForm from '$lib/components/NewPaintingForm.svelte';
+	import NewPaintingForm from '$lib/components/forms/NewPaintingForm.svelte';
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import ContentPageHeading from '$lib/components/ContentPageHeading.svelte';
 	import { prepareModal } from '$lib/helpers/prepareModal';
