@@ -1,7 +1,7 @@
 import type { NewArtistType } from "$lib/types/Artist";
 import type { NewPaintingType } from "$lib/types/Painting";
 
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = 'http://127.0.0.1:8080/api';
 
 export const apiClient = {
     loadArtists: async ({ page = 0, size = 18, search}
@@ -19,7 +19,9 @@ export const apiClient = {
         return await fetch(`${BASE_URL}/artist`, {
             method: "POST", 
             headers: {
+                "Accept": "application/json",
                 "Content-Type": "application/json",
+                "Authorization": "Bearer null",
             },
             body: JSON.stringify(newArtist),
         });
@@ -34,6 +36,7 @@ export const apiClient = {
         return await fetch(`${BASE_URL}/painting`, {
             method: "POST", 
             headers: {
+                "Accept": "application/json",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(newPainting),
@@ -50,6 +53,24 @@ export const apiClient = {
     loadMuseum: async(id: string) => {
         return loadItem("museum", id);
     },
+    test: async() => {
+        return await fetch(`${BASE_URL}/photos`, {
+            method: "POST", 
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                country: {
+                    code: "ru",
+                    name: "Россия",
+                },
+                photo: "photo",
+                description: "desc",
+            
+            }),
+        });
+    }
 }
 
 const loadItem = async (path: string, id: string) => {
