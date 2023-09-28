@@ -1,34 +1,37 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
-    <title>Login to Niffler</title>
+    <title>Rococo</title>
     <link rel="icon" th:href="@{images/favicon.ico}"/>
     <link th:href="@{styles/styles.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<main class="content">
-    <form class="form" action="#" th:action="@{/login}" method="post">
-        <h1 class="form__header">Welcome to Niffler. The coin keeper</h1>
-        <img src="../static/images/niffler-logo.png" width="90" th:src="@{images/niffler-logo.png}" alt="Niffler logo"/>
-        <p class="form__paragraph">Please sign in</p>
-        <div th:if="${param.error}">
-            <p class="form__error">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
-        </div>
-        <div th:if="${param.logout}">
-            <p class="text-warning">You have been logged out.</p>
-        </div>
-        <label class="form__label">Username:
-            <input class="form__input" type="text" name="username" placeholder="Type your username" required/>
-        </label>
-        <label class="form__label">Password:
-            <input class="form__input" type="password" name="password" placeholder="Type your password" required/>
-            <button type="button" class="form__password-button"></button>
-        </label>
-        <button class="form__submit" type="submit">
-            Sign In
-        </button>
-        <p class="form__paragraph">Have no account? <a th:href="@{/register}">Sign up!</a></p>
-    </form>
+<main>
+    <div class="wrapper">
+        <section class="content">
+            <form class="form" action="#" th:action="@{/login}" method="post">
+                <h1 class="form__header">Ro<span class="form__text_gold">coco</span></h1>
+                <div th:if="${param.error}">
+                    <p class="form__error">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+                </div>
+                <div th:if="${param.logout}">
+                    <p class="text-warning">You have been logged out.</p>
+                </div>
+                <label class="form__label">Имя пользователя
+                    <input class="form__input" type="text" name="username" placeholder="Введите имя пользователя..." required/>
+                </label>
+                <label class="form__label">Пароль
+                    <input class="form__input" type="password" name="password" placeholder="Введите пароль..." required/>
+                    <button type="button" class="form__password-button"></button>
+                </label>
+                <button class="form__submit" type="submit">
+                    Войти
+                </button>
+                <p class="form__paragraph">Нет аккаунта? <a th:href="@{/register}" class="form__link">Зарегистрироваться</a></p>
+            </form>
+            <img class="content__image" src="../static/images/hermitage.jpg" th:src="@{images/hermitage.jpg}" alt="Эрмитаж"/>
+        </section>
+    </div>
 </main>
 <script>
     const passwordButton = document.querySelector(".form__password-button");

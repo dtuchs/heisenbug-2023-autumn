@@ -1,42 +1,45 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
-    <title>Register to Niffler</title>
+    <title>Регистрация в Rococo</title>
     <link rel="icon" th:href="@{images/favicon.ico}"/>
     <link th:href="@{styles/styles.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<main class="content">
-    <form th:if="${username == null}" class="form" id="register-form" th:object="${registrationModel}"
-          action="/register" th:action="@{/register}"
-          method="post">
-        <h1 class="form__header">Welcome to Niffler. The coin keeper</h1>
-        <img src="../static/images/niffler-logo.png" width="90" th:src="@{images/niffler-logo.png}" alt="Niffler logo"/>
-        <p class="form__paragraph">Registration form</p>
-        <label class="form__label">Username:
-            <input class="form__input" type="text" id="username" th:field="*{username}" name="username"
-                   placeholder="Type your username" required/>
-            <span class="form__error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
-        </label>
-        <label class="form__label">Password:
-            <input class="form__input" type="password" id="password" name="password" th:field="*{password}"
-                   placeholder="Type your password" required/>
-            <span class="form__error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-        </label>
-        <label class="form__label">Submit Password:
-            <input class="form__input" type="password" id="passwordSubmit" name="passwordSubmit"
-                   th:field="*{passwordSubmit}" placeholder="Submit your password" required/>
-            <span class="form__error" th:if="${#fields.hasErrors('passwordSubmit')}"
-                  th:errors="*{passwordSubmit}"></span>
-        </label>
-        <button class="form__submit" type="submit">
-            Sign Up
-        </button>
-        <p class="form__paragraph">Already have an account? <a th:href="@{|${frontUri}|}">Sign in!</a></p>
-    </form>
-    <div class="form" th:unless="${username == null}">
-        <p class="form__paragraph">Congratulations! You've registered!</p>
-        <p class="form__paragraph"><a th:href="@{|${frontUri}|}">Sign in!</a></p>
+<main>
+    <div class="wrapper">
+        <section class="content">
+            <form th:if="${username == null}" class="form" id="register-form" th:object="${registrationModel}"
+                action="/register" th:action="@{/register}"
+                method="post">
+                <h1 class="form__header">Ro<span class="form__text_gold">coco</span></h1>
+                <label class="form__label">Имя пользователя
+                    <input class="form__input" type="text" id="username" th:field="*{username}" name="username"
+                        placeholder="Введите имя пользователя..." required/>
+                    <span class="form__error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                </label>
+                <label class="form__label">Пароль
+                    <input class="form__input" type="password" id="password" name="password" th:field="*{password}"
+                        placeholder="Введите пароль..." required/>
+                    <span class="form__error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                </label>
+                <label class="form__label">Повторите пароль
+                    <input class="form__input" type="password" id="passwordSubmit" name="passwordSubmit"
+                        th:field="*{passwordSubmit}" placeholder="Повторите пароль..." required/>
+                    <span class="form__error" th:if="${#fields.hasErrors('passwordSubmit')}"
+                        th:errors="*{passwordSubmit}"></span>
+                </label>
+                <button class="form__submit" type="submit">
+                    Зарегистрироваться
+                </button>
+                <p class="form__paragraph">Уже есть аккаунт? <a th:href="@{|${frontUri}|}" class="form__link">Войти</a></p>
+            </form>
+            <div class="form" th:unless="${username == null}">
+                <p class="form__paragraph">Добро пожаловать в Ro<span class="form__text_gold">coco</span></p>
+                <p class="form__paragraph"><a th:href="@{|${frontUri}|}">Войти в систему</a></p>
+            </div>
+            <img class="content__image" src="../static/images/renuar.jpeg" width="90" th:src="@{images/renuar.jpeg}" alt="Ренуар"/>
+        </section>
     </div>
 </main>
 </body>

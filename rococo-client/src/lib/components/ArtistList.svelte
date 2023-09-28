@@ -2,7 +2,7 @@
 	import { apiClient } from "$lib/helpers/apiClient";
 	import viewport from "$lib/hooks/useViewport";
 	import type { ArtistType } from "$lib/types/Artist";
-	import { Avatar } from "@skeletonlabs/skeleton";
+	import { Avatar, ProgressRadial } from "@skeletonlabs/skeleton";
 	import EmptySearch from "./EmptySearch.svelte";
 	import EmptyState from "./EmptyState.svelte";
 
@@ -19,15 +19,17 @@
     let currentPage = 0;
     let totalPages = 0;
     let noMoreData = false;
+    let isLoading = false;
 
     const loadMore = async () => {
+        isLoading = true;
         const response = await apiClient.loadArtists({page: ++currentPage});
         totalPages = response.totalPages;
         newBatch = response.content;
-
         if(currentPage === totalPages -1) {
             noMoreData = true;
         }
+        isLoading = false;
     }
 
 </script>
@@ -46,19 +48,27 @@
         />
     {/if}
 {:else}
-    <ul class="grid grid-cols-2 md:grid-cols-6 gap-4 p-8">
+    <ul class="w-100">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-4 p-8">
         {#each artists as artist(artist.id)}
             <li>
                 <a href={`/artist/${artist.id}`} class="flex flex-col justify-center items-center">
                     <Avatar src={artist.photo} width="w-48" rounded="rounded-full" />				
-                    <span class="flex-auto">{artist.name}</span>
+                    <span class="flex-auto py-4">{artist.name}</span>
                 </a>
             </li>
         {/each}
+        </div>
         {#if !noMoreData}
-            <div  
-                use:viewport
-                on:viewportenter={() => loadMore()}>
+            <div use:viewport on:viewportenter={() => loadMore()}>
+                {#if isLoading}
+                <ProgressRadial 
+                    class="mx-auto my-20"
+                    stroke={80} 
+                    meter="stroke-primary-500" 
+                    track="stroke-primary-500/30" 
+                    width="w-12"/>
+                {/if}
             </div>
         {/if}
     </ul>

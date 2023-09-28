@@ -16,15 +16,16 @@ export const apiClient = {
         return loadItem("artist", id);
     },
     addArtist: async(newArtist: NewArtistType) => {
-        return await fetch(`${BASE_URL}/artist`, {
+        const res = await fetch(`${BASE_URL}/artist`, {
             method: "POST", 
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": "Bearer null",
             },
             body: JSON.stringify(newArtist),
         });
+
+        return await res.json();
     },
     loadPaintings: async(search?: string) => {
         return loadItems({path: "painting", search});
@@ -33,7 +34,7 @@ export const apiClient = {
        return loadItem("painting", id);
     },
     addPainting: async(newPainting: NewPaintingType) => {
-        return await fetch(`${BASE_URL}/painting`, {
+        const res = await fetch(`${BASE_URL}/painting`, {
             method: "POST", 
             headers: {
                 "Accept": "application/json",
@@ -41,6 +42,7 @@ export const apiClient = {
             },
             body: JSON.stringify(newPainting),
         });
+        return await res.json();
     },
     loadMuseums: async({ page = 0, size = 4, search}
         : {
@@ -53,31 +55,13 @@ export const apiClient = {
     loadMuseum: async(id: string) => {
         return loadItem("museum", id);
     },
-    test: async() => {
-        return await fetch(`${BASE_URL}/photos`, {
-            method: "POST", 
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                country: {
-                    code: "ru",
-                    name: "Россия",
-                },
-                photo: "photo",
-                description: "desc",
-            
-            }),
-        });
-    }
 }
 
 const loadItem = async (path: string, id: string) => {
     const response = await fetch(`${BASE_URL}/${path}/${id}`);
     if (!response.ok) {
         throw new Error(`Failed loading ${path} with id ${id}`);
-    };
+    }
     return response.json();
 };
 
@@ -92,7 +76,7 @@ const loadItems = async({ path, page = 0, size = 5, search}
     const response = await fetch(`${BASE_URL}/${path}${query}`);
     if (!response.ok) {
         throw new Error("Failed loading data");
-    };
+    }
     return response.json();
 }
 

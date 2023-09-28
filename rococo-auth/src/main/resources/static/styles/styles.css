@@ -1,44 +1,90 @@
-@font-face {
-    font-family: "PTRootUIWeb";
-    src: url("../fonts/PlayfairDisplaySC-Regular.woff2") format("woff2"),
-    url("../fonts/PlayfairDisplaySC-Regular.woff") format("woff"),
-    url("../fonts/PlayfairDisplaySC-Regular.ttf") format("ttf");
-    font-weight: 400;
-    font-style: normal;
+*, ::before, ::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e5e7eb;
 }
 
 body {
+    --color-primary-500: 230 200 51;
+    --color-surface-900: 18 11 24;
+    --color-surface-800: 35 22 49;
+    --color-surface-700: 60 39 84;
+    --color-surface-500: 116 74 161;
+    --color-surface-50: 250 248 252;
+    --color-secondary-500: 6 114 229;
+    --color-error-500: 143 15 34;
+    --theme-font-color-dark: var(--color-surface-50);
+    --theme-rounded-container: 4px;
+    --theme-rounded-base: 4px;
+    --tw-shadow: 0 0 #0000;
+    --theme-border-base: 1px;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgb(59 130 246 / 0.5);
+    --tw-ring-inset: ;
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color) !important;
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color) !important;
+    --on-primary: 0 0 0;
+    --theme-font-family-base: system-ui, sans-serif;
     margin: 0;
     padding: 0;
-    font-family: "PTRootUIWeb", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    font-size: 14px;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-family: var(--theme-font-family-base);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: black;
+    background-color: rgb(var(--color-surface-900));
+    color: rgba(var(--theme-font-color-dark));
+    background-image: radial-gradient(at 0% 100%, rgba(var(--color-secondary-500) / 0.33) 0px, transparent 50%), radial-gradient(at 98% 100%, rgba(var(--color-error-500) / 0.33) 0px, transparent 50%);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+button, input, optgroup, select, textarea {
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+}
+
+main {
+    height: 100%;
+}
+
+.wrapper {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 
 .content {
     width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url("../images/forest-back.jpeg");
-    background-size: cover;
-    background-position: center;
+    max-width: 800px;
+    background-color: rgb(var(--color-surface-800));
+    border-radius: var(--theme-rounded-container);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.content__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 
 .form {
     text-align: center;
     padding: 10px;
-    box-shadow: 0 0 20px 20px black;
-    background-image: url("../images/background.jpg");
-    border-radius: 8px;
     margin: 0 auto;
     width: 100%;
-    max-width: 460px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,39 +92,48 @@ body {
 }
 
 .form__header {
-    margin-top: 60px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    text-align: center;
+    font-size: 3.75rem;
+    line-height: 1;
+    font-weight: bold;
+}
+
+.form__text_gold {
+    color: rgb(var(--color-primary-500));
 }
 
 .form__label {
-    position: relative;
-    max-width: 350px;
-    width: 100%;
     display: flex;
+    width: 100%;
+    padding: 8px 12px;
     flex-direction: column;
+    font-size: 1rem;
+    line-height: 1.5rem;
     align-items: flex-start;
-    font-weight: 700;
 }
 
 .form__input {
+    appearance: none;
+    background-color: rgb(var(--color-surface-700));
+    border-color: rgb(var(--color-surface-500));
+    border-radius: var(--theme-rounded-base);
     width: 100%;
-    display: block;
-    margin-bottom: 20px;
-    font-family: "PTRootUIWeb", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    box-sizing: border-box;
-    font-size: 14px;
-    padding: 10px;
-    border: 2px solid black;
-    border-radius: 8px;
-    font-weight: normal;
-    background-color: #eeedea;
-    color: black;
-    text-transform: none;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow) !important;
+    border-width: var(--theme-border-base);
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+.form__link {
+    color: rgb(var(--color-primary-500) / 0.85);
+    text-decoration: none;
+}
+
+.form__link:hover {
+    color: rgb(var(--color-primary-500));
 }
 
 .form__password-button {
@@ -99,35 +154,31 @@ body {
 }
 
 .form__password-button:hover {
-    cursor: pointer;
+
 }
 
 .form__submit {
-    font-family: "PTRootUIWeb", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    display: block;
-    box-sizing: border-box;
-    max-width: 350px;
-    width: 100%;
-    padding: 15px 30px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    border-radius: 8px;
-    border: 2px solid black;
-    background-color: #eeedea;
-    color: black;
-    font-weight: 700;
+    background-color: rgb(var(--color-primary-500) / 0.85);
+    color: rgb(var(--on-primary));
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: 9px 1.25rem;
+    white-space: nowrap;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border-radius: var(--theme-rounded-base);
 }
 
 .form__submit:hover {
-    cursor: pointer;
-    opacity: 0.8;
+    background-color: rgb(var(--color-primary-500));
 }
 
 .form__error {
-    color: #a10b0b;
-    font-size: 14px;
-    margin-bottom: 10px;
-    font-weight: 700;
+
 }
