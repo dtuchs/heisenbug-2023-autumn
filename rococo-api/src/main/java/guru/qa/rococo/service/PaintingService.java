@@ -81,10 +81,10 @@ public class PaintingService {
   }
 
   @Transactional
-  public PaintingJson add(PaintingJson museum) {
+  public PaintingJson add(PaintingJson painting) {
     return PaintingJson.fromEntity(
         paintingRepository.save(
-            museum.toEntity()
+            painting.toEntity()
         )
     );
   }

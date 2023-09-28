@@ -29,6 +29,11 @@ public class ArtistService {
   }
 
   @Transactional(readOnly = true)
+  public @Nonnull Page<ArtistJson> getAll(@Nonnull String name, @Nonnull Pageable pageable) {
+    return artistRepository.findAllByNameContainsIgnoreCase(name, pageable).map(ArtistJson::fromEntity);
+  }
+
+  @Transactional(readOnly = true)
   public @Nonnull ArtistJson findArtistById(@Nonnull String id) {
     return ArtistJson.fromEntity(
         artistRepository.findById(

@@ -35,7 +35,7 @@ public class PaintingEntity implements Serializable {
   private byte[] content;
 
   @ManyToOne
-  @JoinColumn(name = "museum_id")
+  @JoinColumn(name = "museum_id", nullable = true)
   private MuseumEntity museum;
 
   @ManyToOne
