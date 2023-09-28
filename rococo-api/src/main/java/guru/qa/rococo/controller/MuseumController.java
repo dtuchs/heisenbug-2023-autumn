@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ValueConstants;
 
 
 @RestController()
@@ -28,8 +30,11 @@ public class MuseumController {
   }
 
   @GetMapping()
-  public Page<MuseumJson> getAll(@PageableDefault Pageable pageable) {
-    return museumService.getAll(pageable);
+  public Page<MuseumJson> getAll(@RequestParam(required = false) String title,
+                                 @PageableDefault Pageable pageable) {
+    return ValueConstants.DEFAULT_NONE.equals(title)
+        ? museumService.getAll(pageable)
+        : museumService.getAll(title, pageable);
   }
 
   @GetMapping("/{id}")

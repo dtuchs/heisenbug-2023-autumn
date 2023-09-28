@@ -3,6 +3,7 @@ package guru.qa.rococo.service;
 import guru.qa.rococo.data.MuseumEntity;
 import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.exception.NotFoundException;
+import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
@@ -26,6 +27,11 @@ public class MuseumService {
   @Transactional(readOnly = true)
   public @Nonnull Page<MuseumJson> getAll(@Nonnull Pageable pageable) {
     return museumRepository.findAll(pageable).map(MuseumJson::fromEntity);
+  }
+
+  @Transactional(readOnly = true)
+  public @Nonnull Page<MuseumJson> getAll(@Nonnull String title, @Nonnull Pageable pageable) {
+    return museumRepository.findAllByTitleContainsIgnoreCase(title, pageable).map(MuseumJson::fromEntity);
   }
 
   @Transactional(readOnly = true)
