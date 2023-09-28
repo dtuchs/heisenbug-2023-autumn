@@ -29,13 +29,10 @@ public class ArtistController {
   }
 
   @GetMapping()
-  public Page<ArtistJson> getAll(@PageableDefault Pageable pageable) {
-    return artistService.getAll(pageable);
-  }
-
-  @GetMapping()
-  public Page<ArtistJson> getAll(@RequestParam String name, @PageableDefault Pageable pageable) {
-    return artistService.getAll(name, pageable);
+  public Page<ArtistJson> getAll(@RequestParam(required = false, defaultValue = "") String name, @PageableDefault Pageable pageable) {
+    return "".equals(name)
+        ? artistService.getAll(pageable)
+        : artistService.getAll(name, pageable);
   }
 
   @GetMapping("/{id}")
