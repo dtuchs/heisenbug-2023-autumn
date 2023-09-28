@@ -49,6 +49,7 @@ button, input, optgroup, select, textarea {
     font-family: inherit;
     font-feature-settings: inherit;
     font-variation-settings: inherit;
+    color: inherit;
 }
 
 main {
@@ -101,7 +102,7 @@ main {
     color: rgb(var(--color-primary-500));
 }
 
-.form__label {
+.form__element {
     display: flex;
     width: 100%;
     padding: 8px 12px;
@@ -109,6 +110,10 @@ main {
     font-size: 1rem;
     line-height: 1.5rem;
     align-items: flex-start;
+}
+
+.form__label {
+    margin: 8px 2px;
 }
 
 .form__input {
@@ -125,6 +130,11 @@ main {
     padding: 0.5rem 0.75rem;
     font-size: 1rem;
     line-height: 1.5rem;
+}
+
+.form__input:focus {
+    outline: rgb(var(--color-primary-500) / 0.85) solid 1px;
+    border: none;
 }
 
 .form__link {
@@ -173,6 +183,7 @@ main {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
     border-radius: var(--theme-rounded-base);
+    margin: 24px;
 }
 
 .form__submit:hover {

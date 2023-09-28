@@ -72,7 +72,7 @@ const loadItems = async({ path, page = 0, size = 5, search}
         size?: number,
         search?: string
     }) => {
-    const query = search ? `?search=${search}` : `?size=${size}&page=${page}`;
+    const query = search ? `?name=${search}` : `?size=${size}&page=${page}`;
     const response = await fetch(`${BASE_URL}/${path}${query}`);
     if (!response.ok) {
         throw new Error("Failed loading data");
