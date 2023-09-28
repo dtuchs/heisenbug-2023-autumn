@@ -13,17 +13,20 @@
                 action="/register" th:action="@{/register}"
                 method="post">
                 <h1 class="form__header">Ro<span class="form__text_gold">coco</span></h1>
-                <label class="form__label">Имя пользователя
+                <label class="form__element">
+                    <span class="form__label">Имя пользователя</span>
                     <input class="form__input" type="text" id="username" th:field="*{username}" name="username"
                         placeholder="Введите имя пользователя..." required/>
                     <span class="form__error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
                 </label>
-                <label class="form__label">Пароль
+                <label class="form__element">
+                    <span class="form__label">Пароль</span>
                     <input class="form__input" type="password" id="password" name="password" th:field="*{password}"
                         placeholder="Введите пароль..." required/>
                     <span class="form__error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </label>
-                <label class="form__label">Повторите пароль
+                <label class="form__element">
+                    <span class="form__label">Повторите пароль</span>
                     <input class="form__input" type="password" id="passwordSubmit" name="passwordSubmit"
                         th:field="*{passwordSubmit}" placeholder="Повторите пароль..." required/>
                     <span class="form__error" th:if="${#fields.hasErrors('passwordSubmit')}"
