@@ -1,8 +1,13 @@
 import type { PageLoad } from "./$types";
-import { paintings } from '../../mock/paintings';
+import {apiClient} from "$lib/helpers/apiClient";
 
-export const load: PageLoad = ({}) => {
+export const load: PageLoad = async ({}) => {
+
+    const paintings = await apiClient.loadPaintings({page: 0, size: 18});
+
     return {
-        paintings,
+        paintings: paintings.content,
+        currentPage: paintings.currentPage,
+        totalPages: paintings.totalPages,
     };
 };

@@ -10,7 +10,7 @@ export const apiClient = {
             size?: number,
             search?: string
         }) => {
-        return loadItems({path: "artist", search, page, size});
+        return loadItems({path: "artist", search, page, size, searchName: "name"});
     },
     loadArtist: async(id: string) => {
         return loadItem("artist", id);
@@ -27,8 +27,13 @@ export const apiClient = {
 
         return await res.json();
     },
-    loadPaintings: async(search?: string) => {
-        return loadItems({path: "painting", search});
+    loadPaintings: async({ page = 0, size = 18, search}
+                             : {
+        page?: number,
+        size?: number,
+        search?: string
+    }) => {
+        return loadItems({path: "painting", search, page, size, searchName: "title"});
     },
     loadPainting: async(id: string) => {
        return loadItem("painting", id);
@@ -65,15 +70,16 @@ const loadItem = async (path: string, id: string) => {
     return response.json();
 };
 
-const loadItems = async({ path, page = 0, size = 5, search}
+const loadItems = async({ path, page = 0, size = 5, search, searchName}
     : {
         path: string, 
         page?: number,
         size?: number,
-        search?: string
+        search?: string,
+        searchName?: string,
     }) => {
-    const query = search ? `?name=${search}` : `?size=${size}&page=${page}`;
-    const response = await fetch(`${BASE_URL}/${path}${query}`);
+    const query = search ? `?${searchName ?? "name"}=${search}` : `?size=${size}&page=${page}`;
+    const response = await fetch(encodeURI(`${BASE_URL}/${path}${query}`));
     if (!response.ok) {
         throw new Error("Failed loading data");
     }

@@ -4,25 +4,54 @@
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import ContentPageHeading from '$lib/components/ContentPageHeading.svelte';
 	import { prepareModal } from '$lib/helpers/prepareModal';
-	import EmptyState from '$lib/components/EmptyState.svelte';
-	import EmptySearch from '$lib/components/EmptySearch.svelte';
+	import PaintingList from "$lib/components/PaintingList.svelte";
+	import {paintingsStore} from "$lib/stores/painting.store.js";
+	import {apiClient} from "$lib/helpers/apiClient";
+	import ListWrapper from "$lib/components/ListWrapper.svelte";
 	
 	export let data: PageData;
 	let isSearchNotEmpty = false;
 	const modalStore = getModalStore();
 
+	let currentPage = 0;
+
+	paintingsStore.set({
+		paintings: data.paintings,
+		noMoreData: data.currentPage === data.totalPages - 1,
+		isLoading: false,
+	});
+
 	const loadPaintings = async (search: string) => {
-		const response = await fetch(`/api/painting?search=${search}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json',
-			},
+		paintingsStore.update((prevState) => {
+			return {
+				...prevState,
+				isLoading: true,
+			}
 		});
-        data.paintings = await response.json();
-		if (search.length > 0) {
-            isSearchNotEmpty = true;
-        }
+		const response = await apiClient.loadPaintings({search});
+		paintingsStore.set({paintings: response.content, noMoreData: true, isLoading: false});
+		isSearchNotEmpty = search.length > 0;
 	};
+
+	const loadMore = async () => {
+		paintingsStore.update((prevState) => {
+			return {
+				...prevState,
+				isLoading: true,
+			}
+		});
+		const response = await apiClient.loadPaintings({page: ++currentPage});
+		const newBatch = response.content;
+		paintingsStore.update((prevState) => {
+			return {paintings: [
+					...prevState.paintings,
+					...newBatch
+				],
+				noMoreData: currentPage === response.totalPages -1,
+				isLoading: false,
+			}
+		});
+	}
 
 	const clickAddButton = () => {
 		const modal = prepareModal(
@@ -41,32 +70,20 @@
     onAddButtonClick={clickAddButton}
     loadFunction={loadPaintings}
 />
+<ListWrapper
+		emptySearchText="Картины не найдены"
+		emptySearchDescription="Для указанного вами фильтра мы не смогли найти ни одной картины"
+		emptyStateTitle="Пока что список картин пуст. Чтобы пополнить галерею, добавьте новую картину"
+		emptyStateButtonName="Добавить картину"
+		{isSearchNotEmpty}
+		noMoreData={$paintingsStore.noMoreData}
+		isLoading={$paintingsStore.isLoading}
+		data={$paintingsStore.paintings}
+		{loadMore}
+		{clickAddButton}>
+	<PaintingList/>
+</ListWrapper>
 
-
-{#if data?.paintings?.length === 0}
-	{#if isSearchNotEmpty}
-        <EmptySearch
-                text="Картины не найдены"
-                description="Для указанного вами фильтра мы не смогли найти ни одной картины"
-        />
-    {:else}
-		<EmptyState 
-			text="Пока что список картин пуст. Чтобы пополнить галерею, добавьте новую картину"
-			buttonName="Добавить картину"
-			onButtonClick={clickAddButton}
-		/>
-    {/if}
-	
-{:else}
-	<section class="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
-		{#each data.paintings as painting}
-			<a href={`/painting/${painting?.id}`}>
-				<img class="h-auto max-w-full rounded-lg object-cover w-full h-80" src={painting.src} alt={painting.title}>
-				<div class="text-center">{painting?.title}, {painting?.year}</div>
-			</a>
-		{/each}
-	</section>
-{/if}
 
 
 
