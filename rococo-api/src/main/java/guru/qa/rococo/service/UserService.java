@@ -48,7 +48,9 @@ public class UserService {
     return UserJson.fromEntity(
         userRepository.findById(
             UUID.fromString(id)
-        ).orElseThrow(NotFoundException::new)
+        ).orElseThrow(
+            () -> new NotFoundException("Пользователь не найден по id: " + id)
+        )
     );
   }
 
@@ -69,7 +71,7 @@ public class UserService {
 
   private @Nonnull UserEntity getRequiredUser(@Nonnull String username) {
     return userRepository.findByUsername(username).orElseThrow(
-        NotFoundException::new
+        () -> new NotFoundException("Пользователь не найден по username: " + username)
     );
   }
 }

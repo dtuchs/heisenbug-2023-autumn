@@ -41,7 +41,9 @@ public class MuseumService {
     return MuseumJson.fromEntity(
         museumRepository.findById(
             UUID.fromString(id)
-        ).orElseThrow(NotFoundException::new)
+        ).orElseThrow(
+            () -> new NotFoundException("Музей не найден по id: " + id)
+        )
     );
   }
 
@@ -74,13 +76,13 @@ public class MuseumService {
 
   private @Nonnull MuseumEntity getRequiredMuseum(@Nonnull UUID id) {
     return museumRepository.findById(id).orElseThrow(
-        NotFoundException::new
+        () -> new NotFoundException("Музей не найден по id: " + id)
     );
   }
 
   private @Nonnull CountryEntity getRequiredCountry(@Nonnull UUID id) {
     return countryRepository.findById(id).orElseThrow(
-        NotFoundException::new
+        () -> new NotFoundException("Страна не найдена по id: " + id)
     );
   }
 }

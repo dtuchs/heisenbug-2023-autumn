@@ -1,5 +1,6 @@
 package guru.qa.rococo.service;
 
+import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.ErrorJson;
 import jakarta.annotation.Nonnull;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -46,5 +47,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus.BAD_REQUEST.value(),
         List.of("Объект не может быть сохранен по причине дублирования первичного ключа")
     ), headers, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(NotFoundException.class)
+  public ResponseEntity<Object> handleNotFoundException(@Nonnull NotFoundException ex,
+                                                        @Nonnull HttpHeaders headers,
+                                                        @Nonnull WebRequest request) {
+    return new ResponseEntity<>(new ErrorJson(
+        new Date(),
+        HttpStatus.NOT_FOUND.value(),
+        List.of("Объект не найден в БД", ex.getMessage())
+    ), headers, HttpStatus.NOT_FOUND);
   }
 }

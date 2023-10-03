@@ -48,7 +48,9 @@ public class PaintingService {
     return PaintingJson.fromEntity(
         paintingRepository.findById(
             UUID.fromString(id)
-        ).orElseThrow(NotFoundException::new)
+        ).orElseThrow(
+            () -> new NotFoundException("Картина не найдена по id: " + id)
+        )
     );
   }
 
@@ -57,7 +59,9 @@ public class PaintingService {
     return paintingRepository.findAllByArtist(
         artistRepository.findById(
             UUID.fromString(id)
-        ).orElseThrow(NotFoundException::new),
+        ).orElseThrow(
+            () -> new NotFoundException("Художник не найден по id: " + id)
+        ),
         pageable
     ).map(PaintingJson::fromEntity);
   }
@@ -76,7 +80,9 @@ public class PaintingService {
       final UUID museumIdFromJson = painting.museum().id();
       if (isMuseumShouldBeUpdated(paintingEntity, museumIdFromJson)) {
         MuseumEntity museumEntity = museumRepository.findById(museumIdFromJson)
-            .orElseThrow(NotFoundException::new);
+            .orElseThrow(
+                () -> new NotFoundException("Музей не найден по id: " + museumIdFromJson)
+            );
         museumEntity.addPaintings(paintingEntity);
       }
     }
@@ -84,7 +90,9 @@ public class PaintingService {
       final UUID artistIdFromJson = painting.artist().id();
       if (isArtistShouldBeUpdated(paintingEntity, artistIdFromJson)) {
         ArtistEntity artistEntity = artistRepository.findById(artistIdFromJson)
-            .orElseThrow(NotFoundException::new);
+            .orElseThrow(
+                () -> new NotFoundException("Художник не найден по id: " + artistIdFromJson)
+            );
         artistEntity.addPaintings(paintingEntity);
       }
     }
@@ -98,12 +106,12 @@ public class PaintingService {
     PaintingEntity paintingEntity = painting.toEntity();
     paintingEntity.setArtist(artistRepository.findById(painting.artist().id())
         .orElseThrow(
-            NotFoundException::new
+            () -> new NotFoundException("Музей не найден по id: " + painting.artist().id())
         ));
     if (painting.museum() != null && painting.museum().id() != null) {
       paintingEntity.setMuseum(museumRepository.findById(painting.museum().id())
           .orElseThrow(
-              NotFoundException::new
+              () -> new NotFoundException("Художник не найден по id: " + painting.museum().id())
           ));
     }
 
@@ -116,7 +124,7 @@ public class PaintingService {
 
   private @Nonnull PaintingEntity getRequiredPainting(@Nonnull UUID id) {
     return paintingRepository.findById(id).orElseThrow(
-        NotFoundException::new
+        () -> new NotFoundException("Картина не найдена по id: " + id)
     );
   }
 

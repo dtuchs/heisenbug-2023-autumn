@@ -37,7 +37,9 @@ public class CountryService {
     return CountryJson.fromEntity(
         countryRepository.findById(
             UUID.fromString(id)
-        ).orElseThrow(NotFoundException::new)
+        ).orElseThrow(
+            () -> new NotFoundException("Страна не найдена по id: " + id)
+        )
     );
   }
 
@@ -46,13 +48,15 @@ public class CountryService {
     return CountryJson.fromEntity(
         countryRepository.findByName(
             name
-        ).orElseThrow(NotFoundException::new)
+        ).orElseThrow(
+            () -> new NotFoundException("Страна не найдена по имени: " + name)
+        )
     );
   }
 
   private @Nonnull CountryEntity getRequiredMuseum(@Nonnull UUID id) {
     return countryRepository.findById(id).orElseThrow(
-        NotFoundException::new
+        () -> new NotFoundException("Музей не найден по id: " + id)
     );
   }
 }

@@ -37,7 +37,9 @@ public class ArtistService {
     return ArtistJson.fromEntity(
         artistRepository.findById(
             UUID.fromString(id)
-        ).orElseThrow(NotFoundException::new)
+        ).orElseThrow(
+            () -> new NotFoundException("Художник не найден по id: " + id)
+        )
     );
   }
 
@@ -67,7 +69,7 @@ public class ArtistService {
 
   private @Nonnull ArtistEntity getRequiredArtist(@Nonnull UUID id) {
     return artistRepository.findById(id).orElseThrow(
-        NotFoundException::new
+        () -> new NotFoundException("Художник не найден по id: " + id)
     );
   }
 }
