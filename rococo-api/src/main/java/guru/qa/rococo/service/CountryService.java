@@ -1,13 +1,9 @@
 package guru.qa.rococo.service;
 
 import guru.qa.rococo.data.CountryEntity;
-import guru.qa.rococo.data.MuseumEntity;
 import guru.qa.rococo.data.repository.CountryRepository;
-import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.CountryJson;
-import guru.qa.rococo.model.MuseumJson;
-import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;

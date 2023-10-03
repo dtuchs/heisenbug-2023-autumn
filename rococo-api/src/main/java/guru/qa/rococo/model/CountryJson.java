@@ -2,9 +2,6 @@ package guru.qa.rococo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guru.qa.rococo.data.CountryEntity;
-import guru.qa.rococo.data.MuseumEntity;
-import guru.qa.rococo.model.util.BytesAsString;
-import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
