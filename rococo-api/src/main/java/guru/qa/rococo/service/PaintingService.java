@@ -85,9 +85,21 @@ public class PaintingService {
 
   @Transactional
   public PaintingJson add(PaintingJson painting) {
+    PaintingEntity paintingEntity = painting.toEntity();
+    paintingEntity.setArtist(artistRepository.findById(painting.artist().id())
+        .orElseThrow(
+            NotFoundException::new
+        ));
+    if (painting.museum() != null && painting.museum().id() != null) {
+      paintingEntity.setMuseum(museumRepository.findById(painting.museum().id())
+          .orElseThrow(
+              NotFoundException::new
+          ));
+    }
+
     return PaintingJson.fromEntity(
         paintingRepository.save(
-            painting.toEntity()
+            paintingEntity
         )
     );
   }
