@@ -14,8 +14,8 @@
 	const toastStore = getToastStore();
 
 	export let parent: any;
-	let files: FileList;
 
+	let files: FileList;
 	let title = "";
 	let description = "";
 	let content = "";
@@ -66,16 +66,17 @@
 				description,
 				content,
 				artist: {
-					id: authorId
+					id: authorId,
 				},
-				museumId});
-			if(res.ok) {
-				const t: ToastSettings = {
-					message: `Вы добавили картину: ${title}`,
-					background: 'variant-filled-primary',
-				};
-				toastStore.trigger(t);
-			}
+				museum: {
+					id: museumId,
+				}});
+			const t: ToastSettings = {
+				message: `Вы добавили картину: ${title}`,
+				background: 'variant-filled-primary',
+			};
+			toastStore.trigger(t);
+
 			if($modalStore[0].response) {
 				$modalStore[0].response(res);
 			} 
@@ -126,7 +127,7 @@
 				loadFunction={apiClient.loadMuseums}
 				bind:value={museumId}
 				keyName="id"
-				valueName="name"
+				valueName="title"
 				error={errors.museumId}
 			/>	
 			<ModalButtonGroup onClose={parent.onClose}/>

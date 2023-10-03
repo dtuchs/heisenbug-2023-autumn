@@ -45,10 +45,7 @@
 				? Errors.BIOGRAPHY_LENGTH_CONSTRAINT_MAX
 				: "";
 
-		if(Object.values(errors).some(v => v.length > 0)) {
-			return false;
-		}
-		return true;
+		return !Object.values(errors).some(v => v.length > 0);
 	}
 
 	const onSubmit = async (evt: SubmitEvent) => {
@@ -58,13 +55,11 @@
 		photo = await blobToBase64(photoFile) as string;
 		if(validateForm()) {
 			const res = await apiClient.addArtist({name, biography, photo});
-			if(res.ok) {
-				const t: ToastSettings = {
-					message: `Вы добавили художника: ${name}`,
-					background: 'variant-filled-primary',
-				};
-				toastStore.trigger(t);
-			}
+			const t: ToastSettings = {
+				message: `Вы добавили художника: ${name}`,
+				background: 'variant-filled-primary',
+			};
+			toastStore.trigger(t);
 			if($modalStore[0].response) {
 				$modalStore[0].response(res);
 			} 

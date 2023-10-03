@@ -1,12 +1,26 @@
-export type MuseumType = {
-    id: number,
+import type {IdDto} from "$lib/types/IdDto";
+
+export interface MuseumType extends IdDto {
     photo: string,
-    name: string,
+    title: string,
     description: string,
-    country: string,
-    city: string,
-    location: {
-        lat: number,
-        lng: number,
+    geo: {
+        country: {
+            id: string,
+            name: string,
+        },
+        city: string,
+    }
+}
+
+export type NewMuseumType = {
+    title: string,
+    description: string,
+    photo: string,
+    geo: {
+        country: {
+            id: string,
+        },
+        city: string,
     }
 }

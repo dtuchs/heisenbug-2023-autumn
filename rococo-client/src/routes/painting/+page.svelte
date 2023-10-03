@@ -9,6 +9,7 @@
 	import {apiClient} from "$lib/helpers/apiClient";
 	import ListWrapper from "$lib/components/ListWrapper.svelte";
 	import type {PaintingType} from "$lib/types/Painting";
+	import {checkDuplicates} from "$lib/helpers/dataUtils";
 	
 	export let data: PageData;
 	let isSearchNotEmpty = false;
@@ -18,7 +19,7 @@
 
 	paintingsStore.set({
 		paintings: data.paintings,
-		noMoreData: data.currentPage === data.totalPages - 1,
+		noMoreData: currentPage === data.totalPages - 1,
 		isLoading: false,
 		ignoreIds: [],
 	});
@@ -42,34 +43,16 @@
 		isSearchNotEmpty = search.length > 0;
 	};
 
-	const checkDuplicates = (data: PaintingType[]) => {
-		if(!$paintingsStore.ignoreIds.length) {
-			return data;
-		}
-		return data.filter((item) => {
-			if($paintingsStore.ignoreIds.includes(item.id)) {
-				paintingsStore.update((prevState) => {
-					return {
-						...prevState,
-						ignoreIds:
-								prevState.ignoreIds.splice(prevState.ignoreIds.indexOf(item.id), 1),
-					}
-				});
-				return false;
-			}
-			return true;
-		});
-	}
-
 	const loadMore = async () => {
 		paintingsStore.update((prevState) => {
 			return {
 				...prevState,
 				isLoading: true,
+				noMoreData: true,
 			}
 		});
 		const response = await apiClient.loadPaintings({page: ++currentPage});
-		const newBatch = checkDuplicates(response.content);
+		const newBatch = checkDuplicates<PaintingType>(response.content, paintingsStore, $paintingsStore.ignoreIds);
 		paintingsStore.update((prevState) => {
 			return {
 				...prevState,

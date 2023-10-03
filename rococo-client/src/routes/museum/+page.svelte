@@ -8,6 +8,8 @@
 	import {museumsStore} from "$lib/stores/museum.store";
 	import {apiClient} from "$lib/helpers/apiClient";
 	import ListWrapper from "$lib/components/ListWrapper.svelte";
+	import type {MuseumType} from "$lib/types/Museum";
+	import {checkDuplicates} from "$lib/helpers/dataUtils.js";
 
 	export let data: PageData;
 	let isSearchNotEmpty = false;
@@ -17,8 +19,9 @@
 
 	museumsStore.set({
 		museums: data.museums,
-		noMoreData: data.currentPage === data.totalPages - 1,
+		noMoreData: currentPage === data.totalPages - 1,
 		isLoading: false,
+		ignoreIds: [],
 	});
 
 	const loadMuseums = async(search: string) => {
@@ -29,7 +32,14 @@
 			}
 		});
 		const response = await apiClient.loadMuseums({search});
-		museumsStore.set({museums: response.content, noMoreData: true, isLoading: false});
+		museumsStore.update((prevState) => {
+			return {
+				...prevState,
+				museums: response.content,
+				isLoading: false,
+				noMoreData: true,
+			}
+		});
 		isSearchNotEmpty = search.length > 0;
 	}
 
@@ -37,13 +47,16 @@
 		museumsStore.update((prevState) => {
 			return {
 				...prevState,
+				noMoreData: true,
 				isLoading: true,
 			}
 		});
 		const response = await apiClient.loadMuseums({page: ++currentPage});
-		const newBatch = response.content;
+		const newBatch = checkDuplicates<MuseumType>(response.content, museumsStore, $museumsStore.ignoreIds);
 		museumsStore.update((prevState) => {
-			return {museums: [
+			return {
+				...prevState,
+				museums: [
 					...prevState.museums,
 					...newBatch
 				],
@@ -53,11 +66,26 @@
 		});
 	}
 
+	const museumAddCallback = async (result: MuseumType) => {
+		museumsStore.update((prevState) => {
+			return {
+				...prevState,
+				museums: [
+					result,
+					...prevState.museums,
+				],
+				ignoreIds: [...prevState.ignoreIds, result.id],
+			}
+		});
+	}
+
 	const clickAddButton = () => {
 		const modal = prepareModal(
 			NewMuseumForm,
 			"Новый музей", 
-            "Заполните форму, чтобы добавить новый музей");
+            "Заполните форму, чтобы добавить новый музей",
+			museumAddCallback,
+		);
         modalStore.trigger(modal);
 	};
 

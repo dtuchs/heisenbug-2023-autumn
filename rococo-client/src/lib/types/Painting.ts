@@ -1,5 +1,6 @@
-export type PaintingType = {
-    id: string,
+import type {IdDto} from "$lib/types/IdDto";
+
+export interface PaintingType extends IdDto{
     authorId: string,
     content: string,
     title: string,
@@ -9,10 +10,12 @@ export type PaintingType = {
 
 export type NewPaintingType = {
     artist: {
-        id: string
+        id: string,
     },
     content: string,
     title: string,
     description: string,
-    museumId?: string,
+    museum?: {
+        id?: string,
+    },
 }

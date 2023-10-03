@@ -1,5 +1,6 @@
-export type ArtistType = {
-    id: string,
+import type {IdDto} from "$lib/types/IdDto";
+
+export interface ArtistType extends IdDto {
     name: string,
     photo: string,
     biography: string,

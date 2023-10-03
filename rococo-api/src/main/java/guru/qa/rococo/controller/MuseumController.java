@@ -39,12 +39,12 @@ public class MuseumController {
     return museumService.findMuseumById(id);
   }
 
-  @PatchMapping("/")
+  @PatchMapping()
   public MuseumJson updateMuseum(@RequestBody MuseumJson museum) {
     return museumService.update(museum);
   }
 
-  @PostMapping("/")
+  @PostMapping()
   public MuseumJson addMuseum(@RequestBody MuseumJson museum) {
     return museumService.add(museum);
   }

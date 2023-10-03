@@ -9,6 +9,7 @@
     import ArtistList from '$lib/components/ArtistList.svelte';
     import ListWrapper from "$lib/components/ListWrapper.svelte";
     import type {ArtistType} from "$lib/types/Artist";
+    import {checkDuplicates} from "$lib/helpers/dataUtils";
 
     export let data: PageData;
     let isSearchNotEmpty = false;
@@ -18,7 +19,7 @@
 
     artistsStore.set({
         artists: data.artists,
-        noMoreData: data.currentPage === data.totalPages - 1,
+        noMoreData: currentPage === data.totalPages - 1,
         isLoading: false,
         ignoreIds: [],
     });
@@ -42,34 +43,16 @@
         isSearchNotEmpty = search.length > 0;
 	};
 
-    const checkDuplicates = (data: ArtistType[]) => {
-        if(!$artistsStore.ignoreIds.length) {
-            return data;
-        }
-        return data.filter((item) => {
-            if($artistsStore.ignoreIds.includes(item.id)) {
-                artistsStore.update((prevState) => {
-                    return {
-                        ...prevState,
-                        ignoreIds:
-                            prevState.ignoreIds.splice(prevState.ignoreIds.indexOf(item.id), 1),
-                    }
-                });
-                return false;
-            }
-            return true;
-        });
-    }
-
     const loadMore = async () => {
         artistsStore.update((prevState) => {
             return {
                 ...prevState,
                 isLoading: true,
+                noMoreData: true,
             }
         });
         const response = await apiClient.loadArtists({page: ++currentPage});
-        const newBatch = checkDuplicates(response.content);
+        const newBatch = checkDuplicates<ArtistType>(response.content, artistsStore, $artistsStore.ignoreIds);
         artistsStore.update((prevState) => {
             return {
                 ...prevState,

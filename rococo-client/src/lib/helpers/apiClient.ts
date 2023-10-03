@@ -1,5 +1,6 @@
 import type { NewArtistType } from "$lib/types/Artist";
 import type { NewPaintingType } from "$lib/types/Painting";
+import type {NewMuseumType} from "$lib/types/Museum";
 
 const BASE_URL = 'http://127.0.0.1:8080/api';
 
@@ -27,7 +28,7 @@ export const apiClient = {
 
         return await res.json();
     },
-    loadPaintings: async({ page = 0, size = 18, search}
+    loadPaintings: async({ page = 0, size = 9, search}
                              : {
         page?: number,
         size?: number,
@@ -57,8 +58,25 @@ export const apiClient = {
         }) => {
         return loadItems({path: "museum", search, page, size});
     },
+    addMuseum: async(newMuseum: NewMuseumType) => {
+        const res = await fetch(`${BASE_URL}/museum`, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newMuseum),
+        });
+        return await res.json();
+    },
     loadMuseum: async(id: string) => {
         return loadItem("museum", id);
+    },
+    loadCountries: async({page = 0, size = 20}: {
+        page?: number,
+        size?: number,
+    }) => {
+        return loadItems({path: "country", page, size});
     },
 }
 

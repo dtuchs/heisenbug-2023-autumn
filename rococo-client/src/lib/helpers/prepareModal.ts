@@ -8,6 +8,10 @@ export function prepareModal(ref: ComponentType, title: string, body: string, ca
         component,
         title,
         body,
-        response: (r) => callback?.(r),
+        response: (r) => {
+            if(r) {
+                callback?.(r)
+            }
+        },
     };
 }
