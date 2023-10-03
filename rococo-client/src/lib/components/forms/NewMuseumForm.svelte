@@ -12,6 +12,7 @@
         name: "",
         description: "",
         country: "fr",
+		city: "",
         photo: "",
     };
 
@@ -54,7 +55,7 @@
 			</label>
             <label class="label">
 				<span>Укажите город</span>
-				<input class="input" type="text" bind:value={formData.name} placeholder="Введите название музея" />
+				<input class="input" type="text" bind:value={formData.city} placeholder="Введите название музея" />
 			</label>
             <label class="label">
 				<span>Изображение музея</span>

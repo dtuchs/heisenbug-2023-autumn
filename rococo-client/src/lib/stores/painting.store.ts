@@ -5,4 +5,5 @@ export const paintingsStore = writable<{
     paintings: PaintingType[],
     noMoreData: boolean,
     isLoading: boolean,
-}>({paintings: [], noMoreData: false, isLoading: false});
+    ignoreIds: string [],
+}>({paintings: [], noMoreData: false, isLoading: false, ignoreIds: []});

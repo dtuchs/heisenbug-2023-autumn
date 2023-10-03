@@ -7,7 +7,7 @@
     {#each $paintingsStore.paintings as painting(painting.id)}
         <li>
             <a href={`/painting/${painting?.id}`}>
-                <img class="max-w-full rounded-lg object-cover w-full h-80" src={painting.src} alt={painting.title}>
+                <img class="max-w-full rounded-lg object-cover w-full h-80" src={painting.content} alt={painting.title}>
                 <div class="text-center">{painting?.title}</div>
             </a>
         </li>

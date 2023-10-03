@@ -18,21 +18,21 @@
 
 	let title = "";
 	let description = "";
-	let src = "";
+	let content = "";
 	let authorId = "";
 	let museumId: string | undefined = undefined;
 
 	const errors: Record<string, string> = {
 		title: "",
         description: "",
-		src: "",
+		content: "",
 		authorId: "",
 		museumId: "",
 	}
 
-	const validateImage = (src: File) => {
-		if (src.size > 120_000_000) {
-			errors.src = Errors.IMAGE_CONSTRAINT_TOO_BIG;
+	const validateImage = (content: File) => {
+		if (content.size > 120_000_000) {
+			errors.content = Errors.IMAGE_CONSTRAINT_TOO_BIG;
 		}
 	}
 
@@ -60,12 +60,12 @@
 		const file = files[0];
 		validateImage(file);
 		if(validateForm()) {
-			src = await blobToBase64(file) as string;
+			content = await blobToBase64(file) as string;
 			const res = await apiClient.addPainting({
 				title,
 				description,
-				src,
-				author: {
+				content,
+				artist: {
 					id: authorId
 				},
 				museumId});
@@ -98,9 +98,9 @@
 			/>
 			<ImageInput
 				label="Загрузите изображение картины"
-				name="src"
+				name="content"
 				bind:files={files}
-				error={errors.src}
+				error={errors.content}
 				required={true}
 			/>
 			<Select

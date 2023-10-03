@@ -8,6 +8,7 @@
 	import {paintingsStore} from "$lib/stores/painting.store.js";
 	import {apiClient} from "$lib/helpers/apiClient";
 	import ListWrapper from "$lib/components/ListWrapper.svelte";
+	import type {PaintingType} from "$lib/types/Painting";
 	
 	export let data: PageData;
 	let isSearchNotEmpty = false;
@@ -19,6 +20,7 @@
 		paintings: data.paintings,
 		noMoreData: data.currentPage === data.totalPages - 1,
 		isLoading: false,
+		ignoreIds: [],
 	});
 
 	const loadPaintings = async (search: string) => {
@@ -29,9 +31,35 @@
 			}
 		});
 		const response = await apiClient.loadPaintings({search});
-		paintingsStore.set({paintings: response.content, noMoreData: true, isLoading: false});
+		paintingsStore.update((prevState) => {
+			return {
+				...prevState,
+				paintings: response.content,
+				isLoading: false,
+				noMoreData: true,
+			}
+		});
 		isSearchNotEmpty = search.length > 0;
 	};
+
+	const checkDuplicates = (data: PaintingType[]) => {
+		if(!$paintingsStore.ignoreIds.length) {
+			return data;
+		}
+		return data.filter((item) => {
+			if($paintingsStore.ignoreIds.includes(item.id)) {
+				paintingsStore.update((prevState) => {
+					return {
+						...prevState,
+						ignoreIds:
+								prevState.ignoreIds.splice(prevState.ignoreIds.indexOf(item.id), 1),
+					}
+				});
+				return false;
+			}
+			return true;
+		});
+	}
 
 	const loadMore = async () => {
 		paintingsStore.update((prevState) => {
@@ -41,9 +69,11 @@
 			}
 		});
 		const response = await apiClient.loadPaintings({page: ++currentPage});
-		const newBatch = response.content;
+		const newBatch = checkDuplicates(response.content);
 		paintingsStore.update((prevState) => {
-			return {paintings: [
+			return {
+				...prevState,
+				paintings: [
 					...prevState.paintings,
 					...newBatch
 				],
@@ -53,11 +83,26 @@
 		});
 	}
 
+	const paintingAddCallback = async (result: PaintingType) => {
+		paintingsStore.update((prevState) => {
+			return {
+				...prevState,
+				paintings: [
+					result,
+					...prevState.paintings,
+				],
+				ignoreIds: [...prevState.ignoreIds, result.id],
+			}
+		});
+	}
+
 	const clickAddButton = () => {
 		const modal = prepareModal(
 			NewPaintingForm,
 			"Новая картина", 
-            "Заполните форму, чтобы добавить новую картину");
+            "Заполните форму, чтобы добавить новую картину",
+			paintingAddCallback,
+		);
         modalStore.trigger(modal);
 	};
 
