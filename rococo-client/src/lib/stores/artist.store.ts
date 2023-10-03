@@ -5,5 +5,6 @@ export const artistsStore = writable<{
     artists: ArtistType[],
     noMoreData: boolean,
     isLoading: boolean,
-}>({artists: [], noMoreData: false, isLoading: false});
+    ignoreIds: string [],
+}>({artists: [], noMoreData: false, isLoading: false, ignoreIds: []});
 

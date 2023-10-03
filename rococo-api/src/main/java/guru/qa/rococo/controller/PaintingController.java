@@ -39,12 +39,12 @@ public class PaintingController {
     return paintingService.findArtistById(id);
   }
 
-  @PatchMapping("/")
+  @PatchMapping()
   public PaintingJson updatePainting(@RequestBody PaintingJson painting) {
     return paintingService.update(painting);
   }
 
-  @PostMapping("/")
+  @PostMapping()
   public PaintingJson addPainting(@RequestBody PaintingJson painting) {
     return paintingService.add(painting);
   }

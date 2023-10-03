@@ -8,7 +8,9 @@ export type PaintingType = {
 }
 
 export type NewPaintingType = {
-    authorId: string,
+    author: {
+        id: string
+    },
     src: string,
     title: string,
     description: string,

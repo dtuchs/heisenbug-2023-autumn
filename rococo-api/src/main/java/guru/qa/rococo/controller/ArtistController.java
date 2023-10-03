@@ -39,7 +39,7 @@ public class ArtistController {
     return artistService.findArtistById(id);
   }
 
-  @PatchMapping("/")
+  @PatchMapping()
   public ArtistJson updateArtist(@RequestBody ArtistJson artist) {
     return artistService.update(artist);
   }

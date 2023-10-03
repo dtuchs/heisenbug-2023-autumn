@@ -13,29 +13,20 @@
     export let loadFunction: ({page}: {page?: number}) => Promise<Pageable<[]>>;
 
     let currentPage = 0;
-    let totalPages = 0;
-    let noMoreData = false;
-    let items:[] = [];
-    let newBatch: [] = [];
-
-    $: items = [
-		...items,
-        ...newBatch,
-    ];
+    let data: any [] = [];
+    let noMoreData: boolean;
 
     onMount(async() => {
         const res = await loadFunction({page: currentPage});
-        items = res.content;
+        data = res.content;
+        noMoreData =  currentPage === res.totalPages -1
     });
 
     const loadMore = async () => {
         const response = await loadFunction({page: ++currentPage});
-        totalPages = response.totalPages;
-        newBatch = response.content;
-
-        if(currentPage === totalPages -1) {
-            noMoreData = true;
-        }
+        let newBatch = response.content;
+        data = [...data, ...newBatch];
+        noMoreData = currentPage === response.totalPages -1;
     }
 
 </script>
@@ -46,14 +37,13 @@
     <select 
         class="select" 
         size={3}
-        on:scroll
-        bind:value={value} 
+        bind:value={value}
         on:select={() => error = ""}
         {required}
         {name}
         >
-    {#each items as item(item[keyName])}
-        {#if item[keyName] === items[items.length - 1][keyName]}
+    {#each data as item(item[keyName])}
+        {#if item[keyName] === data[data.length - 1][keyName]}
         <option
             use:viewport
             value={item[keyName]}

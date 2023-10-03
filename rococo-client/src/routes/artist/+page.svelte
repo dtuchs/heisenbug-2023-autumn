@@ -8,6 +8,7 @@
     import { artistsStore } from '$lib/stores/artist.store';
     import ArtistList from '$lib/components/ArtistList.svelte';
     import ListWrapper from "$lib/components/ListWrapper.svelte";
+    import type {ArtistType} from "$lib/types/Artist";
 
     export let data: PageData;
     let isSearchNotEmpty = false;
@@ -19,6 +20,7 @@
         artists: data.artists,
         noMoreData: data.currentPage === data.totalPages - 1,
         isLoading: false,
+        ignoreIds: [],
     });
 
     const loadAuthors = async (search: string) => {
@@ -29,9 +31,35 @@
             }
         });
         const response = await apiClient.loadArtists({search});
-        artistsStore.set({artists: response.content, noMoreData: true, isLoading: false});
+        artistsStore.update((prevState) => {
+            return {
+                ...prevState,
+                artists: response.content,
+                isLoading: false,
+                noMoreData: true,
+            }
+        });
         isSearchNotEmpty = search.length > 0;
 	};
+
+    const checkDuplicates = (data: ArtistType[]) => {
+        if(!$artistsStore.ignoreIds.length) {
+            return data;
+        }
+        return data.filter((item) => {
+            if($artistsStore.ignoreIds.includes(item.id)) {
+                artistsStore.update((prevState) => {
+                    return {
+                        ...prevState,
+                        ignoreIds:
+                            prevState.ignoreIds.splice(prevState.ignoreIds.indexOf(item.id), 1),
+                    }
+                });
+                return false;
+            }
+            return true;
+        });
+    }
 
     const loadMore = async () => {
         artistsStore.update((prevState) => {
@@ -41,9 +69,11 @@
             }
         });
         const response = await apiClient.loadArtists({page: ++currentPage});
-        const newBatch = response.content;
+        const newBatch = checkDuplicates(response.content);
         artistsStore.update((prevState) => {
-            return {artists: [
+            return {
+                ...prevState,
+                artists: [
                     ...prevState.artists,
                     ...newBatch
                 ],
@@ -52,12 +82,26 @@
             }
         });
     }
+
+    const artistAddCallback = async (result: ArtistType) => {
+        artistsStore.update((prevState) => {
+            return {
+                ...prevState,
+                artists: [
+                    result,
+                    ...prevState.artists,
+                ],
+                ignoreIds: [...prevState.ignoreIds, result.id],
+            }
+        });
+    }
  
     const clickAddButton = () => {
         const modal = prepareModal(
             NewArtistForm, 
             "Новый художник", 
-            "Заполните форму, чтобы добавить нового художника");
+            "Заполните форму, чтобы добавить нового художника",
+            artistAddCallback);
         modalStore.trigger(modal);
     }
 </script>

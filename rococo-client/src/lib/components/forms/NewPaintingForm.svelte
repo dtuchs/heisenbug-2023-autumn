@@ -51,10 +51,8 @@
 
 		errors.authorId = !authorId ? Errors.AUTHOR_CONTRAINT_NOT_EMPTY : "";
 
-		if(Object.values(errors).some(v => v.length > 0)) {
-			return false;
-		}
-		return true;
+		return !Object.values(errors).some(v => v.length > 0);
+
 	}
 
 	const onSubmit = async (evt: SubmitEvent) => {
@@ -63,7 +61,14 @@
 		validateImage(file);
 		if(validateForm()) {
 			src = await blobToBase64(file) as string;
-			const res = await apiClient.addPainting({title, description, src, authorId, museumId});
+			const res = await apiClient.addPainting({
+				title,
+				description,
+				src,
+				author: {
+					id: authorId
+				},
+				museumId});
 			if(res.ok) {
 				const t: ToastSettings = {
 					message: `Вы добавили картину: ${title}`,
