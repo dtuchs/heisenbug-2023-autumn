@@ -11,7 +11,7 @@
 
 <section class={`grid grid-cols-1 ${fullPage ? "p-4" : ""}`}>
     <div 
-        class={`${fullPage ? "m-20 py-20" : "p-12 mb-20 mt-4"} rounded-container-token border-surface-500 text-center`}
+        class={`${fullPage ? "m-20 py-20" : "mb-20 mt-4"} rounded-container-token border-surface-500 text-center`}
         class:border={bordered}>
         <p class="mx-4 my-10 text-xl">{text}</p>
         <button type="button" class="btn variant-filled-primary ml-4" on:click={onButtonClick}>{buttonName}</button>	

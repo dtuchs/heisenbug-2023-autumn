@@ -15,6 +15,9 @@
     export let clickAddButton: () => void;
     export let loadMore: () => void;
 
+    export let bordered = true;
+    export let fullPage = true;
+
 </script>
 
 {#if data?.length === 0}
@@ -28,6 +31,8 @@
                 text={emptyStateTitle}
                 buttonName={emptyStateButtonName}
                 onButtonClick={clickAddButton}
+                {bordered}
+                {fullPage}
         />
     {/if}
 {:else}

@@ -6,11 +6,7 @@ const BASE_URL = 'http://127.0.0.1:8080/api';
 
 export const apiClient = {
     loadArtists: async ({ page = 0, size = 18, search}
-        : {
-            page?: number,
-            size?: number,
-            search?: string
-        }) => {
+        : { page?: number, size?: number, search?: string }) => {
         return loadItems({path: "artist", search, page, size, searchName: "name"});
     },
     loadArtist: async(id: string) => {
@@ -35,6 +31,15 @@ export const apiClient = {
         search?: string
     }) => {
         return loadItems({path: "painting", search, page, size, searchName: "title"});
+    },
+    loadPaintingsByAuthorId: async({ authorId, page = 0, size = 9, search}
+                             : {
+        authorId: string,
+        page?: number,
+        size?: number,
+        search?: string
+    }) => {
+        return loadItems({path: `painting/author/${authorId}`, search, page, size, searchName: "title"});
     },
     loadPainting: async(id: string) => {
        return loadItem("painting", id);

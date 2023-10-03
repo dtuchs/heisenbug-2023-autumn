@@ -109,7 +109,7 @@
 		data={$paintingsStore.paintings}
 		{loadMore}
 		{clickAddButton}>
-	<PaintingList/>
+	<PaintingList paintings={$paintingsStore.paintings}/>
 </ListWrapper>
 
 
