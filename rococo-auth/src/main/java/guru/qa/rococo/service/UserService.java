@@ -17,20 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class UserService {
 
-  public static final String TOPIC = "user";
   private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
-  private final KafkaTemplate<String, UserJson> kafkaTemplate;
 
   @Autowired
   public UserService(UserRepository userRepository,
-                     PasswordEncoder passwordEncoder,
-                     KafkaTemplate<String, UserJson> kafkaTemplate) {
+                     PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
-    this.kafkaTemplate = kafkaTemplate;
   }
 
   @Transactional
@@ -50,9 +46,6 @@ public class UserService {
     writeAuthorityEntity.setAuthority(Authority.write);
 
     userEntity.addAuthorities(readAuthorityEntity, writeAuthorityEntity);
-    String savedUser = userRepository.save(userEntity).getUsername();
-    kafkaTemplate.send(TOPIC, new UserJson(savedUser));
-    LOG.info("### Kafka topic [users] sent message: " + savedUser);
-    return savedUser;
+    return userRepository.save(userEntity).getUsername();
   }
 }

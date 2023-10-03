@@ -12,7 +12,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
 //    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation "org.springframework.kafka:spring-kafka:${project.ext.springKafkaVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation "com.google.code.findbugs:jsr305:${project.ext.jsr305Version}"
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"

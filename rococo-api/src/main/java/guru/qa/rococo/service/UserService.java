@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 
 @Service
 public class UserService {
@@ -29,6 +30,16 @@ public class UserService {
   @Autowired
   public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
+  }
+
+  @Transactional
+  public void createNewUserIfNotPresent(String username) {
+    userRepository.findByUsername(username)
+        .orElseGet(() -> {
+          UserEntity userEntity = new UserEntity();
+          userEntity.setUsername(username);
+          return userRepository.save(userEntity);
+        });
   }
 
   @Transactional(readOnly = true)

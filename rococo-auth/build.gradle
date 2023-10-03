@@ -14,7 +14,6 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.security:spring-security-oauth2-authorization-server:${project.ext.oauth2AuthorizationServerVersion}"
-    implementation "org.springframework.kafka:spring-kafka:${project.ext.springKafkaVersion}"
     implementation "com.google.code.findbugs:jsr305:${project.ext.jsr305Version}"
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
