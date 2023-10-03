@@ -1,7 +1,6 @@
 package guru.qa.rococo.controller;
 
 import guru.qa.rococo.model.RegistrationModel;
-import guru.qa.rococo.model.UserJson;
 import guru.qa.rococo.service.UserService;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -34,16 +32,12 @@ public class RegisterController {
 
   private final UserService userService;
 
-  private final KafkaTemplate<String, UserJson> kafkaTemplate;
-
   private final String frontUri;
 
   @Autowired
   public RegisterController(UserService userService,
-                            KafkaTemplate<String, UserJson> kafkaTemplate,
                             @Value("${rococo-ui.uri}") String frontUri) {
     this.userService = userService;
-    this.kafkaTemplate = kafkaTemplate;
     this.frontUri = frontUri;
   }
 
@@ -68,10 +62,6 @@ public class RegisterController {
         );
         response.setStatus(HttpServletResponse.SC_CREATED);
         model.addAttribute(MODEL_USERNAME_ATTR, registeredUserName);
-
-        UserJson user = new UserJson(registrationModel.username());
-        kafkaTemplate.send("users", user);
-        LOG.info("### Kafka topic [users] sent message: " + user.username());
       } catch (DataIntegrityViolationException e) {
         LOG.error("### Error while registration user: " + e.getMessage());
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
