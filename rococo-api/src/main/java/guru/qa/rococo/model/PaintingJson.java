@@ -14,6 +14,8 @@ public record PaintingJson(
     UUID id,
     @JsonProperty("title")
     String title,
+    @JsonProperty("description")
+    String description,
     @JsonProperty("content")
     String content,
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -27,6 +29,7 @@ public record PaintingJson(
     return new PaintingJson(
         entity.getId(),
         entity.getTitle(),
+        entity.getDescription(),
         new BytesAsString(
             entity.getContent()
         ).string(),
@@ -38,6 +41,7 @@ public record PaintingJson(
   public @Nonnull PaintingEntity toEntity() {
     PaintingEntity entity = new PaintingEntity();
     entity.setTitle(title);
+    entity.setDescription(description);
     entity.setContent(
         new StringAsBytes(
             content

@@ -3,14 +3,11 @@ package guru.qa.rococo.data;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,44 +24,15 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 @Setter
 @Entity
-@Table(name = "museum")
-public class MuseumEntity implements Serializable {
+@Table(name = "country")
+public class CountryEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false, columnDefinition = "BINARY(16)")
   private UUID id;
 
   @Column(nullable = false, unique = true)
-  private String title;
-
-  @Column
-  private String description;
-
-  @Column(nullable = false)
-  private String city;
-
-  @Lob
-  @Column(columnDefinition = "LONGBLOB")
-  private byte[] photo;
-
-  @OneToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "country_id", referencedColumnName = "id")
-  private CountryEntity country;
-
-  @OneToMany(fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "museum")
-  private Set<PaintingEntity> paintings = new HashSet<>();
-
-  public void addPaintings(PaintingEntity... paintings) {
-    for (PaintingEntity painting : paintings) {
-      this.paintings.add(painting);
-      painting.setMuseum(this);
-    }
-  }
-
-  public void removePaintings(PaintingEntity painting) {
-    this.paintings.remove(painting);
-    painting.setMuseum(null);
-  }
+  private String name;
 
   @Override
   public final boolean equals(Object o) {
@@ -73,7 +41,7 @@ public class MuseumEntity implements Serializable {
     Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
     Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
-    MuseumEntity that = (MuseumEntity) o;
+    CountryEntity that = (CountryEntity) o;
     return getId() != null && Objects.equals(getId(), that.getId());
   }
 

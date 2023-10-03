@@ -36,7 +36,13 @@ public class PaintingController {
 
   @GetMapping("/{id}")
   public PaintingJson findPaintingById(@PathVariable("id") String id) {
-    return paintingService.findArtistById(id);
+    return paintingService.findPaintingById(id);
+  }
+
+  @GetMapping("/author/{id}")
+  public Page<PaintingJson> findPaintingByAuthorId(@PathVariable("id") String id,
+                                                   @PageableDefault Pageable pageable) {
+    return paintingService.findPaintingByAuthorId(id, pageable);
   }
 
   @PatchMapping()

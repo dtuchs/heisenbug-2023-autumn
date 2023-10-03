@@ -8,13 +8,23 @@ create table if not exists `user`
     primary key (id)
 );
 
-create table if not exists `museum`
+create table if not exists `country`
 (
     id        binary(16)    unique not null default (UUID_TO_BIN(UUID(), true)),
-    title     varchar(255)  unique not null,
-    address   varchar(255)  unique not null,
-    photo     longblob,
+    name      varchar(255)  unique not null,
     primary key (id)
+);
+
+create table if not exists `museum`
+(
+    id          binary(16)    unique not null default (UUID_TO_BIN(UUID(), true)),
+    title       varchar(255)  unique not null,
+    description varchar(1000),
+    city        varchar(255),
+    photo       longblob,
+    country_id  binary(16)     not null,
+    primary key (id),
+    constraint fk_country_id foreign key (country_id) references `country` (id)
 );
 
 create table if not exists `artist`
@@ -28,11 +38,12 @@ create table if not exists `artist`
 
 create table if not exists `painting`
 (
-    id        binary(16)   unique not null default (UUID_TO_BIN(UUID(), true)),
-    title     varchar(255)        not null,
-    artist_id binary(16)          not null,
-    museum_id binary(16),
-    content   longblob,
+    id          binary(16)      unique not null default (UUID_TO_BIN(UUID(), true)),
+    title       varchar(255)    not null,
+    description varchar(1000),
+    artist_id   binary(16)     not null,
+    museum_id   binary(16),
+    content     longblob,
     primary key (id),
     constraint fk_artist_id foreign key (artist_id) references `artist` (id),
     constraint fk_museum_id foreign key (museum_id) references `museum` (id)

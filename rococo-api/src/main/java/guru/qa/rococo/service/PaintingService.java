@@ -44,12 +44,22 @@ public class PaintingService {
   }
 
   @Transactional(readOnly = true)
-  public @Nonnull PaintingJson findArtistById(@Nonnull String id) {
+  public @Nonnull PaintingJson findPaintingById(@Nonnull String id) {
     return PaintingJson.fromEntity(
         paintingRepository.findById(
             UUID.fromString(id)
         ).orElseThrow(NotFoundException::new)
     );
+  }
+
+  @Transactional(readOnly = true)
+  public Page<PaintingJson> findPaintingByAuthorId(String id, Pageable pageable) {
+    return paintingRepository.findAllByArtist(
+        artistRepository.findById(
+            UUID.fromString(id)
+        ).orElseThrow(NotFoundException::new),
+        pageable
+    ).map(PaintingJson::fromEntity);
   }
 
   @Transactional

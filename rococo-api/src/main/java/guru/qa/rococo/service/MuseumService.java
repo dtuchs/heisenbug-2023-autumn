@@ -1,6 +1,8 @@
 package guru.qa.rococo.service;
 
+import guru.qa.rococo.data.CountryEntity;
 import guru.qa.rococo.data.MuseumEntity;
+import guru.qa.rococo.data.repository.CountryRepository;
 import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.MuseumJson;
@@ -18,10 +20,12 @@ import java.util.UUID;
 @Service
 public class MuseumService {
   private final MuseumRepository museumRepository;
+  private final CountryRepository countryRepository;
 
   @Autowired
-  public MuseumService(MuseumRepository museumRepository) {
+  public MuseumService(MuseumRepository museumRepository, CountryRepository countryRepository) {
     this.museumRepository = museumRepository;
+    this.countryRepository = countryRepository;
   }
 
   @Transactional(readOnly = true)
@@ -45,12 +49,13 @@ public class MuseumService {
   public @Nonnull MuseumJson update(@Nonnull MuseumJson museum) {
     MuseumEntity museumEntity = getRequiredMuseum(museum.id());
     museumEntity.setTitle(museum.title());
-    museumEntity.setAddress(museum.address());
+    museumEntity.setCity(museum.geo().city());
     museumEntity.setPhoto(
         new StringAsBytes(
             museum.photo()
         ).bytes()
     );
+    museumEntity.setCountry(getRequiredCountry(museum.geo().country().id()));
     return MuseumJson.fromEntity(
         museumRepository.save(museumEntity)
     );
@@ -58,15 +63,23 @@ public class MuseumService {
 
   @Transactional
   public MuseumJson add(MuseumJson museum) {
+    MuseumEntity museumEntity = museum.toEntity();
+    museumEntity.setCountry(getRequiredCountry(museum.geo().country().id()));
     return MuseumJson.fromEntity(
         museumRepository.save(
-            museum.toEntity()
+            museumEntity
         )
     );
   }
 
   private @Nonnull MuseumEntity getRequiredMuseum(@Nonnull UUID id) {
     return museumRepository.findById(id).orElseThrow(
+        NotFoundException::new
+    );
+  }
+
+  private @Nonnull CountryEntity getRequiredCountry(@Nonnull UUID id) {
+    return countryRepository.findById(id).orElseThrow(
         NotFoundException::new
     );
   }

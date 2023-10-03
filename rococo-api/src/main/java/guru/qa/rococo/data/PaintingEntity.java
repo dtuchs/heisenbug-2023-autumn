@@ -30,6 +30,8 @@ public class PaintingEntity implements Serializable {
   @Column(nullable = false)
   private String title;
 
+  private String description;
+
   @Lob
   @Column(columnDefinition = "LONGBLOB")
   private byte[] content;

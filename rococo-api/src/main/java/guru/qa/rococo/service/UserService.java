@@ -64,7 +64,7 @@ public class UserService {
   @KafkaListener(topics = TOPIC, groupId = "rococo-api")
   public void listener(@Payload UserJson userJson, ConsumerRecord<String, UserJson> cr) {
     LOG.info("### Kafka consumer record: " + cr.toString());
-    userRepository.save(userJson.toUnlinkedEntity());
+    userRepository.save(userJson.toEntity());
   }
 
   private @Nonnull UserEntity getRequiredUser(@Nonnull String username) {

@@ -32,7 +32,7 @@ public record UserJson(
     );
   }
 
-  public @Nonnull UserEntity toUnlinkedEntity() {
+  public @Nonnull UserEntity toEntity() {
     UserEntity entity = new UserEntity();
     entity.setUsername(username);
     entity.setFirstname(firstname);
