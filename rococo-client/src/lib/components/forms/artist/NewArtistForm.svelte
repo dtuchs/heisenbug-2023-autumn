@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { getModalStore, getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
-	import ModalButtonGroup from "../ModalButtonGroup.svelte";
+	import ModalButtonGroup from "../../ModalButtonGroup.svelte";
 	import { apiClient } from "$lib/helpers/apiClient";
 
 	import { blobToBase64 } from "$lib/helpers/imageUtils";
-	import FormWrapper from "../FormWrapper.svelte";
-	import Input from "../formElements/Input.svelte";
-	import Textarea from "../formElements/Textarea.svelte";
-	import { Errors } from "$lib/types/Errors";
-	import ImageInput from "../formElements/ImageInput.svelte";
+	import FormWrapper from "../../FormWrapper.svelte";
+	import Input from "../../formElements/Input.svelte";
+	import Textarea from "../../formElements/Textarea.svelte";
+	import ImageInput from "../../formElements/ImageInput.svelte";
+	import {validateImage} from "$lib/helpers/validate";
+	import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.error.store";
+	import {validateForm} from "$lib/components/forms/artist/validate";
 
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
@@ -20,40 +22,25 @@
 	let biography = "";
 	let photo = "";
 
-	const errors: Record<string, string> = {
+	artistsFormErrorStore.set({
 		name: "",
-        biography: "",
+		biography: "",
 		photo: "",
-	}
-	
-	const validateImage = (photoFile: File) => {
-		if (photoFile.size > 120_000_000) {
-			errors.photo = Errors.IMAGE_CONSTRAINT_TOO_BIG;
-		}
-	}
-
-	const validateForm = () => {	
-		errors.name = name?.length < 3 
-			? Errors.NAME_LENGTH_CONSTRAINT_MIN
-			: name?.length > 255 
-				? Errors.NAME_LENGTH_CONSTRAINT_MAX
-				: "";
-
-		errors.biography = biography?.length < 11
-			? Errors.BIOGRAPHY_LENGTH_CONSTRAINT_MIN
-			: biography?.length > 2000
-				? Errors.BIOGRAPHY_LENGTH_CONSTRAINT_MAX
-				: "";
-
-		return !Object.values(errors).some(v => v.length > 0);
-	}
+	});
 
 	const onSubmit = async (evt: SubmitEvent) => {
 		evt.preventDefault();
 		const photoFile = files[0];
-		validateImage(photoFile);
+		artistsFormErrorStore.update((prevState) => {
+			return {
+				...prevState,
+				photo: validateImage(photoFile),
+			}
+		});
 		photo = await blobToBase64(photoFile) as string;
-		if(validateForm()) {
+		validateForm(name, biography);
+
+		if(!Object.values($artistsFormErrorStore).some(v => v.length > 0)) {
 			const res = await apiClient.addArtist({name, biography, photo});
 			const t: ToastSettings = {
 				message: `Вы добавили художника: ${name}`,
@@ -77,7 +64,7 @@
 				name="name" 
 				bind:value={name}
 				placeholder="Введите имя художника..."
-				error={errors.name}
+				error={$artistsFormErrorStore.name}
 				required={true}
 				/>
 			<ImageInput
@@ -85,7 +72,7 @@
 				name="photo"
 				bind:files={files} 
 				required={true}
-				error={errors.photo}
+				error={$artistsFormErrorStore.photo}
 				/>
 			<Textarea 
 				label="Биография"
@@ -93,7 +80,7 @@
 				bind:value={biography}
 				placeholder="Биография художника"
 				required={true}
-				error={errors.biography}
+				error={$artistsFormErrorStore.biography}
 			/>
 			<ModalButtonGroup onClose={parent.onClose}/>
 		</form>

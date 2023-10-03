@@ -9,11 +9,13 @@
 	import Textarea from "../formElements/Textarea.svelte";
 	import { Errors } from "$lib/types/Errors";
 	import { blobToBase64 } from "$lib/helpers/imageUtils";
+	import type {IdDto} from "$lib/types/IdDto";
 
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
 
 	export let parent: any;
+	let data = $modalStore[0]?.valueAttr as IdDto;
 
 	let files: FileList;
 	let title = "";
@@ -49,7 +51,7 @@
 				? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MAX
 				: "";
 
-		errors.authorId = !authorId ? Errors.AUTHOR_CONTRAINT_NOT_EMPTY : "";
+		errors.authorId = !(authorId || data?.id)? Errors.AUTHOR_CONTRAINT_NOT_EMPTY : "";
 
 		return !Object.values(errors).some(v => v.length > 0);
 
@@ -66,7 +68,7 @@
 				description,
 				content,
 				artist: {
-					id: authorId,
+					id: data?.id ?? authorId,
 				},
 				museum: {
 					id: museumId,
@@ -104,16 +106,18 @@
 				error={errors.content}
 				required={true}
 			/>
-			<Select
-				label="Укажите автора картины"
-				name="authorId"
-				loadFunction={apiClient.loadArtists}
-				bind:value={authorId}
-				keyName="id"
-				valueName="name"
-				required={true}
-				error={errors.authorId}
-			/>
+			{#if !data?.id}
+				<Select
+						label="Укажите автора картины"
+						name="authorId"
+						loadFunction={apiClient.loadArtists}
+						bind:value={authorId}
+						keyName="id"
+						valueName="name"
+						required={true}
+						error={errors.authorId}
+				/>
+			{/if}
 			<Textarea
 				label="Описание картины"
 				name="description"

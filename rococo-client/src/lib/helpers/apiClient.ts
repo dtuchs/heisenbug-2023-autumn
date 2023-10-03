@@ -1,4 +1,4 @@
-import type { NewArtistType } from "$lib/types/Artist";
+import type {ArtistType, NewArtistType} from "$lib/types/Artist";
 import type { NewPaintingType } from "$lib/types/Painting";
 import type {NewMuseumType} from "$lib/types/Museum";
 
@@ -20,6 +20,18 @@ export const apiClient = {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(newArtist),
+        });
+
+        return await res.json();
+    },
+    updateArtist: async(artist: ArtistType) => {
+        const res = await fetch(`${BASE_URL}/artist`, {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(artist),
         });
 
         return await res.json();

@@ -80,12 +80,12 @@
 	}
 
 	const clickAddButton = () => {
-		const modal = prepareModal(
-			NewPaintingForm,
-			"Новая картина", 
-            "Заполните форму, чтобы добавить новую картину",
-			paintingAddCallback,
-		);
+		const modal = prepareModal({
+			ref: NewPaintingForm,
+			title: "Новая картина",
+			body: "Заполните форму, чтобы добавить новую картину",
+			callback: paintingAddCallback,
+		});
         modalStore.trigger(modal);
 	};
 

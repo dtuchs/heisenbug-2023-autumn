@@ -80,12 +80,12 @@
 	}
 
 	const clickAddButton = () => {
-		const modal = prepareModal(
-			NewMuseumForm,
-			"Новый музей", 
-            "Заполните форму, чтобы добавить новый музей",
-			museumAddCallback,
-		);
+		const modal = prepareModal({
+			ref: NewMuseumForm,
+			title: "Новый музей",
+			body: "Заполните форму, чтобы добавить новый музей",
+			callback: museumAddCallback,
+		});
         modalStore.trigger(modal);
 	};
 

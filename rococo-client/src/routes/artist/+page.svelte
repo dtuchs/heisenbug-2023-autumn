@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getModalStore } from '@skeletonlabs/skeleton';
-    import NewArtistForm from '$lib/components/forms/NewArtistForm.svelte';
+    import NewArtistForm from '$lib/components/forms/artist/NewArtistForm.svelte';
     import type { PageData } from './$types';
 	import ContentPageHeading from '$lib/components/ContentPageHeading.svelte';
 	import { prepareModal } from '$lib/helpers/prepareModal';
@@ -80,11 +80,11 @@
     }
  
     const clickAddButton = () => {
-        const modal = prepareModal(
-            NewArtistForm, 
-            "Новый художник", 
-            "Заполните форму, чтобы добавить нового художника",
-            artistAddCallback);
+        const modal = prepareModal({
+            ref: NewArtistForm,
+            title: "Новый художник",
+            body: "Заполните форму, чтобы добавить нового художника",
+            callback: artistAddCallback});
         modalStore.trigger(modal);
     }
 </script>
