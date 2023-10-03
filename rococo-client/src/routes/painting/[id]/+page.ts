@@ -1,11 +1,10 @@
 import type { PageLoad } from "./$types";
-import { paintings } from '../../../mock/paintings';
-import { artists } from "../../../mock/artists";
+import {apiClient} from "$lib/helpers/apiClient";
 
-export const load: PageLoad = ({params}) => {
-    const painting = paintings.find(painting => Number(params.id) === painting.id);
+export const load: PageLoad = async ({params}) => {
+    const painting = await apiClient.loadPainting(params.id);
     return {
         painting,
-        author: artists.find(artist => artist.id === painting?.authorId),
+        artist: painting.artist,
     };
 };

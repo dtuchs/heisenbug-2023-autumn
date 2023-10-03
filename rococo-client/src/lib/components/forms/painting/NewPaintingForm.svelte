@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { getModalStore, getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
-	import FormWrapper from "../FormWrapper.svelte";
-	import ModalButtonGroup from "../ModalButtonGroup.svelte";
-	import Input from "../formElements/Input.svelte";
-	import Select from "../formElements/Select.svelte";
-	import ImageInput from "../formElements/ImageInput.svelte";
+	import FormWrapper from "../../FormWrapper.svelte";
+	import ModalButtonGroup from "../../ModalButtonGroup.svelte";
+	import Input from "../../formElements/Input.svelte";
+	import Select from "../../formElements/Select.svelte";
+	import ImageInput from "../../formElements/ImageInput.svelte";
 	import { apiClient } from "$lib/helpers/apiClient";
-	import Textarea from "../formElements/Textarea.svelte";
+	import Textarea from "../../formElements/Textarea.svelte";
 	import { Errors } from "$lib/types/Errors";
 	import { blobToBase64 } from "$lib/helpers/imageUtils";
 	import type {IdDto} from "$lib/types/IdDto";
+	import {validateImage} from "$lib/helpers/validate";
+	import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.error.store";
 
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
@@ -30,12 +32,6 @@
 		content: "",
 		authorId: "",
 		museumId: "",
-	}
-
-	const validateImage = (content: File) => {
-		if (content.size > 120_000_000) {
-			errors.content = Errors.IMAGE_CONSTRAINT_TOO_BIG;
-		}
 	}
 
 	const validateForm = () => {	
@@ -60,7 +56,12 @@
 	const onSubmit = async (evt: SubmitEvent) => {
 		evt.preventDefault();
 		const file = files[0];
-		validateImage(file);
+		artistsFormErrorStore.update((prevState) => {
+			return {
+				...prevState,
+				photo: validateImage(file),
+			}
+		});
 		if(validateForm()) {
 			content = await blobToBase64(file) as string;
 			const res = await apiClient.addPainting({

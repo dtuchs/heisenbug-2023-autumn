@@ -1,5 +1,5 @@
 import type {ArtistType, NewArtistType} from "$lib/types/Artist";
-import type { NewPaintingType } from "$lib/types/Painting";
+import type {NewPaintingType, PaintingType} from "$lib/types/Painting";
 import type {NewMuseumType} from "$lib/types/Museum";
 
 const BASE_URL = 'http://127.0.0.1:8080/api';
@@ -65,6 +65,18 @@ export const apiClient = {
             },
             body: JSON.stringify(newPainting),
         });
+        return await res.json();
+    },
+    updatePainting: async(painting: PaintingType) => {
+        const res = await fetch(`${BASE_URL}/painting`, {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(painting),
+        });
+
         return await res.json();
     },
     loadMuseums: async({ page = 0, size = 4, search}

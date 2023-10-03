@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Avatar, getModalStore} from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
-    import NewPaintingForm from '$lib/components/forms/NewPaintingForm.svelte';
+    import NewPaintingForm from '$lib/components/forms/painting/NewPaintingForm.svelte';
     import { prepareModal } from '$lib/helpers/prepareModal';
     import {singleArtistStore} from "$lib/stores/singleArtist.store";
     import {apiClient} from "$lib/helpers/apiClient";

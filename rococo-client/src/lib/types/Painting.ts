@@ -1,11 +1,15 @@
 import type {IdDto} from "$lib/types/IdDto";
 
 export interface PaintingType extends IdDto{
-    authorId: string,
+    artist: {
+        id: string,
+    },
     content: string,
     title: string,
     description: string,
-    museumId: string,
+    museum?: {
+        id?: string,
+    },
 }
 
 export type NewPaintingType = {

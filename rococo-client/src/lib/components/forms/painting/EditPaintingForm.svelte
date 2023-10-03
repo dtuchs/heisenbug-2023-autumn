@@ -1,0 +1,129 @@
+<script lang="ts">
+    import { getModalStore, getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
+    import FormWrapper from "../../FormWrapper.svelte";
+    import ModalButtonGroup from "../../ModalButtonGroup.svelte";
+    import Input from "../../formElements/Input.svelte";
+    import Select from "../../formElements/Select.svelte";
+    import ImageInput from "../../formElements/ImageInput.svelte";
+    import { apiClient } from "$lib/helpers/apiClient";
+    import Textarea from "../../formElements/Textarea.svelte";
+    import { blobToBase64 } from "$lib/helpers/imageUtils";
+    import {validateImage} from "$lib/helpers/validate";
+    import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.error.store";
+    import type {PaintingType} from "$lib/types/Painting";
+    import {paintingFormErrorStore} from "$lib/components/forms/painting/painting-form.error.store.js";
+    import {validateForm} from "$lib/components/forms/painting/validate";
+
+    const modalStore = getModalStore();
+    const toastStore = getToastStore();
+
+    export let parent: any;
+    let data = $modalStore[0]?.valueAttr as Record<string, PaintingType>;
+    let painting = data?.painting as PaintingType;
+
+    let files: FileList;
+    let id = painting.id;
+    let title = painting.title;
+    let description = painting.description;
+    let content = painting.content;
+    let authorId = painting.artist.id;
+    let museumId: string | undefined = painting?.museum?.id;
+
+    paintingFormErrorStore.set({
+        title: "",
+        description: "",
+        content: "",
+        authorId: "",
+        museumId: "",
+    });
+
+    const onSubmit = async (evt: SubmitEvent) => {
+        evt.preventDefault();
+        const file = files?.[0];
+        if(file) {
+            artistsFormErrorStore.update((prevState) => {
+                return {
+                    ...prevState,
+                    photo: validateImage(file),
+                }
+            });
+            content = await blobToBase64(file) as string;
+        }
+        validateForm(title, description, painting?.id ?? authorId);
+        if(!Object.values($paintingFormErrorStore).some(v => v.length > 0)) {
+            const res = await apiClient.updatePainting({
+                id,
+                title,
+                description,
+                content,
+                artist: {
+                    id: painting?.id ?? authorId,
+                },
+                museum: {
+                    id: museumId,
+                }});
+            const t: ToastSettings = {
+                message: `Вы обновили картину: ${title}`,
+                background: 'variant-filled-primary',
+            };
+            toastStore.trigger(t);
+
+            if($modalStore[0].response) {
+                $modalStore[0].response(res);
+            }
+            modalStore.close();
+        }
+    }
+
+</script>
+
+{#if $modalStore[0]}
+    <FormWrapper modalTitle={$modalStore[0].title ?? ""} modalBody={$modalStore[0].body ?? ""}>
+        <form class="modal-form space-y-4" on:submit={onSubmit}>
+            <Input
+                    label="Название картины"
+                    name="title"
+                    placeholder="Введите название картины..."
+                    bind:value={title}
+                    error={$paintingFormErrorStore.title}
+                    required={true}
+            />
+            <ImageInput
+                    label="Загрузите изображение картины"
+                    name="content"
+                    bind:files={files}
+                    error={$paintingFormErrorStore.content}
+                    required={true}
+            />
+            {#if !data?.id}
+                <Select
+                        label="Укажите автора картины"
+                        name="authorId"
+                        loadFunction={apiClient.loadArtists}
+                        bind:value={authorId}
+                        keyName="id"
+                        valueName="name"
+                        required={true}
+                        error={$paintingFormErrorStore.authorId}
+                />
+            {/if}
+            <Textarea
+                    label="Описание картины"
+                    name="description"
+                    bind:value={description}
+                    required={true}
+                    error={$paintingFormErrorStore.description}
+            />
+            <Select
+                    label="Укажите, где хранится оригинал"
+                    name="museumId"
+                    loadFunction={apiClient.loadMuseums}
+                    bind:value={museumId}
+                    keyName="id"
+                    valueName="title"
+                    error={$paintingFormErrorStore.museumId}
+            />
+            <ModalButtonGroup onClose={parent.onClose}/>
+        </form>
+    </FormWrapper>
+{/if}
