@@ -40,7 +40,7 @@ public class MuseumEntity implements Serializable {
   @Column
   private String description;
 
-  @Column(nullable = false)
+  @Column
   private String city;
 
   @Lob
