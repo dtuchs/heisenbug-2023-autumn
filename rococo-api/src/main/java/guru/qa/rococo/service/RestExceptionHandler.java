@@ -39,24 +39,24 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-  public ResponseEntity<Object> handleSQLIntegrityConstraintViolationException(@Nonnull SQLIntegrityConstraintViolationException ex,
-                                                                               @Nonnull HttpHeaders headers,
-                                                                               @Nonnull WebRequest request) {
-    return new ResponseEntity<>(new ErrorJson(
-        new Date(),
-        HttpStatus.BAD_REQUEST.value(),
-        List.of("Объект не может быть сохранен по причине дублирования первичного ключа")
-    ), headers, HttpStatus.BAD_REQUEST);
+  public ResponseEntity<ErrorJson> handleSQLIntegrityConstraintViolationException(@Nonnull SQLIntegrityConstraintViolationException ex) {
+    return ResponseEntity
+        .status(HttpStatus.BAD_REQUEST)
+        .body(new ErrorJson(
+            new Date(),
+            HttpStatus.BAD_REQUEST.value(),
+            List.of("Объект не может быть сохранен по причине дублирования первичного ключа")
+        ));
   }
 
   @ExceptionHandler(NotFoundException.class)
-  public ResponseEntity<Object> handleNotFoundException(@Nonnull NotFoundException ex,
-                                                        @Nonnull HttpHeaders headers,
-                                                        @Nonnull WebRequest request) {
-    return new ResponseEntity<>(new ErrorJson(
-        new Date(),
-        HttpStatus.NOT_FOUND.value(),
-        List.of("Объект не найден в БД", ex.getMessage())
-    ), headers, HttpStatus.NOT_FOUND);
+  public ResponseEntity<ErrorJson> handleNotFoundException(@Nonnull NotFoundException ex) {
+    return ResponseEntity
+        .status(HttpStatus.NOT_FOUND)
+        .body(new ErrorJson(
+            new Date(),
+            HttpStatus.NOT_FOUND.value(),
+            List.of("Объект не найден в БД", ex.getMessage())
+        ));
   }
 }
