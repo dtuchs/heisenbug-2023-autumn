@@ -5,6 +5,7 @@ import guru.qa.rococo.data.MuseumEntity;
 import guru.qa.rococo.model.util.BytesAsString;
 import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.UUID;
 
@@ -18,15 +19,16 @@ public record MuseumJson(
     @JsonProperty("photo")
     String photo) {
 
-  public static @Nonnull MuseumJson fromEntity(@Nonnull MuseumEntity entity) {
-    return new MuseumJson(
+  public static @Nullable MuseumJson fromEntity(@Nullable MuseumEntity entity) {
+    return (entity != null)
+        ? new MuseumJson(
         entity.getId(),
         entity.getTitle(),
         entity.getAddress(),
         new BytesAsString(
             entity.getPhoto()
         ).string()
-    );
+    ) : null;
   }
 
   public @Nonnull MuseumEntity toEntity() {

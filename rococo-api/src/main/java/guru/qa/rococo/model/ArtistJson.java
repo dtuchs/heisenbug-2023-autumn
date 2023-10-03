@@ -5,6 +5,7 @@ import guru.qa.rococo.data.ArtistEntity;
 import guru.qa.rococo.model.util.BytesAsString;
 import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.UUID;
 
@@ -18,15 +19,16 @@ public record ArtistJson(
     @JsonProperty("photo")
     String photo) {
 
-  public static @Nonnull ArtistJson fromEntity(@Nonnull ArtistEntity entity) {
-    return new ArtistJson(
+  public static @Nullable ArtistJson fromEntity(@Nullable ArtistEntity entity) {
+    return (entity != null)
+        ? new ArtistJson(
         entity.getId(),
         entity.getName(),
         entity.getBiography(),
         new BytesAsString(
             entity.getPhoto()
         ).string()
-    );
+    ) : null;
   }
 
   public @Nonnull ArtistEntity toEntity() {
