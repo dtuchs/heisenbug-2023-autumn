@@ -7,7 +7,6 @@ import guru.qa.rococo.data.repository.ArtistRepository;
 import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.data.repository.PaintingRepository;
 import guru.qa.rococo.exception.NotFoundException;
-import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.model.PaintingJson;
 import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
@@ -37,13 +36,11 @@ public class PaintingService {
   }
 
   @Transactional(readOnly = true)
-  public @Nonnull Page<PaintingJson> getAll(@Nonnull Pageable pageable) {
-    return paintingRepository.findAll(pageable).map(PaintingJson::fromEntity);
-  }
-
-  @Transactional(readOnly = true)
-  public @Nonnull Page<PaintingJson> getAll(@Nonnull String title, @Nonnull Pageable pageable) {
-    return paintingRepository.findAllByTitleContainsIgnoreCase(title, pageable).map(PaintingJson::fromEntity);
+  public @Nonnull Page<PaintingJson> getAll(@Nullable String title, @Nonnull Pageable pageable) {
+    Page<PaintingEntity> paintings = (title == null)
+        ? paintingRepository.findAll(pageable)
+        : paintingRepository.findAllByTitleContainsIgnoreCase(title, pageable);
+    return paintings.map(PaintingJson::fromEntity);
   }
 
   @Transactional(readOnly = true)

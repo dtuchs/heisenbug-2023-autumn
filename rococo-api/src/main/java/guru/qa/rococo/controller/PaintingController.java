@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.ValueConstants;
 
 
 @RestController
@@ -32,9 +31,7 @@ public class PaintingController {
   @GetMapping()
   public Page<PaintingJson> getAll(@RequestParam(required = false) String title,
                                    @PageableDefault Pageable pageable) {
-    return ValueConstants.DEFAULT_NONE.equals(title)
-        ? paintingService.getAll(pageable)
-        : paintingService.getAll(title, pageable);
+    return paintingService.getAll(title, pageable);
   }
 
   @GetMapping("/{id}")

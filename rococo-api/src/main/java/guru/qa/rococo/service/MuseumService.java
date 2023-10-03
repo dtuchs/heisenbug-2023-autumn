@@ -3,10 +3,10 @@ package guru.qa.rococo.service;
 import guru.qa.rococo.data.MuseumEntity;
 import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.exception.NotFoundException;
-import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,13 +25,11 @@ public class MuseumService {
   }
 
   @Transactional(readOnly = true)
-  public @Nonnull Page<MuseumJson> getAll(@Nonnull Pageable pageable) {
-    return museumRepository.findAll(pageable).map(MuseumJson::fromEntity);
-  }
-
-  @Transactional(readOnly = true)
-  public @Nonnull Page<MuseumJson> getAll(@Nonnull String title, @Nonnull Pageable pageable) {
-    return museumRepository.findAllByTitleContainsIgnoreCase(title, pageable).map(MuseumJson::fromEntity);
+  public @Nonnull Page<MuseumJson> getAll(@Nullable String title, @Nonnull Pageable pageable) {
+    Page<MuseumEntity> museums = (title == null)
+        ? museumRepository.findAll(pageable)
+        : museumRepository.findAllByTitleContainsIgnoreCase(title, pageable);
+    return museums.map(MuseumJson::fromEntity);
   }
 
   @Transactional(readOnly = true)

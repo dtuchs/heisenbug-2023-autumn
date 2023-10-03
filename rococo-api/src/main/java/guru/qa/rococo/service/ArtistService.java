@@ -6,6 +6,7 @@ import guru.qa.rococo.exception.NotFoundException;
 import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.model.util.StringAsBytes;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,13 +25,11 @@ public class ArtistService {
   }
 
   @Transactional(readOnly = true)
-  public @Nonnull Page<ArtistJson> getAll(@Nonnull Pageable pageable) {
-    return artistRepository.findAll(pageable).map(ArtistJson::fromEntity);
-  }
-
-  @Transactional(readOnly = true)
-  public @Nonnull Page<ArtistJson> getAll(@Nonnull String name, @Nonnull Pageable pageable) {
-    return artistRepository.findAllByNameContainsIgnoreCase(name, pageable).map(ArtistJson::fromEntity);
+  public @Nonnull Page<ArtistJson> getAll(@Nullable String name, @Nonnull Pageable pageable) {
+    Page<ArtistEntity> artists = (name == null)
+        ? artistRepository.findAll(pageable)
+        : artistRepository.findAllByNameContainsIgnoreCase(name, pageable);
+    return artists.map(ArtistJson::fromEntity);
   }
 
   @Transactional(readOnly = true)
