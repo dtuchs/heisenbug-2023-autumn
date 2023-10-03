@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import NewMuseumForm from '$lib/components/forms/NewMuseumForm.svelte';
+	import NewMuseumForm from '$lib/components/forms/museum/NewMuseumForm.svelte';
 	import ContentPageHeading from '$lib/components/ContentPageHeading.svelte';
 	import { prepareModal } from '$lib/helpers/prepareModal';
 	import { getModalStore } from '@skeletonlabs/skeleton';

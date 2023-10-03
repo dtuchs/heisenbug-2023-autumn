@@ -1,8 +1,8 @@
 <script lang="ts">
 	import {getModalStore, getToastStore} from "@skeletonlabs/skeleton";
 	import type {ToastSettings} from "@skeletonlabs/skeleton";
-	import FormWrapper from "../FormWrapper.svelte";
-	import ModalButtonGroup from "../ModalButtonGroup.svelte";
+	import FormWrapper from "../../FormWrapper.svelte";
+	import ModalButtonGroup from "../../ModalButtonGroup.svelte";
 	import Input from "$lib/components/formElements/Input.svelte";
 	import Textarea from "$lib/components/formElements/Textarea.svelte";
 	import ImageInput from "$lib/components/formElements/ImageInput.svelte";

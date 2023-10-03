@@ -80,6 +80,13 @@
 {#if $modalStore[0]}
     <FormWrapper modalTitle={$modalStore[0].title ?? ""} modalBody={$modalStore[0].body ?? ""}>
         <form class="modal-form space-y-4" on:submit={onSubmit}>
+            <img class="max-w-full rounded-lg object-cover w-full h-80" src={painting.content} alt={painting.title}>
+            <ImageInput
+                    label="Обновить изображение картины"
+                    name="content"
+                    bind:files={files}
+                    error={$paintingFormErrorStore.content}
+            />
             <Input
                     label="Название картины"
                     name="title"
@@ -88,25 +95,16 @@
                     error={$paintingFormErrorStore.title}
                     required={true}
             />
-            <ImageInput
-                    label="Загрузите изображение картины"
-                    name="content"
-                    bind:files={files}
-                    error={$paintingFormErrorStore.content}
+            <Select
+                    label="Укажите автора картины"
+                    name="authorId"
+                    loadFunction={apiClient.loadArtists}
+                    bind:value={authorId}
+                    keyName="id"
+                    valueName="name"
                     required={true}
+                    error={$paintingFormErrorStore.authorId}
             />
-            {#if !data?.id}
-                <Select
-                        label="Укажите автора картины"
-                        name="authorId"
-                        loadFunction={apiClient.loadArtists}
-                        bind:value={authorId}
-                        keyName="id"
-                        valueName="name"
-                        required={true}
-                        error={$paintingFormErrorStore.authorId}
-                />
-            {/if}
             <Textarea
                     label="Описание картины"
                     name="description"
