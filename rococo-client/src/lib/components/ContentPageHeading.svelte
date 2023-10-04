@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { SearchIcon } from "$lib/types/Icon";
+    import {sessionStore} from "$lib/stores/sessionStore";
 
     
     let search = "";
@@ -14,7 +15,9 @@
 
 <div class="flex items-center justify-between m-4">
     <h2 class="text-3xl m-4">{title}</h2>
-    <button type="button" class="btn variant-filled-primary ml-4" on:click={onAddButtonClick}>{addButtonName}</button>
+    {#if $sessionStore.user}
+        <button type="button" class="btn variant-filled-primary ml-4" on:click={onAddButtonClick}>{addButtonName}</button>
+    {/if}
 </div>
 
 <div class="flex justify-center mb-4 mx-8">

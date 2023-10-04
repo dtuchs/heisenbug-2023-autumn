@@ -5,6 +5,7 @@
     import {getModalStore} from "@skeletonlabs/skeleton";
     import type {PaintingType} from "$lib/types/Painting";
     import EditPaintingForm from "$lib/components/forms/painting/EditPaintingForm.svelte";
+    import {sessionStore} from "$lib/stores/sessionStore";
 
     const modalStore = getModalStore();
 
@@ -44,7 +45,9 @@
             <div>
                 <header class="card-header text-center font-bold">{$singlePaintingStore?.painting?.title}</header>
                 <div class="text-center">{$singlePaintingStore?.painting?.artist?.name}</div>
-                <button class="btn variant-ghost m-3 ml-auto block" type="button" on:click={clickEditButton}>Редактировать</button>
+                {#if $sessionStore.user}
+                    <button class="btn variant-ghost m-3 ml-auto block" type="button" on:click={clickEditButton}>Редактировать</button>
+                {/if}
             </div>
             <div class="m-4">{$singlePaintingStore?.painting?.description}</div>
         </div>

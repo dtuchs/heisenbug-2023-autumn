@@ -11,6 +11,7 @@
 	import {apiClient} from "$lib/helpers/apiClient";
 	import {sessionStore} from "$lib/stores/sessionStore.js";
 	import {generateCodeChallenge, generateCodeVerifier} from "$lib/auth/authUtils";
+	import {goto} from "$app/navigation";
 
 	initializeStores();
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
@@ -26,32 +27,30 @@
 	});
 
 	onMount(async () => {
+		if (location.pathname === "/authorized") {
+			return;
+		}
 		const res = await apiClient.loadSession();
 		if (res.username) {
-			// await apiClient.loadUser();
-			//update userStore
+			const res = await apiClient.loadUser();
+			sessionStore.update(() => {
+				return {
+					user: res,
+				}
+			});
 		}
 	});
 
-	// 1. Иду на /api/session
-	// 2. username или null
-	// 3. если username - получаю пользователя, складываю его в стор
-	// 4. если null - не делаю ничего, рисую кнопку логин
-	// 5. при клике на логин - уходим в auth
-	// 6. после возвращения из auth -> получаю пользователя, складываю его в стор
-
-	//7. Логаут
-
 	export let data: LayoutServerData | undefined;
 
-	const onLoginClick = () => {
+	const onLoginClick = async () => {
 		const codeVerifier = generateCodeVerifier();
 		sessionStorage.setItem('codeVerifier', codeVerifier);
 		const codeChallenge = generateCodeChallenge();
 		sessionStorage.setItem('codeChallenge', codeChallenge);
 
 		const link = `http://127.0.0.1:9000/oauth2/authorize?response_type=code&client_id=client&scope=openid&redirect_uri=http://127.0.0.1:3000/authorized&code_challenge=${codeChallenge}&code_challenge_method=S256`;
-		window.location.href = link;
+		await goto(link);
 	}
 
 </script>

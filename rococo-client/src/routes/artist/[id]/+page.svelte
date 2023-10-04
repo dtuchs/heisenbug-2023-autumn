@@ -11,6 +11,7 @@
     import PaintingList from "$lib/components/PaintingList.svelte";
     import EditArtistForm from "$lib/components/forms/artist/EditArtistForm.svelte";
     import type {ArtistType} from "$lib/types/Artist";
+    import {sessionStore} from "$lib/stores/sessionStore";
 
     const modalStore = getModalStore();
 
@@ -108,8 +109,10 @@
     <section class="p-4 grid grid-cols-3 justify-items-center">
         <div class="flex flex-col">
             <Avatar src={$singleArtistStore?.artist?.photo} width="w-56" rounded="rounded-full" class="col-span-1"/>
-            <button class="btn variant-ghost m-3" type="button" on:click={clickEditButton}>Редактировать</button>
-            <button class="btn variant-filled-primary m-3" type="button" on:click={clickAddButton}>Добавить картину</button>
+            {#if $sessionStore.user}
+                <button class="btn variant-ghost m-3" type="button" on:click={clickEditButton}>Редактировать</button>
+                <button class="btn variant-filled-primary m-3" type="button" on:click={clickAddButton}>Добавить картину</button>
+            {/if}
         </div>
         <p class="col-span-2 w-4/5">{$singleArtistStore?.artist?.biography}</p>
     </section>

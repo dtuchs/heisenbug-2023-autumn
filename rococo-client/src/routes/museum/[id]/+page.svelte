@@ -5,6 +5,7 @@
     import EditMuseumForm from "$lib/components/forms/museum/EditMuseumForm.svelte";
     import {singleMuseumStore} from "$lib/stores/singleMuseum.store";
     import type {MuseumType} from "$lib/types/Museum";
+    import {sessionStore} from "$lib/stores/sessionStore";
 
     const modalStore = getModalStore();
     export let data: PageData;
@@ -41,7 +42,9 @@
         <div>
             <header class="card-header text-center font-bold">{$singleMuseumStore.museum?.title}</header>
             <div class="text-center">{$singleMuseumStore.museum?.geo.country.name}, {$singleMuseumStore.museum?.geo?.city}</div>
-            <button class="btn variant-ghost m-3 ml-auto block" type="button" on:click={clickEditButton}>Редактировать</button>
+            {#if $sessionStore.user}
+                <button class="btn variant-ghost m-3 ml-auto block" type="button" on:click={clickEditButton}>Редактировать</button>
+            {/if}
             <div>{$singleMuseumStore.museum?.description}</div>
         </div>
         <img src={$singleMuseumStore.museum?.photo} alt={$singleMuseumStore.museum?.title} class="max-w-xl my-4 mx-auto"/>
