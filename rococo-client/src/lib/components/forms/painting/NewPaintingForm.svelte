@@ -7,11 +7,12 @@
 	import ImageInput from "../../formElements/ImageInput.svelte";
 	import { apiClient } from "$lib/helpers/apiClient";
 	import Textarea from "../../formElements/Textarea.svelte";
-	import { Errors } from "$lib/types/Errors";
 	import { blobToBase64 } from "$lib/helpers/imageUtils";
 	import type {IdDto} from "$lib/types/IdDto";
 	import {validateImage} from "$lib/helpers/validate";
 	import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.error.store";
+	import {paintingFormErrorStore} from "$lib/components/forms/painting/painting-form.error.store";
+	import {validateForm} from "$lib/components/forms/painting/validate";
 
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
@@ -26,32 +27,13 @@
 	let authorId = "";
 	let museumId: string | undefined = undefined;
 
-	const errors: Record<string, string> = {
+	paintingFormErrorStore.set({
 		title: "",
-        description: "",
+		description: "",
 		content: "",
 		authorId: "",
 		museumId: "",
-	}
-
-	const validateForm = () => {	
-		errors.title = title?.length < 3 
-			? Errors.TITLE_LENGTH_CONSTRAINT_MIN
-			: title?.length > 255 
-				? Errors.TITLE_LENGTH_CONSTRAINT_MAX
-				: "";
-
-		errors.description = description?.length < 11
-			? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MIN
-			: description?.length > 2000
-				? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MAX
-				: "";
-
-		errors.authorId = !(authorId || data?.id)? Errors.AUTHOR_CONTRAINT_NOT_EMPTY : "";
-
-		return !Object.values(errors).some(v => v.length > 0);
-
-	}
+	});
 
 	const onSubmit = async (evt: SubmitEvent) => {
 		evt.preventDefault();
@@ -62,7 +44,8 @@
 				photo: validateImage(file),
 			}
 		});
-		if(validateForm()) {
+		validateForm(title, description, data?.id ?? authorId);
+		if(!Object.values($paintingFormErrorStore).some(v => v.length > 0)) {
 			content = await blobToBase64(file) as string;
 			const res = await apiClient.addPainting({
 				title,
@@ -97,14 +80,14 @@
 				name="title"
 				placeholder="Введите название картины..."
 				bind:value={title}
-				error={errors.title}	
+				error={$paintingFormErrorStore.title}
 				required={true}			
 			/>
 			<ImageInput
 				label="Загрузите изображение картины"
 				name="content"
 				bind:files={files}
-				error={errors.content}
+				error={$paintingFormErrorStore.content}
 				required={true}
 			/>
 			{#if !data?.id}
@@ -116,7 +99,7 @@
 						keyName="id"
 						valueName="name"
 						required={true}
-						error={errors.authorId}
+						error={$paintingFormErrorStore.authorId}
 				/>
 			{/if}
 			<Textarea
@@ -124,7 +107,7 @@
 				name="description"
 				bind:value={description} 
 				required={true}
-				error={errors.description}
+				error={$paintingFormErrorStore.description}
 			/>
 			<Select
 				label="Укажите, где хранится оригинал"
@@ -133,7 +116,7 @@
 				bind:value={museumId}
 				keyName="id"
 				valueName="title"
-				error={errors.museumId}
+				error={$paintingFormErrorStore.museumId}
 			/>	
 			<ModalButtonGroup onClose={parent.onClose}/>
 		</form>

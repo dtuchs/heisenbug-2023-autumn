@@ -9,7 +9,6 @@
     const modalStore = getModalStore();
 
     export let data: PageData;
-    console.log(data);
 
     singlePaintingStore.set({
         painting: data.painting,
@@ -40,14 +39,14 @@
 
 <article class="card m-8 p-4 min-h-[90%]">
     <div class="grid grid-cols-2 m-4 min-h-full">
-        <img src={data?.painting?.content} alt={data?.painting?.title} class="max-w-xl my-4 mx-auto"/>
+        <img src={$singlePaintingStore?.painting?.content} alt={$singlePaintingStore?.painting?.title} class="max-w-xl my-4 mx-auto"/>
         <div>
             <div>
-                <header class="card-header text-center font-bold">{data?.painting?.title}</header>
-                <div class="text-center">{data?.artist?.name}</div>
+                <header class="card-header text-center font-bold">{$singlePaintingStore?.painting?.title}</header>
+                <div class="text-center">{$singlePaintingStore?.painting?.artist?.name}</div>
                 <button class="btn variant-ghost m-3 ml-auto block" type="button" on:click={clickEditButton}>Редактировать</button>
             </div>
-            <div class="m-4">{data?.painting?.description}</div>
+            <div class="m-4">{$singlePaintingStore?.painting?.description}</div>
         </div>
     </div>
 </article>

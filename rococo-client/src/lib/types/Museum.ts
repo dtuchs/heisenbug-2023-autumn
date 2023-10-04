@@ -7,7 +7,7 @@ export interface MuseumType extends IdDto {
     geo: {
         country: {
             id: string,
-            name: string,
+            name?: string,
         },
         city: string,
     }

@@ -84,7 +84,7 @@
                     required={true}
                     error={$artistsFormErrorStore.biography}
             />
-            <ModalButtonGroup onClose={parent.onClose}/>
+            <ModalButtonGroup onClose={parent.onClose} submitButtonText="Сохранить"/>
         </form>
     </FormWrapper>
 {/if}

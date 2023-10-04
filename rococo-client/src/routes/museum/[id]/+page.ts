@@ -1,10 +1,9 @@
 import type { PageLoad } from "./$types";
-import { museums } from "../../../mock/museums";
+import {apiClient} from "$lib/helpers/apiClient";
 
-export const ssr = false;
 
-export const load: PageLoad = ({params}) => {
-    const museum = museums.find(museum => Number(params.id) === museum.id);
+export const load: PageLoad = async ({params}) => {
+    const museum = await apiClient.loadMuseum(params.id);
     return {
         museum
     };

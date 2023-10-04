@@ -4,7 +4,7 @@ import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.er
 export const validateForm = (
     title: string,
     description: string,
-    authorId: string,
+    countryId: string,
     city: string) => {
 
     artistsFormErrorStore.update((prevState) => {
@@ -22,7 +22,7 @@ export const validateForm = (
                     ? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MAX
                     : "",
 
-            authorId: !authorId ? Errors.AUTHOR_CONTRAINT_NOT_EMPTY : "",
+            countryId: !countryId ? Errors.COUNTRY_CONTRAINT_NOT_EMPTY : "",
 
             city: city?.length < 3
                 ? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MIN
