@@ -7,141 +7,148 @@ const BASE_URL = 'http://127.0.0.1:8080/api';
 export const apiClient = {
     loadArtists: async ({ page = 0, size = 18, search}
         : { page?: number, size?: number, search?: string }) => {
-        return loadItems({path: "artist", search, page, size, searchName: "name"});
+        const query = search ? `?name=${search}` : `?size=${size}&page=${page}`;
+        return commonFetch({
+            method: "GET",
+            urlPart: `artist${query}`,
+        });
     },
     loadArtist: async(id: string) => {
-        return loadItem("artist", id);
+        return commonFetch({
+            method: "GET",
+            urlPart: `artist/${id}`,
+        });
     },
     addArtist: async(newArtist: NewArtistType) => {
-        const res = await fetch(`${BASE_URL}/artist`, {
-            method: "POST", 
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
+        return await commonFetch({
+            method: "POST",
+            urlPart: "artist",
             body: JSON.stringify(newArtist),
         });
-
-        return await res.json();
     },
     updateArtist: async(artist: ArtistType) => {
-        const res = await fetch(`${BASE_URL}/artist`, {
+        return await commonFetch({
             method: "PATCH",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
+            urlPart: "artist",
             body: JSON.stringify(artist),
         });
-
-        return await res.json();
     },
-    loadPaintings: async({ page = 0, size = 9, search}
-                             : {
+    loadPaintings: async({ page = 0, size = 9, search}: {
         page?: number,
         size?: number,
         search?: string
     }) => {
-        return loadItems({path: "painting", search, page, size, searchName: "title"});
+        const query = search ? `?title=${search}` : `?size=${size}&page=${page}`;
+        return commonFetch({
+            method: "GET",
+            urlPart: `painting${query}`,
+        });
     },
-    loadPaintingsByAuthorId: async({ authorId, page = 0, size = 9, search}
-                             : {
+    loadPaintingsByAuthorId: async({ authorId, page = 0, size = 9, search}: {
         authorId: string,
         page?: number,
         size?: number,
         search?: string
     }) => {
-        return loadItems({path: `painting/author/${authorId}`, search, page, size, searchName: "title"});
+        const query = search ? `?title=${search}` : `?size=${size}&page=${page}`;
+
+        return commonFetch({
+            method: "GET",
+            urlPart: `painting/author/${authorId}${query}`,
+        });
     },
     loadPainting: async(id: string) => {
-       return loadItem("painting", id);
+        return commonFetch({
+            method: "GET",
+            urlPart: `painting/${id}`,
+        });
     },
     addPainting: async(newPainting: NewPaintingType) => {
-        const res = await fetch(`${BASE_URL}/painting`, {
-            method: "POST", 
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
+        return await commonFetch({
+            method: "POST",
+            urlPart: "painting",
             body: JSON.stringify(newPainting),
         });
-        return await res.json();
     },
     updatePainting: async(painting: PaintingType) => {
-        const res = await fetch(`${BASE_URL}/painting`, {
+        return await commonFetch({
             method: "PATCH",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
+            urlPart: "painting",
             body: JSON.stringify(painting),
         });
-
-        return await res.json();
     },
-    loadMuseums: async({ page = 0, size = 4, search}
-        : {
+    loadMuseums: async({ page = 0, size = 4, search}: {
             page?: number,
             size?: number,
             search?: string
         }) => {
-        return loadItems({path: "museum", search, page, size});
-    },
-    addMuseum: async(newMuseum: NewMuseumType) => {
-        const res = await fetch(`${BASE_URL}/museum`, {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newMuseum),
+        const query = search ? `?title=${search}` : `?size=${size}&page=${page}`;
+        return commonFetch({
+            method: "GET",
+            urlPart: `museum${query}`,
         });
-        return await res.json();
-    },
-    updateMuseum: async(museum: MuseumType) => {
-        const res = await fetch(`${BASE_URL}/museum`, {
-            method: "PATCH",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(museum),
-        });
-
-        return await res.json();
     },
     loadMuseum: async(id: string) => {
-        return loadItem("museum", id);
+        return commonFetch({
+            method: "GET",
+            urlPart: `museum/${id}`,
+        });
+    },
+    addMuseum: async(newMuseum: NewMuseumType) => {
+        return await commonFetch({
+            method: "POST",
+            urlPart: "museum",
+            body: JSON.stringify(newMuseum),
+        });
+    },
+    updateMuseum: async(museum: MuseumType) => {
+        return await commonFetch({
+            method: "PATCH",
+            urlPart: "museum",
+            body: JSON.stringify(museum),
+        });
     },
     loadCountries: async({page = 0, size = 20}: {
         page?: number,
         size?: number,
     }) => {
-        return loadItems({path: "country", page, size});
+        const query = `?size=${size}&page=${page}`;
+        return commonFetch({
+            method: "GET",
+            urlPart: `country${query}`,
+        });
+    },
+    loadSession: async() => {
+        return commonFetch({
+            method: "GET",
+            urlPart: "session",
+        });
+    },
+    loadUser: async() => {
+        return commonFetch({
+            method: "GET",
+            urlPart: "user",
+        });
     },
 }
-
-const loadItem = async (path: string, id: string) => {
-    const response = await fetch(`${BASE_URL}/${path}/${id}`);
-    if (!response.ok) {
-        throw new Error(`Failed loading ${path} with id ${id}`);
-    }
-    return response.json();
-};
-
-const loadItems = async({ path, page = 0, size = 5, search, searchName}
-    : {
-        path: string, 
-        page?: number,
-        size?: number,
-        search?: string,
-        searchName?: string,
+const commonFetch = async (
+    { urlPart, method, body }: {
+    urlPart: string,
+    method: string,
+    body?: BodyInit | null,
     }) => {
-    const query = search ? `?${searchName ?? "name"}=${search}` : `?size=${size}&page=${page}`;
-    const response = await fetch(encodeURI(`${BASE_URL}/${path}${query}`));
+    const response = await fetch(`${BASE_URL}/${urlPart}`, {
+        method,
+        headers: {
+            "Accept": "application/json",
+            "Authorization": `Bearer ${sessionStorage.getItem("id_token")}`,
+            "Content-Type": "application/json",
+        },
+        body,
+    });
     if (!response.ok) {
         throw new Error("Failed loading data");
     }
     return response.json();
-}
+};
 
