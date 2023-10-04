@@ -4,12 +4,7 @@
       "priority": 1,
       "request": {
         "method": "GET",
-        "url": "/api/painting/40433774-e548-4504-86ab-cafd25c6abca",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/painting/40433774-e548-4504-86ab-cafd25c6abca"
       },
       "response": {
         "status": 200,
@@ -47,12 +42,7 @@
       "priority": 2,
       "request": {
         "method": "GET",
-        "url": "/api/painting/9450ff00-0c8c-4a37-9eeb-a1d0b5c3d85b",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/painting/9450ff00-0c8c-4a37-9eeb-a1d0b5c3d85b"
       },
       "response": {
         "status": 200,

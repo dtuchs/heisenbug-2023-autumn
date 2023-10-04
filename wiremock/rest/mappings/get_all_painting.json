@@ -4,12 +4,7 @@
       "priority": 1,
       "request": {
         "method": "GET",
-        "url": "/api/painting?size=9&page=0",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/painting?size=9&page=0"
       },
       "response": {
         "status": 200,
@@ -88,12 +83,7 @@
       "priority": 2,
       "request": {
         "method": "GET",
-        "url": "/api/painting?title=female",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/painting?title=female"
       },
       "response": {
         "status": 200,
@@ -160,12 +150,7 @@
       "priority": 3,
       "request": {
         "method": "GET",
-        "url": "/api/painting?title=female%20nude",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/painting?title=female%20nude"
       },
       "response": {
         "status": 200,
@@ -232,12 +217,7 @@
       "priority": 4,
       "request": {
         "method": "GET",
-        "url": "/api/painting?title=%D0%BD%D0%B0%D0%B4%20%D0%B2%D0%B5%D1%87%D0%BD%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BA%D0%BE%D0%B5%D0%BC",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/painting?title=%D0%BD%D0%B0%D0%B4%20%D0%B2%D0%B5%D1%87%D0%BD%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BA%D0%BE%D0%B5%D0%BC"
       },
       "response": {
         "status": 200,

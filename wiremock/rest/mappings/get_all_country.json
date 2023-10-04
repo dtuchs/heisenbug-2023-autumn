@@ -4,12 +4,7 @@
       "priority": 1,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=0",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=0"
       },
       "response": {
         "status": 200,
@@ -131,12 +126,7 @@
       "priority": 2,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=1",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=1"
       },
       "response": {
         "status": 200,
@@ -258,12 +248,7 @@
       "priority": 3,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=2",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=2"
       },
       "response": {
         "status": 200,
@@ -385,12 +370,7 @@
       "priority": 4,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=3",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=3"
       },
       "response": {
         "status": 200,
@@ -512,12 +492,7 @@
       "priority": 5,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=4",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=4"
       },
       "response": {
         "status": 200,
@@ -639,12 +614,7 @@
       "priority": 6,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=5",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=5"
       },
       "response": {
         "status": 200,
@@ -766,12 +736,7 @@
       "priority": 7,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=6",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=6"
       },
       "response": {
         "status": 200,
@@ -893,12 +858,7 @@
       "priority": 8,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=7",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=7"
       },
       "response": {
         "status": 200,
@@ -1020,12 +980,7 @@
       "priority": 9,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=8",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=8"
       },
       "response": {
         "status": 200,
@@ -1147,12 +1102,7 @@
       "priority": 10,
       "request": {
         "method": "GET",
-        "url": "/api/country?size=20&page=9",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/country?size=20&page=9"
       },
       "response": {
         "status": 200,

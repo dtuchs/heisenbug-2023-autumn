@@ -4,12 +4,7 @@
       "priority": 1,
       "request": {
         "method": "GET",
-        "url": "/api/artist?size=18&page=0",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/artist?size=18&page=0"
       },
       "response": {
         "status": 200,

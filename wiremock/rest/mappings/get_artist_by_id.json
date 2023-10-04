@@ -4,12 +4,7 @@
       "priority": 1,
       "request": {
         "method": "GET",
-        "url": "/api/artist/104f76ce-0508-49d4-8967-fdf1ebb8cf45",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/artist/104f76ce-0508-49d4-8967-fdf1ebb8cf45"
       },
       "response": {
         "status": 200,
@@ -28,12 +23,7 @@
       "priority": 2,
       "request": {
         "method": "GET",
-        "url": "/api/artist/104f76ce-0508-49d4-8967-fdf1ebb8cf45",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/artist/104f76ce-0508-49d4-8967-fdf1ebb8cf45"
       },
       "response": {
         "status": 200,
@@ -52,12 +42,7 @@
       "priority": 3,
       "request": {
         "method": "GET",
-        "url": "/api/artist/5a486b2f-c361-459e-bd3f-60692a635ea9",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/artist/5a486b2f-c361-459e-bd3f-60692a635ea9"
       },
       "response": {
         "status": 200,

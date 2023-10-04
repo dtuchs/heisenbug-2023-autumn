@@ -4,12 +4,7 @@
       "priority": 1,
       "request": {
         "method": "GET",
-        "url": "/api/museum/3b785453-0d5b-4328-8380-5f226cb4dd5a",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/museum/3b785453-0d5b-4328-8380-5f226cb4dd5a"
       },
       "response": {
         "status": 200,
@@ -35,12 +30,7 @@
       "priority": 2,
       "request": {
         "method": "GET",
-        "url": "/api/museum/457fa929-4aa6-4772-86e6-57382d212144",
-        "headers": {
-          "Authorization": {
-            "contains": "Bearer"
-          }
-        }
+        "url": "/api/museum/457fa929-4aa6-4772-86e6-57382d212144"
       },
       "response": {
         "status": 200,
