@@ -70,6 +70,7 @@ public class PaintingService {
   public @Nonnull PaintingJson update(@Nonnull PaintingJson painting) {
     PaintingEntity paintingEntity = getRequiredPainting(painting.id());
     paintingEntity.setTitle(painting.title());
+    paintingEntity.setDescription(painting.description());
     paintingEntity.setContent(
         new StringAsBytes(
             painting.content()

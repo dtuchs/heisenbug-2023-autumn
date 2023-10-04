@@ -52,6 +52,7 @@ public class MuseumService {
     MuseumEntity museumEntity = getRequiredMuseum(museum.id());
     museumEntity.setTitle(museum.title());
     museumEntity.setCity(museum.geo().city());
+    museumEntity.setDescription(museum.description());
     museumEntity.setPhoto(
         new StringAsBytes(
             museum.photo()
