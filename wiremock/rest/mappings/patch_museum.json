@@ -1,0 +1,66 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "PATCH",
+        "url": "/api/museum",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "title": "{{jsonPath request.body '$.title'}}",
+          "description": "{{jsonPath request.body '$.description'}}",
+          "photo": "{{jsonPath request.body '$.photo'}}",
+          "geo": {
+            "city": "{{jsonPath request.body '$.geo.city'}}",
+            "country": {
+              "id":  "{{jsonPath request.body '$.geo.country.id'}}",
+              "name": "{{jsonPath request.body '$.geo.country.name'}}"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "POST",
+        "url": "/api/museum",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "title": "{{jsonPath request.body '$.title'}}",
+          "description": "{{jsonPath request.body '$.description'}}",
+          "photo": "{{jsonPath request.body '$.photo'}}",
+          "geo": {
+            "city": "{{jsonPath request.body '$.geo.city'}}",
+            "country": {
+              "id":  "{{jsonPath request.body '$.geo.country.id'}}",
+              "name": "{{jsonPath request.body '$.geo.country.name'}}"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

@@ -69,6 +69,13 @@ public class UserService {
     );
   }
 
+  @Transactional(readOnly = true)
+  public @Nonnull UserJson getByUsername(@Nonnull String username) {
+    return UserJson.fromEntity(
+        getRequiredUser(username)
+    );
+  }
+
   private @Nonnull UserEntity getRequiredUser(@Nonnull String username) {
     return userRepository.findByUsername(username).orElseThrow(
         () -> new NotFoundException("Пользователь не найден по username: " + username)

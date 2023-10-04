@@ -1,0 +1,1254 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=0",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-cecf-75eb-8e63-0242ac110002",
+              "name": "Австралия"
+            },
+            {
+              "id": "11ee622c-cecf-cf1a-8e63-0242ac110002",
+              "name": "Австрия"
+            },
+            {
+              "id": "11ee622c-ced0-250e-8e63-0242ac110002",
+              "name": "Азербайджан"
+            },
+            {
+              "id": "11ee622c-ced0-6f9f-8e63-0242ac110002",
+              "name": "Албания"
+            },
+            {
+              "id": "11ee622c-ced0-c0ee-8e63-0242ac110002",
+              "name": "Алжир"
+            },
+            {
+              "id": "11ee622c-ced1-1794-8e63-0242ac110002",
+              "name": "Ангола"
+            },
+            {
+              "id": "11ee622c-ced1-633e-8e63-0242ac110002",
+              "name": "Андорра"
+            },
+            {
+              "id": "11ee622c-ced1-b24c-8e63-0242ac110002",
+              "name": "Антигуа и Барбуда"
+            },
+            {
+              "id": "11ee622c-ced1-f88b-8e63-0242ac110002",
+              "name": "Аргентина"
+            },
+            {
+              "id": "11ee622c-ced2-48d0-8e63-0242ac110002",
+              "name": "Армения"
+            },
+            {
+              "id": "11ee622c-ced2-9f6e-8e63-0242ac110002",
+              "name": "Афганистан"
+            },
+            {
+              "id": "11ee622c-ced2-f7b4-8e63-0242ac110002",
+              "name": "Багамские Острова"
+            },
+            {
+              "id": "11ee622c-ced3-4a21-8e63-0242ac110002",
+              "name": "Бангладеш"
+            },
+            {
+              "id": "11ee622c-ced3-9c0e-8e63-0242ac110002",
+              "name": "Барбадос"
+            },
+            {
+              "id": "11ee622c-ced3-f363-8e63-0242ac110002",
+              "name": "Бахрейн"
+            },
+            {
+              "id": "11ee622c-ced4-3a66-8e63-0242ac110002",
+              "name": "Белиз"
+            },
+            {
+              "id": "11ee622c-ced4-7c5d-8e63-0242ac110002",
+              "name": "Белоруссия"
+            },
+            {
+              "id": "11ee622c-ced4-cde1-8e63-0242ac110002",
+              "name": "Бельгия"
+            },
+            {
+              "id": "11ee622c-ced5-12ab-8e63-0242ac110002",
+              "name": "Бенин"
+            },
+            {
+              "id": "11ee622c-ced5-52e4-8e63-0242ac110002",
+              "name": "Болгария"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 0,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 0,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": false,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 0,
+          "first": true,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 20,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=1",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-ced5-992e-8e63-0242ac110002",
+              "name": "Боливия"
+            },
+            {
+              "id": "11ee622c-ced5-e8b1-8e63-0242ac110002",
+              "name": "Босния и Герцеговина"
+            },
+            {
+              "id": "11ee622c-ced6-3b17-8e63-0242ac110002",
+              "name": "Ботсвана"
+            },
+            {
+              "id": "11ee622c-ced6-8fa9-8e63-0242ac110002",
+              "name": "Бразилия"
+            },
+            {
+              "id": "11ee622c-ced6-dc26-8e63-0242ac110002",
+              "name": "Бруней"
+            },
+            {
+              "id": "11ee622c-ced7-2825-8e63-0242ac110002",
+              "name": "Буркина-Фасо"
+            },
+            {
+              "id": "11ee622c-ced7-7767-8e63-0242ac110002",
+              "name": "Бурунди"
+            },
+            {
+              "id": "11ee622c-ced7-b974-8e63-0242ac110002",
+              "name": "Бутан"
+            },
+            {
+              "id": "11ee622c-ced8-121b-8e63-0242ac110002",
+              "name": "Вануату"
+            },
+            {
+              "id": "11ee622c-cf08-ffed-8e63-0242ac110002",
+              "name": "Ватикан"
+            },
+            {
+              "id": "11ee622c-ced8-6054-8e63-0242ac110002",
+              "name": "Великобритания"
+            },
+            {
+              "id": "11ee622c-ced8-abd4-8e63-0242ac110002",
+              "name": "Венгрия"
+            },
+            {
+              "id": "11ee622c-ced9-0105-8e63-0242ac110002",
+              "name": "Венесуэла"
+            },
+            {
+              "id": "11ee622c-ced9-4afe-8e63-0242ac110002",
+              "name": "Восточный Тимор"
+            },
+            {
+              "id": "11ee622c-ced9-9e96-8e63-0242ac110002",
+              "name": "Вьетнам"
+            },
+            {
+              "id": "11ee622c-ced9-fef3-8e63-0242ac110002",
+              "name": "Габон"
+            },
+            {
+              "id": "11ee622c-ceda-a381-8e63-0242ac110002",
+              "name": "Гайана"
+            },
+            {
+              "id": "11ee622c-ceda-dc27-8e63-0242ac110002",
+              "name": "Гамбия"
+            },
+            {
+              "id": "11ee622c-cedb-1679-8e63-0242ac110002",
+              "name": "Гана"
+            },
+            {
+              "id": "11ee622c-cedb-4a8c-8e63-0242ac110002",
+              "name": "Гватемала"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 1,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 20,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": false,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 1,
+          "first": false,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 20,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 3,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=2",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-cedb-957c-8e63-0242ac110002",
+              "name": "Гвинея"
+            },
+            {
+              "id": "11ee622c-cedb-d87f-8e63-0242ac110002",
+              "name": "Гвинея-Бисау"
+            },
+            {
+              "id": "11ee622c-cedc-3a56-8e63-0242ac110002",
+              "name": "Германия"
+            },
+            {
+              "id": "11ee622c-cedc-7eeb-8e63-0242ac110002",
+              "name": "Гондурас"
+            },
+            {
+              "id": "11ee622c-cedc-ea4a-8e63-0242ac110002",
+              "name": "Гренада"
+            },
+            {
+              "id": "11ee622c-cedd-45ba-8e63-0242ac110002",
+              "name": "Греция"
+            },
+            {
+              "id": "11ee622c-cedd-b9ac-8e63-0242ac110002",
+              "name": "Грузия"
+            },
+            {
+              "id": "11ee622c-cede-169a-8e63-0242ac110002",
+              "name": "Дания"
+            },
+            {
+              "id": "11ee622c-cee8-bee1-8e63-0242ac110002",
+              "name": "Демократическая Республика Конго"
+            },
+            {
+              "id": "11ee622c-cede-63a1-8e63-0242ac110002",
+              "name": "Джибути"
+            },
+            {
+              "id": "11ee622c-cede-a761-8e63-0242ac110002",
+              "name": "Доминика"
+            },
+            {
+              "id": "11ee622c-cede-df1b-8e63-0242ac110002",
+              "name": "Доминиканская Республика"
+            },
+            {
+              "id": "11ee622c-cedf-29f7-8e63-0242ac110002",
+              "name": "Египет"
+            },
+            {
+              "id": "11ee622c-cedf-782d-8e63-0242ac110002",
+              "name": "Замбия"
+            },
+            {
+              "id": "11ee622c-cedf-c116-8e63-0242ac110002",
+              "name": "Зимбабве"
+            },
+            {
+              "id": "11ee622c-cee0-0d23-8e63-0242ac110002",
+              "name": "Израиль"
+            },
+            {
+              "id": "11ee622c-cee0-4c69-8e63-0242ac110002",
+              "name": "Индия"
+            },
+            {
+              "id": "11ee622c-cee0-a135-8e63-0242ac110002",
+              "name": "Индонезия"
+            },
+            {
+              "id": "11ee622c-cee0-eebe-8e63-0242ac110002",
+              "name": "Иордания"
+            },
+            {
+              "id": "11ee622c-cee1-47da-8e63-0242ac110002",
+              "name": "Ирак"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 2,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 40,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": false,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 2,
+          "first": false,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 20,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 4,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=3",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-cee1-9dea-8e63-0242ac110002",
+              "name": "Иран"
+            },
+            {
+              "id": "11ee622c-cee1-ee3a-8e63-0242ac110002",
+              "name": "Ирландия"
+            },
+            {
+              "id": "11ee622c-cee2-51e5-8e63-0242ac110002",
+              "name": "Исландия"
+            },
+            {
+              "id": "11ee622c-cee2-b097-8e63-0242ac110002",
+              "name": "Испания"
+            },
+            {
+              "id": "11ee622c-cee3-0fe8-8e63-0242ac110002",
+              "name": "Италия"
+            },
+            {
+              "id": "11ee622c-cee3-830b-8e63-0242ac110002",
+              "name": "Йемен"
+            },
+            {
+              "id": "11ee622c-cee3-f96a-8e63-0242ac110002",
+              "name": "Кабо-Верде"
+            },
+            {
+              "id": "11ee622c-cee4-5839-8e63-0242ac110002",
+              "name": "Казахстан"
+            },
+            {
+              "id": "11ee622c-cee4-be1b-8e63-0242ac110002",
+              "name": "Камбоджа"
+            },
+            {
+              "id": "11ee622c-cee5-0213-8e63-0242ac110002",
+              "name": "Камерун"
+            },
+            {
+              "id": "11ee622c-cee5-5204-8e63-0242ac110002",
+              "name": "Канада"
+            },
+            {
+              "id": "11ee622c-cee5-a95d-8e63-0242ac110002",
+              "name": "Катар"
+            },
+            {
+              "id": "11ee622c-cee6-0203-8e63-0242ac110002",
+              "name": "Кения"
+            },
+            {
+              "id": "11ee622c-cee6-b9bc-8e63-0242ac110002",
+              "name": "Киргизия"
+            },
+            {
+              "id": "11ee622c-cee7-200a-8e63-0242ac110002",
+              "name": "Кирибати"
+            },
+            {
+              "id": "11ee622c-cee7-795f-8e63-0242ac110002",
+              "name": "Китай"
+            },
+            {
+              "id": "11ee622c-cee7-c206-8e63-0242ac110002",
+              "name": "Колумбия"
+            },
+            {
+              "id": "11ee622c-cee8-1134-8e63-0242ac110002",
+              "name": "Коморы"
+            },
+            {
+              "id": "11ee622c-cee9-0eb2-8e63-0242ac110002",
+              "name": "Корейская Народно-Демократическая Республика"
+            },
+            {
+              "id": "11ee622c-cee9-aad4-8e63-0242ac110002",
+              "name": "Коста-Рика"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 3,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 60,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": false,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 3,
+          "first": false,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 20,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=4",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-cee9-f9ba-8e63-0242ac110002",
+              "name": "Кот-д’Ивуар"
+            },
+            {
+              "id": "11ee622c-ceea-6396-8e63-0242ac110002",
+              "name": "Куба"
+            },
+            {
+              "id": "11ee622c-ceea-af96-8e63-0242ac110002",
+              "name": "Кувейт"
+            },
+            {
+              "id": "11ee622c-ceea-f408-8e63-0242ac110002",
+              "name": "Лаос"
+            },
+            {
+              "id": "11ee622c-ceeb-3663-8e63-0242ac110002",
+              "name": "Латвия"
+            },
+            {
+              "id": "11ee622c-ceeb-7127-8e63-0242ac110002",
+              "name": "Лесото"
+            },
+            {
+              "id": "11ee622c-ceeb-afd9-8e63-0242ac110002",
+              "name": "Либерия"
+            },
+            {
+              "id": "11ee622c-ceeb-ed24-8e63-0242ac110002",
+              "name": "Ливан"
+            },
+            {
+              "id": "11ee622c-ceec-3496-8e63-0242ac110002",
+              "name": "Ливия"
+            },
+            {
+              "id": "11ee622c-ceec-7fbe-8e63-0242ac110002",
+              "name": "Литва"
+            },
+            {
+              "id": "11ee622c-ceec-d369-8e63-0242ac110002",
+              "name": "Лихтенштейн"
+            },
+            {
+              "id": "11ee622c-ceed-2871-8e63-0242ac110002",
+              "name": "Люксембург"
+            },
+            {
+              "id": "11ee622c-ceed-81ef-8e63-0242ac110002",
+              "name": "Маврикий"
+            },
+            {
+              "id": "11ee622c-ceed-cb7d-8e63-0242ac110002",
+              "name": "Мавритания"
+            },
+            {
+              "id": "11ee622c-ceed-f9cf-8e63-0242ac110002",
+              "name": "Мадагаскар"
+            },
+            {
+              "id": "11ee622c-ceee-4115-8e63-0242ac110002",
+              "name": "Малави"
+            },
+            {
+              "id": "11ee622c-ceee-6ffb-8e63-0242ac110002",
+              "name": "Малайзия"
+            },
+            {
+              "id": "11ee622c-ceee-cd22-8e63-0242ac110002",
+              "name": "Мали"
+            },
+            {
+              "id": "11ee622c-ceef-0985-8e63-0242ac110002",
+              "name": "Мальдивы"
+            },
+            {
+              "id": "11ee622c-ceef-516c-8e63-0242ac110002",
+              "name": "Мальта"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 4,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 80,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": false,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 4,
+          "first": false,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 20,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 6,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=5",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-ceef-97e5-8e63-0242ac110002",
+              "name": "Марокко"
+            },
+            {
+              "id": "11ee622c-ceef-e799-8e63-0242ac110002",
+              "name": "Маршалловы Острова"
+            },
+            {
+              "id": "11ee622c-cef0-3099-8e63-0242ac110002",
+              "name": "Мексика"
+            },
+            {
+              "id": "11ee622c-cef0-cc44-8e63-0242ac110002",
+              "name": "Мозамбик"
+            },
+            {
+              "id": "11ee622c-cef1-0ef8-8e63-0242ac110002",
+              "name": "Молдавия"
+            },
+            {
+              "id": "11ee622c-cef1-46b2-8e63-0242ac110002",
+              "name": "Монако"
+            },
+            {
+              "id": "11ee622c-cef1-7d9d-8e63-0242ac110002",
+              "name": "Монголия"
+            },
+            {
+              "id": "11ee622c-cef1-bcc4-8e63-0242ac110002",
+              "name": "Мьянма"
+            },
+            {
+              "id": "11ee622c-cef1-ed07-8e63-0242ac110002",
+              "name": "Намибия"
+            },
+            {
+              "id": "11ee622c-cef2-322c-8e63-0242ac110002",
+              "name": "Науру"
+            },
+            {
+              "id": "11ee622c-cef2-611f-8e63-0242ac110002",
+              "name": "Непал"
+            },
+            {
+              "id": "11ee622c-cef2-b9c3-8e63-0242ac110002",
+              "name": "Нигер"
+            },
+            {
+              "id": "11ee622c-cef2-f8b5-8e63-0242ac110002",
+              "name": "Нигерия"
+            },
+            {
+              "id": "11ee622c-cef3-2762-8e63-0242ac110002",
+              "name": "Нидерланды"
+            },
+            {
+              "id": "11ee622c-cef3-735b-8e63-0242ac110002",
+              "name": "Никарагуа"
+            },
+            {
+              "id": "11ee622c-cef3-b6b1-8e63-0242ac110002",
+              "name": "Новая Зеландия"
+            },
+            {
+              "id": "11ee622c-cef3-f662-8e63-0242ac110002",
+              "name": "Норвегия"
+            },
+            {
+              "id": "11ee622c-cef4-389f-8e63-0242ac110002",
+              "name": "Объединённые Арабские Эмираты"
+            },
+            {
+              "id": "11ee622c-cef4-7728-8e63-0242ac110002",
+              "name": "Оман"
+            },
+            {
+              "id": "11ee622c-cef4-aaec-8e63-0242ac110002",
+              "name": "Пакистан"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 5,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 100,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": false,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 5,
+          "first": false,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 20,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 7,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=6",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-cef4-f565-8e63-0242ac110002",
+              "name": "Палау"
+            },
+            {
+              "id": "11ee622c-cf09-4253-8e63-0242ac110002",
+              "name": "Палестина"
+            },
+            {
+              "id": "11ee622c-cef5-2310-8e63-0242ac110002",
+              "name": "Панама"
+            },
+            {
+              "id": "11ee622c-cef5-679e-8e63-0242ac110002",
+              "name": "Папуа — Новая Гвинея"
+            },
+            {
+              "id": "11ee622c-cef5-a218-8e63-0242ac110002",
+              "name": "Парагвай"
+            },
+            {
+              "id": "11ee622c-cef5-ecd7-8e63-0242ac110002",
+              "name": "Перу"
+            },
+            {
+              "id": "11ee622c-cef6-350f-8e63-0242ac110002",
+              "name": "Польша"
+            },
+            {
+              "id": "11ee622c-cef6-7c12-8e63-0242ac110002",
+              "name": "Португалия"
+            },
+            {
+              "id": "11ee622c-ceda-6479-8e63-0242ac110002",
+              "name": "Республика Гаити"
+            },
+            {
+              "id": "11ee622c-cee6-5776-8e63-0242ac110002",
+              "name": "Республика Кипр"
+            },
+            {
+              "id": "11ee622c-cee8-696f-8e63-0242ac110002",
+              "name": "Республика Конго"
+            },
+            {
+              "id": "11ee622c-cee9-576e-8e63-0242ac110002",
+              "name": "Республика Корея"
+            },
+            {
+              "id": "11ee622c-cef6-ab30-8e63-0242ac110002",
+              "name": "Россия"
+            },
+            {
+              "id": "11ee622c-cef6-e99f-8e63-0242ac110002",
+              "name": "Руанда"
+            },
+            {
+              "id": "11ee622c-cef7-1a95-8e63-0242ac110002",
+              "name": "Румыния"
+            },
+            {
+              "id": "11ee622c-cef7-63aa-8e63-0242ac110002",
+              "name": "Сальвадор"
+            },
+            {
+              "id": "11ee622c-cef7-9bc1-8e63-0242ac110002",
+              "name": "Самоа"
+            },
+            {
+              "id": "11ee622c-cef7-f3a6-8e63-0242ac110002",
+              "name": "Сан-Марино"
+            },
+            {
+              "id": "11ee622c-cef8-3afc-8e63-0242ac110002",
+              "name": "Сан-Томе и Принсипи"
+            },
+            {
+              "id": "11ee622c-cef8-7ea5-8e63-0242ac110002",
+              "name": "Саудовская Аравия"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 6,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 120,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": false,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 6,
+          "first": false,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 20,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 8,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=7",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-cef9-2a13-8e63-0242ac110002",
+              "name": "Сейшельские Острова"
+            },
+            {
+              "id": "11ee622c-cef9-751b-8e63-0242ac110002",
+              "name": "Сенегал"
+            },
+            {
+              "id": "11ee622c-cef9-be99-8e63-0242ac110002",
+              "name": "Сент-Винсент и Гренадины"
+            },
+            {
+              "id": "11ee622c-cef9-ff06-8e63-0242ac110002",
+              "name": "Сент-Китс и Невис"
+            },
+            {
+              "id": "11ee622c-cefa-34e7-8e63-0242ac110002",
+              "name": "Сент-Люсия"
+            },
+            {
+              "id": "11ee622c-cefa-77a8-8e63-0242ac110002",
+              "name": "Сербия"
+            },
+            {
+              "id": "11ee622c-cefa-b292-8e63-0242ac110002",
+              "name": "Сингапур"
+            },
+            {
+              "id": "11ee622c-cefa-e8f7-8e63-0242ac110002",
+              "name": "Сирия"
+            },
+            {
+              "id": "11ee622c-cefb-21b6-8e63-0242ac110002",
+              "name": "Словакия"
+            },
+            {
+              "id": "11ee622c-cefb-62f3-8e63-0242ac110002",
+              "name": "Словения"
+            },
+            {
+              "id": "11ee622c-cefb-9b8f-8e63-0242ac110002",
+              "name": "Соединённые Штаты Америки"
+            },
+            {
+              "id": "11ee622c-cefb-cfd7-8e63-0242ac110002",
+              "name": "Соломоновы Острова"
+            },
+            {
+              "id": "11ee622c-cefc-3bcf-8e63-0242ac110002",
+              "name": "Сомали"
+            },
+            {
+              "id": "11ee622c-cefc-8bb3-8e63-0242ac110002",
+              "name": "Судан"
+            },
+            {
+              "id": "11ee622c-cefc-ec70-8e63-0242ac110002",
+              "name": "Суринам"
+            },
+            {
+              "id": "11ee622c-cefd-562f-8e63-0242ac110002",
+              "name": "Сьерра-Леоне"
+            },
+            {
+              "id": "11ee622c-cefd-a3fd-8e63-0242ac110002",
+              "name": "Таджикистан"
+            },
+            {
+              "id": "11ee622c-cefe-0ccc-8e63-0242ac110002",
+              "name": "Таиланд"
+            },
+            {
+              "id": "11ee622c-cefe-55df-8e63-0242ac110002",
+              "name": "Танзания"
+            },
+            {
+              "id": "11ee622c-cefe-a22f-8e63-0242ac110002",
+              "name": "Того"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 7,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 140,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": false,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 7,
+          "first": false,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 20,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 9,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=8",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-cefe-e331-8e63-0242ac110002",
+              "name": "Тонга"
+            },
+            {
+              "id": "11ee622c-ceff-1a82-8e63-0242ac110002",
+              "name": "Тринидад и Тобаго"
+            },
+            {
+              "id": "11ee622c-ceff-512e-8e63-0242ac110002",
+              "name": "Тувалу"
+            },
+            {
+              "id": "11ee622c-ceff-8e56-8e63-0242ac110002",
+              "name": "Тунис"
+            },
+            {
+              "id": "11ee622c-ceff-c434-8e63-0242ac110002",
+              "name": "Туркменистан"
+            },
+            {
+              "id": "11ee622c-cf00-0462-8e63-0242ac110002",
+              "name": "Турция"
+            },
+            {
+              "id": "11ee622c-cf00-4415-8e63-0242ac110002",
+              "name": "Уганда"
+            },
+            {
+              "id": "11ee622c-cf00-9438-8e63-0242ac110002",
+              "name": "Узбекистан"
+            },
+            {
+              "id": "11ee622c-cf00-d82e-8e63-0242ac110002",
+              "name": "Украина"
+            },
+            {
+              "id": "11ee622c-cf01-0b44-8e63-0242ac110002",
+              "name": "Уругвай"
+            },
+            {
+              "id": "11ee622c-cef0-7ef7-8e63-0242ac110002",
+              "name": "Федеративные Штаты Микронезии"
+            },
+            {
+              "id": "11ee622c-cf01-4c98-8e63-0242ac110002",
+              "name": "Фиджи"
+            },
+            {
+              "id": "11ee622c-cf01-a780-8e63-0242ac110002",
+              "name": "Филиппины"
+            },
+            {
+              "id": "11ee622c-cf01-f4b4-8e63-0242ac110002",
+              "name": "Финляндия"
+            },
+            {
+              "id": "11ee622c-cef8-cfc4-8e63-0242ac110002",
+              "name": "Флаг Северной Македонии"
+            },
+            {
+              "id": "11ee622c-cf05-8b0a-8e63-0242ac110002",
+              "name": "Флаг Шри-Ланки"
+            },
+            {
+              "id": "11ee622c-cf02-3f7e-8e63-0242ac110002",
+              "name": "Франция"
+            },
+            {
+              "id": "11ee622c-cf02-909e-8e63-0242ac110002",
+              "name": "Хорватия"
+            },
+            {
+              "id": "11ee622c-cf02-f767-8e63-0242ac110002",
+              "name": "Центральноафриканская Республика"
+            },
+            {
+              "id": "11ee622c-cf03-3e14-8e63-0242ac110002",
+              "name": "Чад"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 8,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 160,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": false,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 8,
+          "first": false,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 20,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "url": "/api/country?size=20&page=9",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "content": [
+            {
+              "id": "11ee622c-cf03-df7f-8e63-0242ac110002",
+              "name": "Черногория"
+            },
+            {
+              "id": "11ee622c-cf04-3e1f-8e63-0242ac110002",
+              "name": "Чехия"
+            },
+            {
+              "id": "11ee622c-cf04-a7b7-8e63-0242ac110002",
+              "name": "Чили"
+            },
+            {
+              "id": "11ee622c-cf04-f875-8e63-0242ac110002",
+              "name": "Швейцария"
+            },
+            {
+              "id": "11ee622c-cf05-3adb-8e63-0242ac110002",
+              "name": "Швеция"
+            },
+            {
+              "id": "11ee622c-cf05-d814-8e63-0242ac110002",
+              "name": "Эквадор"
+            },
+            {
+              "id": "11ee622c-cf06-281c-8e63-0242ac110002",
+              "name": "Экваториальная Гвинея"
+            },
+            {
+              "id": "11ee622c-cf06-6bf1-8e63-0242ac110002",
+              "name": "Эритрея"
+            },
+            {
+              "id": "11ee622c-cf06-ce43-8e63-0242ac110002",
+              "name": "Эсватини"
+            },
+            {
+              "id": "11ee622c-cf07-1ab2-8e63-0242ac110002",
+              "name": "Эстония"
+            },
+            {
+              "id": "11ee622c-cf07-77cf-8e63-0242ac110002",
+              "name": "Эфиопия"
+            },
+            {
+              "id": "11ee622c-cf07-cf50-8e63-0242ac110002",
+              "name": "Южно-Африканская Республика"
+            },
+            {
+              "id": "11ee622c-cf08-3b48-8e63-0242ac110002",
+              "name": "Южный Судан"
+            },
+            {
+              "id": "11ee622c-cf08-85e2-8e63-0242ac110002",
+              "name": "Ямайка"
+            },
+            {
+              "id": "11ee622c-cf08-cbe3-8e63-0242ac110002",
+              "name": "Япония"
+            }
+          ],
+          "pageable": {
+            "pageNumber": 9,
+            "pageSize": 20,
+            "sort": {
+              "empty": true,
+              "sorted": false,
+              "unsorted": true
+            },
+            "offset": 180,
+            "paged": true,
+            "unpaged": false
+          },
+          "last": true,
+          "totalPages": 10,
+          "totalElements": 195,
+          "number": 9,
+          "first": false,
+          "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+          },
+          "size": 20,
+          "numberOfElements": 15,
+          "empty": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

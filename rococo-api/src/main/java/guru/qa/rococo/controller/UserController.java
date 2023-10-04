@@ -27,13 +27,11 @@ public class UserController {
   }
 
   @GetMapping()
-  public Page<UserJson> getAll(@PageableDefault Pageable pageable) {
-    return userService.getAll(pageable);
-  }
-
-  @GetMapping("/{id}")
-  public UserJson findUserById(@PathVariable("id") String id) {
-    return userService.findUserById(id);
+  public UserJson getCurrent(
+//       @AuthenticationPrincipal Jwt principal
+  ) {
+//    return userService.getByUsername(principal.getClaim("sub"));
+    return UserJson.empty();
   }
 
   @PatchMapping("/")

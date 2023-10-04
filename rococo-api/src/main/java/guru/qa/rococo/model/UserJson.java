@@ -44,4 +44,8 @@ public record UserJson(
     );
     return entity;
   }
+
+  public static @Nonnull UserJson empty() {
+    return new UserJson(null, null, null, null, null);
+  }
 }

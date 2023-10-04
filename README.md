@@ -106,7 +106,11 @@ model-классов, получить перформанс и простое н
 никаких ограничений, лишь бы сервис выполнял свое прямое назначение
 
 ##### Особенности реализации backend
-- Pageble контроллеры;
+
+###### Сервис gateway
+
+1) Pageble контроллеры;
+Пример:
 ```java
   @GetMapping()
   public Page<ArtistJson> getAll(@RequestParam(required = false) String name,
@@ -114,9 +118,54 @@ model-классов, получить перформанс и простое н
     return artistService.getAll(name, pageable);
   }
 ```
-Здесь объект Pageable - приходит в виде GET параметров с фронта. 
-Так же GET парметром может прийти (а может и нет) параметр name. Тогда запрос в БД должен включать филтрацию по полю name (ContainsIgnoreCase)
+Здесь объект `Pageable` - приходит в виде GET параметров с фронта. 
+Так же GET парметром может прийти (а может и нет) параметр name. Тогда запрос в БД должен включать фильтрацию по полю name (`ContainsIgnoreCase`)
+Пример репозитория с запросом к БД с учетом Pageable и name
+```java
+public interface ArtistRepository extends JpaRepository<ArtistEntity, UUID> {
 
+  @Nonnull
+  Page<ArtistEntity> findAllByNameContainsIgnoreCase(
+          @Nonnull String name,
+          @Nonnull Pageable pageable
+  );
+}
+```
+Почитать, дополнительно, тут: https://www.baeldung.com/spring-data-jpa-pagination-sorting
+
+
+2) необходим доступ без авторизации к эндпойнту `/api/session` без необходимости быть
+аторизованным, для этого пропишем его в security config:
+```java
+@EnableWebSecurity
+@Configuration
+@Profile("!local")
+public class SecurityConfigMain {
+
+    private final CorsCustomizer corsCustomizer;
+
+    @Autowired
+    public SecurityConfigMain(CorsCustomizer corsCustomizer) {
+        this.corsCustomizer = corsCustomizer;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        corsCustomizer.corsCustomizer(http);
+
+        http.authorizeHttpRequests(customizer ->
+                customizer.requestMatchers(
+                                antMatcher("/session"),
+                                antMatcher("/actuator/health"))
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
+        ).oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
+        return http.build();
+    }
+}
+```
+Все прочие эндпойнты должны требовать авторизацию
 
 #### 6. Подготовить структуру тестового "фреймворка", подумать о том какие прекондишены и как вы будете создавать
 

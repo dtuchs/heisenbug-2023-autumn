@@ -1,0 +1,52 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "PATCH",
+        "url": "/api/artist",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "name": "{{jsonPath request.body '$.name'}}",
+          "biography": "{{jsonPath request.body '$.biography'}}",
+          "photo": "{{jsonPath request.body '$.photo'}}"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "POST",
+        "url": "/api/artist",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "name": "{{jsonPath request.body '$.name'}}",
+          "biography": "{{jsonPath request.body '$.biography'}}",
+          "photo": "{{jsonPath request.body '$.photo'}}"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

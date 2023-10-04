@@ -1,0 +1,29 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "PATCH",
+        "url": "/api/user",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "username": "{{jsonPath request.body '$.username'}}",
+          "firstname": "{{jsonPath request.body '$.firstname'}}",
+          "lastname": "{{jsonPath request.body '$.lastname'}}",
+          "avatar": "{{jsonPath request.body '$.avatar'}}"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

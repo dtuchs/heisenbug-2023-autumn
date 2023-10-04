@@ -1,0 +1,45 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "GET",
+        "url": "/api/session",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "username": "MockUser",
+          "issuedAt": "{{now format='yyyy-MM-dd HH:mm:ssZ'}}",
+          "expiresAt": "{{now offset='1 hours' format='yyyy-MM-dd HH:mm:ssZ'}}"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "GET",
+        "url": "/api/session"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "username": null,
+          "issuedAt": null,
+          "expiresAt": null
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

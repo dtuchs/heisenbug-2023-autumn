@@ -1,0 +1,90 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "PATCH",
+        "url": "/api/painting",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "title": "{{jsonPath request.body '$.title'}}",
+          "description": "{{jsonPath request.body '$.description'}}",
+          "content": "{{jsonPath request.body '$.content'}}",
+          "museum": {
+            "id": "{{jsonPath request.body '$.museum.id'}}",
+            "title": "{{jsonPath request.body '$.museum.title'}}",
+            "description": "{{jsonPath request.body '$.museum.description'}}",
+            "photo": "{{jsonPath request.body '$.museum.photo'}}",
+            "geo": {
+              "city": "{{jsonPath request.body '$.museum.geo.city'}}",
+              "country": {
+                "id":  "{{jsonPath request.body '$.museum.geo.country.id'}}",
+                "name": "{{jsonPath request.body '$.museum.geo.country.name'}}"
+              }
+            }
+          },
+          "artist": {
+            "id": "{{jsonPath request.body '$.artist.id'}}",
+            "name": "{{jsonPath request.body '$.artist.name'}}",
+            "biography": "{{jsonPath request.body '$.artist.biography'}}",
+            "photo": "{{jsonPath request.body '$.artist.photo'}}"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "POST",
+        "url": "/api/painting",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "title": "{{jsonPath request.body '$.title'}}",
+          "description": "{{jsonPath request.body '$.description'}}",
+          "content": "{{jsonPath request.body '$.content'}}",
+          "museum": {
+            "id": "{{jsonPath request.body '$.museum.id'}}",
+            "title": "{{jsonPath request.body '$.museum.title'}}",
+            "description": "{{jsonPath request.body '$.museum.description'}}",
+            "photo": "{{jsonPath request.body '$.museum.photo'}}",
+            "geo": {
+              "city": "{{jsonPath request.body '$.museum.geo.city'}}",
+              "country": {
+                "id":  "{{jsonPath request.body '$.museum.geo.country.id'}}",
+                "name": "{{jsonPath request.body '$.museum.geo.country.name'}}"
+              }
+            }
+          },
+          "artist": {
+            "id": "{{jsonPath request.body '$.artist.id'}}",
+            "name": "{{jsonPath request.body '$.artist.name'}}",
+            "biography": "{{jsonPath request.body '$.artist.biography'}}",
+            "photo": "{{jsonPath request.body '$.artist.photo'}}"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

@@ -85,7 +85,7 @@ export const apiClient = {
             size?: number,
             search?: string
         }) => {
-        return loadItems({path: "museum", search, page, size});
+        return loadItems({path: "museum", search, page, size, searchName: "title"});
     },
     addMuseum: async(newMuseum: NewMuseumType) => {
         const res = await fetch(`${BASE_URL}/museum`, {
