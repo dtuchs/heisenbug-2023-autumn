@@ -1,0 +1,46 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/user",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/user",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "PATH"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "PATH",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    }
+  ]
+}

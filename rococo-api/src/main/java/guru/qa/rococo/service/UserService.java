@@ -29,13 +29,14 @@ public class UserService {
   }
 
   @Transactional
-  public void createNewUserIfNotPresent(String username) {
-    userRepository.findByUsername(username)
+  public @Nonnull UserJson createNewUserIfNotPresent(String username) {
+    return UserJson.fromEntity(userRepository.findByUsername(username)
         .orElseGet(() -> {
           UserEntity userEntity = new UserEntity();
           userEntity.setUsername(username);
           return userRepository.save(userEntity);
-        });
+        })
+    );
   }
 
   @Transactional(readOnly = true)

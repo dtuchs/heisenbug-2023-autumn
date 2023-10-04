@@ -1,0 +1,88 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/artist?size=18&page=0",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/artist?name=%D1%88%D0%B8%D1%88%D0%BA%D0%B8%D0%BD",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 3,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/artist?name=%D1%80%D0%B5%D0%BD%D1%83%D0%B0%D1%80",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 4,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/artist?name=%D0%BB%D0%B5%D0%B2%D0%B8%D1%82%",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    }
+  ]
+}

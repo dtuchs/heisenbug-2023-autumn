@@ -29,7 +29,7 @@
       "priority": 2,
       "request": {
         "method": "GET",
-        "url": "/api/session"
+        "url": "/api/user"
       },
       "response": {
         "status": 403

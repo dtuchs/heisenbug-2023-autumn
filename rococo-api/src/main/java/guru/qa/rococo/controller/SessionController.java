@@ -2,8 +2,6 @@ package guru.qa.rococo.controller;
 
 
 import guru.qa.rococo.model.SessionJson;
-import guru.qa.rococo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,20 +17,11 @@ import static java.util.Objects.requireNonNull;
 @RequestMapping("/api/session")
 public class SessionController {
 
-  private final UserService userService;
-
-  @Autowired
-  public SessionController(UserService userService) {
-    this.userService = userService;
-  }
-
   @GetMapping()
   public SessionJson session(@AuthenticationPrincipal Jwt principal) {
     if (principal != null) {
-      final String username = principal.getClaim("sub");
-      userService.createNewUserIfNotPresent(username);
       return new SessionJson(
-          username,
+          principal.getClaim("sub"),
           Date.from(requireNonNull(principal.getIssuedAt())),
           Date.from(requireNonNull(principal.getExpiresAt()))
       );

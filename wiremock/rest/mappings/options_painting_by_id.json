@@ -1,0 +1,46 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/painting/40433774-e548-4504-86ab-cafd25c6abca",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/painting/9450ff00-0c8c-4a37-9eeb-a1d0b5c3d85b",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    }
+  ]
+}

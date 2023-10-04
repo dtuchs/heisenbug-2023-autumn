@@ -31,7 +31,7 @@ public class UserController {
 
   @GetMapping()
   public UserJson getCurrent(@AuthenticationPrincipal Jwt principal) {
-    return userService.getByUsername(principal.getClaim("sub"));
+    return userService.createNewUserIfNotPresent(principal.getClaim("sub"));
   }
 
   @PatchMapping("/")

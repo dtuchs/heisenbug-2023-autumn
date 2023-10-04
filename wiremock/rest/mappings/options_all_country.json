@@ -1,0 +1,214 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=0",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=1",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 3,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=2",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 4,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=3",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=4",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 6,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=5",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 7,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=6",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 8,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=7",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 9,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=8",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/country?size=20&page=9",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    }
+  ]
+}
