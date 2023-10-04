@@ -137,13 +137,19 @@ const commonFetch = async (
     method: string,
     body?: BodyInit | null,
     }) => {
+    const token= sessionStorage.getItem("id_token");
+    const headers= {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+    };
+
+    if(token) {
+        // @ts-ignore
+        headers["Authorization"] = `Bearer ${token}`;
+    }
     const response = await fetch(`${BASE_URL}/${urlPart}`, {
         method,
-        headers: {
-            "Accept": "application/json",
-            "Authorization": `Bearer ${sessionStorage.getItem("id_token")}`,
-            "Content-Type": "application/json",
-        },
+        headers,
         body,
     });
     if (!response.ok) {
