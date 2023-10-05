@@ -22,7 +22,3 @@ subprojects {
         dockerArch = System.getProperty("os.arch") == "arm64" ? "arm64" : "amd64"
     }
 }
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
