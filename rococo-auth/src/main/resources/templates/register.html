@@ -38,8 +38,8 @@
                 <p class="form__paragraph">Уже есть аккаунт? <a th:href="@{|${frontUri}|}" class="form__link">Войти</a></p>
             </form>
             <div class="form" th:unless="${username == null}">
-                <p class="form__paragraph">Добро пожаловать в Ro<span class="form__text_gold">coco</span></p>
-                <p class="form__paragraph"><a th:href="@{|${frontUri}|}">Войти в систему</a></p>
+                <p class="form__subheader">Добро пожаловать в Ro<span class="form__text_gold">coco</span></p>
+                <p class="form__paragraph"><a class="form__submit" th:href="@{|${frontUri}|}">Войти в систему</a></p>
             </div>
             <img class="content__image" src="../static/images/renuar.jpeg" width="90" th:src="@{images/renuar.jpeg}" alt="Ренуар"/>
         </section>

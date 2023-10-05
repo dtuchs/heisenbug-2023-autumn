@@ -21,7 +21,7 @@ const getAuthLink = (codeChallenge: string) => {
 }
 
 const getTokenUrl = (code: string, verifier: string) => {
-    return `oauth2/token?client_id=${import.meta.env.CLIENT_ID}&redirect_uri=${import.meta.env.VITE_FRONT_URL}/authorized&grant_type=authorization_code&code=${code}&code_verifier=${verifier}`;
+    return `oauth2/token?client_id=${import.meta.env.VITE_CLIENT_ID}&redirect_uri=${import.meta.env.VITE_FRONT_URL}/authorized&grant_type=authorization_code&code=${code}&code_verifier=${verifier}`;
 }
 
 

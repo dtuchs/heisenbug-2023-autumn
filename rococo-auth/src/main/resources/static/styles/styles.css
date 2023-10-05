@@ -98,6 +98,12 @@ main {
     font-weight: bold;
 }
 
+.form__subheader {
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: bold;
+}
+
 .form__text_gold {
     color: rgb(var(--color-primary-500));
 }
@@ -184,6 +190,7 @@ main {
     transition-duration: 150ms;
     border-radius: var(--theme-rounded-base);
     margin: 24px;
+    text-decoration: none;
 }
 
 .form__submit:hover {
