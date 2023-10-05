@@ -1,26 +1,35 @@
 <script lang="ts">
 	import '../app.postcss';
-	import { AppShell, AppBar, Avatar, Modal, popup, LightSwitch, initializeStores, Toast } from '@skeletonlabs/skeleton';
-	import type { PopupSettings } from '@skeletonlabs/skeleton';
-
-	// Floating UI for Popups
-	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
-	import { storePopup } from '@skeletonlabs/skeleton';
-	import type { LayoutServerData} from './$types';
+	import {
+		AppShell,
+		AppBar,
+		Avatar,
+		Modal,
+		LightSwitch,
+		initializeStores,
+		Toast,
+		getModalStore
+	} from '@skeletonlabs/skeleton';
 	import {onMount} from "svelte";
 	import {apiClient} from "$lib/helpers/apiClient";
 	import {sessionStore} from "$lib/stores/sessionStore.js";
-	import {generateCodeChallenge, generateCodeVerifier} from "$lib/auth/authUtils";
+	import {clearSession, generateCodeChallenge, generateCodeVerifier, getAuthLink} from "$lib/auth/authUtils";
 	import {goto} from "$app/navigation";
+	import {prepareModal} from "$lib/helpers/prepareModal";
+	import UserForm from "$lib/components/forms/user/UserForm.svelte";
+	import {authClient} from "$lib/helpers/authClient";
 
 	initializeStores();
-	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	const modalStore = getModalStore();
 
-	const popupFeatured: PopupSettings = {
-		event: "click",
-		target: "popup",
-		placement: "bottom",
-	};
+	const clickProfileButton = () => {
+		const modal = prepareModal({
+			ref: UserForm,
+			title: "Профиль",
+			body: "",
+			callback: () => {}});
+		modalStore.trigger(modal);
+	}
 
 	sessionStore.set({
 		user: undefined,
@@ -31,7 +40,7 @@
 			return;
 		}
 		const res = await apiClient.loadSession();
-		if (res.username) {
+		if (!!res.username && res.username !== $sessionStore.user?.username) {
 			const res = await apiClient.loadUser();
 			sessionStore.update(() => {
 				return {
@@ -41,16 +50,19 @@
 		}
 	});
 
-	export let data: LayoutServerData | undefined;
-
 	const onLoginClick = async () => {
 		const codeVerifier = generateCodeVerifier();
 		sessionStorage.setItem('codeVerifier', codeVerifier);
 		const codeChallenge = generateCodeChallenge();
 		sessionStorage.setItem('codeChallenge', codeChallenge);
 
-		const link = `http://127.0.0.1:9000/oauth2/authorize?response_type=code&client_id=client&scope=openid&redirect_uri=http://127.0.0.1:3000/authorized&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+		const link = getAuthLink(codeChallenge);
 		await goto(link);
+	}
+
+	const onLogoutClick = async() => {
+		await authClient.logout();
+		clearSession();
 	}
 
 </script>
@@ -67,6 +79,11 @@
 				</h1>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
+				{#if $sessionStore.user}
+					<button type="button" class="btn-icon variant-filled-surface relative" on:click={clickProfileButton}>
+						<Avatar src={$sessionStore.user.avatar} width="w-16" rounded="rounded-full" />
+					</button>
+				{/if}
 				<nav class="list-nav">
 					<ul class="flex items-baseline">
 						<li>
@@ -86,38 +103,22 @@
 						</li>
 					</ul>
 				</nav>
-				<LightSwitch rounded="rounded-full"/>
+				<div>
+					<LightSwitch rounded="rounded-full"/>
+				</div>
 				{#if $sessionStore.user}
-					<button type="button" class="btn-icon variant-filled-surface relative" use:popup={popupFeatured}>
-						<Avatar src="https://images.unsplash.com/photo-1617296538902-887900d9b592?ixid=M3w0Njc5ODF8MHwxfGFsbHx8fHx8fHx8fDE2ODc5NzExMDB8&ixlib=rb-4.0.3&w=128&h=128&auto=format&fit=crop" width="w-16" rounded="rounded-full" />				
+					<button type="button" class="btn variant-ghost" on:click={onLogoutClick}>
+						Выйти
 					</button>
+
 				{:else}
 					<button type="button" class="btn variant-filled-primary" on:click={onLoginClick}>
-						Войти				
+						Войти
 					</button>
-				{/if}		
+				{/if}
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
-	<div class="card m-4 p-4 w-72 shadow-xl" data-popup="popup">
-		<form class="flex flex-col justify-center items-center">
-			<Avatar src="https://images.unsplash.com/photo-1617296538902-887900d9b592?ixid=M3w0Njc5ODF8MHwxfGFsbHx8fHx8fHx8fDE2ODc5NzExMDB8&ixlib=rb-4.0.3&w=128&h=128&auto=format&fit=crop" width="w-32" rounded="rounded-full" />				
-			<h4>@renoir</h4>
-			<label class="label m-2">
-				<span>Имя</span>
-				<input class="input" type="text" placeholder="Имя" />
-			</label>
-			<label class="label m-2">
-				<span>Фамилия</span>
-				<input class="input" type="text" placeholder="Фамилия" />
-			</label>
-			<label class="label m-2">
-				<span>Email</span>
-				<input class="input" type="text" placeholder="Email" />
-			</label>
-			<button type="button" class="btn variant-filled-primary m-2">Обновить профиль</button>
-		</form>
-	</div>
 	<slot />
 </AppShell>
 <Toast />
