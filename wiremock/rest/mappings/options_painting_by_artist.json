@@ -1,0 +1,67 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/painting/author/104f76ce-0508-49d4-8967-fdf1ebb8cf45?size=9&page=0",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/painting/author/19bbbbb8-b687-4eec-8ba0-c8917c0a58a3?size=9&page=0",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    },
+    {
+      "priority": 3,
+      "request": {
+        "method": "OPTIONS",
+        "url": "/api/painting/author/5a486b2f-c361-459e-bd3f-60692a635ea9?size=9&page=0",
+        "headers": {
+          "Access-Control-Request-Method": {
+            "contains": "GET"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Headers": "authorization, content-type",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      }
+    }
+  ]
+}

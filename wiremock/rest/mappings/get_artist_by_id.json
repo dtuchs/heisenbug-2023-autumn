@@ -4,7 +4,7 @@
       "priority": 1,
       "request": {
         "method": "GET",
-        "url": "/api/artist/104f76ce-0508-49d4-8967-fdf1ebb8cf45"
+        "url": "/api/artist/19bbbbb8-b687-4eec-8ba0-c8917c0a58a3"
       },
       "response": {
         "status": 200,
