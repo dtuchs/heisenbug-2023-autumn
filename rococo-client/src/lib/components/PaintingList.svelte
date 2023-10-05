@@ -5,7 +5,7 @@
 </script>
 
 
-<ul class="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
+<ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
     {#each paintings as painting(painting.id)}
         <li>
             <a href={`/painting/${painting?.id}`}>

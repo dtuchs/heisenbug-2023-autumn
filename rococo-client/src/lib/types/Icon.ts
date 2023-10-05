@@ -1,5 +1,5 @@
 import search from "$lib/assets/icons/search.svg";
-import museum from "$lib/assets/icons/museum.svg";
+import menu from "$lib/assets/icons/menu.svg";
 
 export {search as SearchIcon};
-export {museum as MuseumIcon};
+export {menu as MenuIcon};

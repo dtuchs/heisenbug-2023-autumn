@@ -4,7 +4,7 @@
 
 </script>
 
-<ul class="grid grid-cols-2 md:grid-cols-6 gap-4 p-8">
+<ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-8">
     {#each $artistsStore.artists as artist(artist.id)}
         <li>
             <a href={`/artist/${artist.id}`} class="flex flex-col justify-center items-center">

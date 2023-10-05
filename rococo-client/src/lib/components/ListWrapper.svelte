@@ -20,7 +20,7 @@
 
 </script>
 
-{#if data?.length === 0}
+{#if !data?.length}
     {#if isSearchNotEmpty}
         <EmptySearch
                 text={emptySearchText}

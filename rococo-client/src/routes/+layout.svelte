@@ -13,14 +13,15 @@
 	import {onMount} from "svelte";
 	import {apiClient} from "$lib/helpers/apiClient";
 	import {sessionStore} from "$lib/stores/sessionStore.js";
-	import {clearSession, generateCodeChallenge, generateCodeVerifier, getAuthLink} from "$lib/auth/authUtils";
+	import { generateCodeChallenge, generateCodeVerifier, getAuthLink} from "$lib/auth/authUtils";
 	import {goto} from "$app/navigation";
 	import {prepareModal} from "$lib/helpers/prepareModal";
 	import UserForm from "$lib/components/forms/user/UserForm.svelte";
-	import {authClient} from "$lib/helpers/authClient";
+	import {MenuIcon} from "$lib/types/Icon";
 
 	initializeStores();
 	const modalStore = getModalStore();
+	let isMenuVisible = false;
 
 	const clickProfileButton = () => {
 		const modal = prepareModal({
@@ -60,6 +61,10 @@
 		await goto(link);
 	}
 
+	const toggleMenu = () => {
+		isMenuVisible = !isMenuVisible;
+	}
+
 </script>
 
 <Modal />
@@ -74,7 +79,10 @@
 				</h1>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<nav class="list-nav">
+				<button type="button" class="block md:hidden shrink-0" on:click={toggleMenu}>
+					<img src={MenuIcon} alt="Иконка меню" class="w-50 h-50 md:hidden" width="50" height="50"/>
+				</button>
+				<nav class="list-nav hidden md:block">
 					<ul class="flex items-baseline">
 						<li>
 							<a href="/painting">
@@ -107,6 +115,27 @@
 				{/if}
 			</svelte:fragment>
 		</AppBar>
+		{#if isMenuVisible}
+			<nav class="list-nav md:hidden w-full">
+				<ul class="flex items-baseline justify-around">
+					<li>
+						<a href="/painting">
+							Картины
+						</a>
+					</li>
+					<li>
+						<a href="/artist">
+							Художники
+						</a>
+					</li>
+					<li>
+						<a href="/museum">
+							Музеи
+						</a>
+					</li>
+				</ul>
+			</nav>
+		{/if}
 	</svelte:fragment>
 	<slot />
 </AppShell>
