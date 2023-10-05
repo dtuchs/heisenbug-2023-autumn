@@ -9,7 +9,6 @@
     import {apiClient} from "$lib/helpers/apiClient";
     import Select from "$lib/components/formElements/Select.svelte";
     import {blobToBase64} from "$lib/helpers/imageUtils";
-    import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.error.store";
     import {museumFormErrorStore} from "$lib/components/forms/museum/museum-form.error.store";
     import {validateImage} from "$lib/helpers/validate";
     import {validateForm} from "$lib/components/forms/museum/validate";
@@ -42,7 +41,7 @@
         evt.preventDefault();
         const file = files?.[0];
         if (file) {
-            artistsFormErrorStore.update((prevState) => {
+            museumFormErrorStore.update((prevState) => {
                 return {
                     ...prevState,
                     photo: validateImage(file),

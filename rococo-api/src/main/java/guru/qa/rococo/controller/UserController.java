@@ -34,7 +34,7 @@ public class UserController {
     return userService.createNewUserIfNotPresent(principal.getClaim("sub"));
   }
 
-  @PatchMapping("/")
+  @PatchMapping()
   public UserJson updateUser(@RequestBody UserJson user, @AuthenticationPrincipal Jwt principal) {
     String username = principal.getClaim("sub");
     if (!Objects.equals(username, user.username())) {

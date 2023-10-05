@@ -1,12 +1,12 @@
 import {Errors} from "$lib/types/Errors";
-import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.error.store";
+import {paintingFormErrorStore} from "$lib/components/forms/painting/painting-form.error.store";
 
 export const validateForm = (
     title: string,
     description: string,
     authorId: string) => {
 
-    artistsFormErrorStore.update((prevState) => {
+    paintingFormErrorStore.update((prevState) => {
         return {
             ...prevState,
             title: title?.length < 3

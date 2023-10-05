@@ -24,9 +24,8 @@ export const authClient = {
             }
         });
         if (!response.ok) {
-            throw new Error("Failed loading data");
+            throw new Error("Failed logout");
         }
-        return response.json();
     }
 }
 

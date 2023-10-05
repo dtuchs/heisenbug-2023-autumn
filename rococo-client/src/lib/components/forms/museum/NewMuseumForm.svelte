@@ -8,8 +8,10 @@
 	import ImageInput from "$lib/components/formElements/ImageInput.svelte";
 	import {apiClient} from "$lib/helpers/apiClient";
 	import Select from "$lib/components/formElements/Select.svelte";
-	import {Errors} from "$lib/types/Errors";
 	import {blobToBase64} from "$lib/helpers/imageUtils";
+	import {museumFormErrorStore} from "$lib/components/forms/museum/museum-form.error.store";
+	import {validateImage} from "$lib/helpers/validate";
+	import {validateForm} from "$lib/components/forms/museum/validate";
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
 
@@ -30,41 +32,17 @@
 		countryId: "",
 	}
 
-	const validateImage = (content: File) => {
-		if (content.size > 120_000_000) {
-			errors.photo = Errors.IMAGE_CONSTRAINT_TOO_BIG;
-		}
-	}
-
-	const validateForm = () => {
-		errors.title = title?.length < 3
-				? Errors.TITLE_LENGTH_CONSTRAINT_MIN
-				: title?.length > 255
-						? Errors.TITLE_LENGTH_CONSTRAINT_MAX
-						: "";
-
-		errors.description = description?.length < 11
-				? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MIN
-				: description?.length > 2000
-						? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MAX
-						: "";
-
-		errors.authorId = !countryId ? Errors.COUNTRY_CONTRAINT_NOT_EMPTY : "";
-
-		errors.city = city?.length < 3
-				? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MIN
-				: description?.length > 255
-						? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MAX
-						: "";
-
-		return !Object.values(errors).some(v => v.length > 0);
-	}
-
 	const onSubmit = async (evt: SubmitEvent)=> {
 		evt.preventDefault();
 		const file = files[0];
-		validateImage(file);
-		if(validateForm()) {
+		museumFormErrorStore.update((prevState) => {
+			return {
+				...prevState,
+				photo: validateImage(file),
+			}
+		});
+		validateForm(title, description, countryId, city);
+		if(!Object.values($museumFormErrorStore).some(v => v.length > 0)) {
 			photo = await blobToBase64(file) as string;
 			const res = await apiClient.addMuseum({
 				title,

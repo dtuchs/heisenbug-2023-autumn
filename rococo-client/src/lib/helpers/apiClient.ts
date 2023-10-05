@@ -1,6 +1,7 @@
 import type {ArtistType, NewArtistType} from "$lib/types/Artist";
 import type {NewPaintingType, PaintingType} from "$lib/types/Painting";
 import type {MuseumType, NewMuseumType} from "$lib/types/Museum";
+import type {UserType} from "$lib/types/User";
 
 const BASE_URL = 'http://127.0.0.1:8080/api';
 
@@ -130,6 +131,13 @@ export const apiClient = {
             urlPart: "user",
         });
     },
+    updateUser: async(user: UserType) => {
+        return await commonFetch({
+            method: "PATCH",
+            urlPart: "user",
+            body: JSON.stringify(user),
+        });
+    }
 }
 const commonFetch = async (
     { urlPart, method, body }: {

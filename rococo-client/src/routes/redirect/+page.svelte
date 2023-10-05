@@ -1,7 +1,7 @@
 <script lang="ts">
     import {ProgressRadial} from "@skeletonlabs/skeleton";
     import {onMount} from "svelte";
-    import {generateCodeChallenge, generateCodeVerifier, getAuthLink, getRedirectLink} from "$lib/auth/authUtils";
+    import {generateCodeChallenge, generateCodeVerifier, getAuthLink} from "$lib/auth/authUtils";
     import {goto} from "$app/navigation";
     onMount(async () => {
         const codeVerifier = generateCodeVerifier();

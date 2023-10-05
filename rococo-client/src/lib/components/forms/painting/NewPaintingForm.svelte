@@ -10,7 +10,6 @@
 	import { blobToBase64 } from "$lib/helpers/imageUtils";
 	import type {IdDto} from "$lib/types/IdDto";
 	import {validateImage} from "$lib/helpers/validate";
-	import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.error.store";
 	import {paintingFormErrorStore} from "$lib/components/forms/painting/painting-form.error.store";
 	import {validateForm} from "$lib/components/forms/painting/validate";
 
@@ -38,7 +37,7 @@
 	const onSubmit = async (evt: SubmitEvent) => {
 		evt.preventDefault();
 		const file = files[0];
-		artistsFormErrorStore.update((prevState) => {
+		paintingFormErrorStore.update((prevState) => {
 			return {
 				...prevState,
 				photo: validateImage(file),
@@ -65,7 +64,7 @@
 
 			if($modalStore[0].response) {
 				$modalStore[0].response(res);
-			} 
+			}
 			modalStore.close();
 		} 
 	}

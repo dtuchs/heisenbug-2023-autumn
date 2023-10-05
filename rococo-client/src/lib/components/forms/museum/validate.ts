@@ -1,5 +1,5 @@
 import {Errors} from "$lib/types/Errors";
-import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.error.store";
+import {museumFormErrorStore} from "$lib/components/forms/museum/museum-form.error.store";
 
 export const validateForm = (
     title: string,
@@ -7,7 +7,7 @@ export const validateForm = (
     countryId: string,
     city: string) => {
 
-    artistsFormErrorStore.update((prevState) => {
+    museumFormErrorStore.update((prevState) => {
         return {
             ...prevState,
             title:  title?.length < 3

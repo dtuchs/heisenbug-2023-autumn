@@ -9,7 +9,6 @@
     import Textarea from "../../formElements/Textarea.svelte";
     import { blobToBase64 } from "$lib/helpers/imageUtils";
     import {validateImage} from "$lib/helpers/validate";
-    import {artistsFormErrorStore} from "$lib/components/forms/artist/artist-form.error.store";
     import type {PaintingType} from "$lib/types/Painting";
     import {paintingFormErrorStore} from "$lib/components/forms/painting/painting-form.error.store.js";
     import {validateForm} from "$lib/components/forms/painting/validate";
@@ -41,7 +40,7 @@
         evt.preventDefault();
         const file = files?.[0];
         if(file) {
-            artistsFormErrorStore.update((prevState) => {
+            paintingFormErrorStore.update((prevState) => {
                 return {
                     ...prevState,
                     photo: validateImage(file),
