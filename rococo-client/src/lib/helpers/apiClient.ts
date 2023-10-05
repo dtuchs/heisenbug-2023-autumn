@@ -157,6 +157,7 @@ const commonFetch = async (
     }
     const response = await fetch(`${BASE_URL}/${urlPart}`, {
         method,
+        credentials: "include",
         headers,
         body,
     });
