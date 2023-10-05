@@ -60,11 +60,6 @@
 		await goto(link);
 	}
 
-	const onLogoutClick = async() => {
-		await authClient.logout();
-		clearSession();
-	}
-
 </script>
 
 <Modal />
@@ -79,11 +74,6 @@
 				</h1>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				{#if $sessionStore.user}
-					<button type="button" class="btn-icon variant-filled-surface relative" on:click={clickProfileButton}>
-						<Avatar src={$sessionStore.user.avatar} width="w-16" rounded="rounded-full" />
-					</button>
-				{/if}
 				<nav class="list-nav">
 					<ul class="flex items-baseline">
 						<li>
@@ -107,10 +97,9 @@
 					<LightSwitch rounded="rounded-full"/>
 				</div>
 				{#if $sessionStore.user}
-					<button type="button" class="btn variant-ghost" on:click={onLogoutClick}>
-						Выйти
+					<button type="button" class="btn-icon variant-filled-surface relative" on:click={clickProfileButton}>
+						<Avatar src={$sessionStore.user.avatar} width="w-16" rounded="rounded-full" />
 					</button>
-
 				{:else}
 					<button type="button" class="btn variant-filled-primary" on:click={onLoginClick}>
 						Войти

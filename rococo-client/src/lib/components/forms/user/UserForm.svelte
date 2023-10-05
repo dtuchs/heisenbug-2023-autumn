@@ -11,9 +11,14 @@
     import {blobToBase64} from "$lib/helpers/imageUtils";
     import {validateForm} from "$lib/components/forms/user/validate";
     import {apiClient} from "$lib/helpers/apiClient";
+    import {authClient} from "$lib/helpers/authClient";
+    import {clearSession} from "$lib/auth/authUtils";
+    import ModalButtonGroup from "$lib/components/ModalButtonGroup.svelte";
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
+
+    export let parent: any;
 
     let files: FileList;
 
@@ -61,24 +66,39 @@
                     user: res,
                 }
             });
-
             modalStore.close();
         }
+    }
+
+    const onLogoutClick = async() => {
+        await authClient.logout();
+        clearSession();
+        modalStore.close();
+        const t: ToastSettings = {
+            message: `Сессия завершена`,
+            background: 'variant-filled-tertiary',
+        };
+        toastStore.trigger(t);
     }
 
 </script>
 
 {#if $modalStore[0] && id}
     <FormWrapper modalTitle={$modalStore[0].title ?? ""} modalBody={$modalStore[0].body ?? ""}>
-        <form class="modal-form space-y-4" on:submit={onSubmit}>
-            <Avatar class="mx-auto" src={avatar} width="w-32" rounded="rounded-full" />
+        <form class="modal-form space-y-4 relative" on:submit={onSubmit}>
+            <div class="text-right absolute right-0">
+                <button type="button" class="btn variant-ghost" on:click={onLogoutClick}>
+                    Выйти
+                </button>
+            </div>
+            <Avatar class="mx-auto" src={avatar} width="w-48" rounded="rounded-full" />
+            <h4 class="text-center">@{username}</h4>
             <ImageInput
                     label="Обновить фото профиля"
                     name="content"
                     bind:files={files}
                     error={$userFormErrorStore.avatar}
             />
-            <h4 class="text-center">@{username}</h4>
             <Input
                     label="Имя"
                     name="firstname"
@@ -94,7 +114,7 @@
                     error={$userFormErrorStore.lastname}
             />
             <div class="text-center">
-                <button type="submit" class="btn variant-filled-primary m-2">Обновить профиль</button>
+                <ModalButtonGroup onClose={parent.onClose} submitButtonText="Обновить профиль"/>
             </div>
         </form>
     </FormWrapper>
