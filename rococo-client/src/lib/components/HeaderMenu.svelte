@@ -3,8 +3,9 @@ import {MenuIcon} from "$lib/types/Icon.js";
 import {sessionStore} from "$lib/stores/sessionStore.js";
 import {Avatar, getModalStore, LightSwitch} from "@skeletonlabs/skeleton";
 import PagesNavigation from "$lib/components/PagesNavigation.svelte";
-import {generateCodeChallenge, generateCodeVerifier, getAuthLink} from "$lib/auth/authUtils";
-import {goto} from "$app/navigation";
+import {
+    initLocalStorageAndRedirectToAuth
+} from "$lib/auth/authUtils";
 import {prepareModal} from "$lib/helpers/prepareModal";
 import UserForm from "$lib/components/forms/user/UserForm.svelte";
 import type {UserType} from "$lib/types/User";
@@ -16,13 +17,7 @@ export let toggleMenu: () => void;
 const modalStore = getModalStore();
 
 const onLoginClick = async () => {
-    const codeVerifier = generateCodeVerifier();
-    localStorage.setItem('codeVerifier', codeVerifier);
-    const codeChallenge = generateCodeChallenge();
-    localStorage.setItem('codeChallenge', codeChallenge);
-
-    const link = getAuthLink(codeChallenge);
-    await goto(link);
+    await initLocalStorageAndRedirectToAuth();
 }
 
 const updateProfileCallback = async (result: {

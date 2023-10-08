@@ -13,10 +13,10 @@
 	import PagesNavigation from "$lib/components/PagesNavigation.svelte";
 	import ToastHandler from "$lib/components/ToastHandler.svelte";
 	import HeaderMenu from "$lib/components/HeaderMenu.svelte";
+	import MainTitle from "$lib/components/MainTitle.svelte";
 
 	initializeStores();
 	let isMenuVisible = false;
-
 
 	onMount(async () => {
 		if (location.pathname === "/authorized") {
@@ -67,11 +67,7 @@
 	<svelte:fragment slot="header">
 		<AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end" class="px-6">
 			<svelte:fragment slot="lead">
-				<h1 class="text-6xl">
-					<a href="/">
-						Ro<span class="text-primary-500">coco</span>
-					</a>
-				</h1>
+				<MainTitle/>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<ToastHandler let:triggerError let:triggerSuccess>

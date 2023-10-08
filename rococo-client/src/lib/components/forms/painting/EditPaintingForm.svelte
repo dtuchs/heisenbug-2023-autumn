@@ -70,7 +70,7 @@
 </script>
 
 {#if $modalStore[0]}
-    <FormWrapper modalTitle={$modalStore[0].title ?? ""} modalBody={$modalStore[0].body ?? ""}>
+    <FormWrapper modalTitle="Редактировать картину" modalBody="">
         <form class="modal-form space-y-4" on:submit={onSubmit}>
             <img class="max-w-full rounded-lg object-cover w-full h-80" src={painting.content} alt={painting.title}>
             <ImageInput

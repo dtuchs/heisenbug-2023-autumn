@@ -5,8 +5,8 @@
     import {apiClient} from "$lib/helpers/apiClient";
     import {goto} from "$app/navigation";
     import {sessionStore} from "$lib/stores/sessionStore";
-    import {ProgressRadial} from "@skeletonlabs/skeleton";
     import {getTokenUrl} from "$lib/auth/authUtils";
+    import Loader from "$lib/components/Loader.svelte";
 
     const finishLoading = () => {
         sessionStore.update((prevState) => {
@@ -53,9 +53,4 @@
 
 </script>
 
-<ProgressRadial
-        class="mx-auto my-40"
-        stroke={80}
-        meter="stroke-primary-500"
-        track="stroke-primary-500/30"
-        width="w-12"/>
+<Loader/>

@@ -1,8 +1,8 @@
 <script lang="ts">
     import EmptySearch from "$lib/components/EmptySearch.svelte";
     import EmptyState from "$lib/components/EmptyState.svelte";
-    import {ProgressRadial} from "@skeletonlabs/skeleton";
     import viewport from "$lib/hooks/useViewport";
+    import Loader from "$lib/components/Loader.svelte";
 
     export let data: any[];
     export let isSearchNotEmpty: boolean;
@@ -41,12 +41,7 @@
         {#if !noMoreData}
             <div use:viewport on:viewportenter={() => loadMore()}>
                 {#if isLoading}
-                    <ProgressRadial
-                            class="mx-auto my-20"
-                            stroke={80}
-                            meter="stroke-primary-500"
-                            track="stroke-primary-500/30"
-                            width="w-12"/>
+                    <Loader/>
                 {/if}
             </div>
         {/if}

@@ -53,7 +53,7 @@
 </script>
 
 {#if $modalStore[0]}
-    <FormWrapper modalTitle={$modalStore[0].title ?? ""} modalBody={$modalStore[0].body ?? ""}>
+    <FormWrapper modalTitle="Редактировать художника" modalBody="">
         <form class="modal-form space-y-4" on:submit={onSubmit} enctype="multipart/form-data">
             <Avatar src={photo} width="w-48" rounded="rounded-full" class="mx-auto"/>
             <ImageInput

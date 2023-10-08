@@ -177,7 +177,7 @@ const commonFetch = async (
             if(response.status === 401) {
                 clearSession();
             }
-            throw new Error(`Не получилось загрузить данные, ${response.status}`);
+            throw new Error(`Что-то пошло не так, код ошибки: ${response.status}`);
         }
         const data = await response.json();
         return {

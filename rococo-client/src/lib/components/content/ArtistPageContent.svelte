@@ -9,9 +9,9 @@
     import ListWrapper from "$lib/components/ListWrapper.svelte";
     import PaintingList from "$lib/components/PaintingList.svelte";
     import EditArtistForm from "$lib/components/forms/artist/EditArtistForm.svelte";
-    import type {ArtistType} from "$lib/types/Artist";
     import type {PageData} from "../../../../.svelte-kit/types/src/routes/artist/[id]/$types.js";
     import {sessionStore} from "$lib/stores/sessionStore";
+    import EditComponent from "$lib/components/EditComponent.svelte";
 
     const modalStore = getModalStore();
 
@@ -28,7 +28,7 @@
     }
     if(data.artist.data && data.paintings.data) {
         singleArtistStore.set({
-            artist: data.artist.data,
+            data: data.artist.data,
             paintings: data.paintings.data.content,
             noMoreData: currentPage === data.paintings.data.totalPages - 1,
             isLoading: false,
@@ -93,54 +93,17 @@
                     ignoreIds: [...prevState.ignoreIds, data.id],
                 }
             });
-            successTrigger(`Добавлена картины: ${data.title}`);
-        }
-    }
-
-    const artistEditCallback = async (result: {
-        data?: ArtistType,
-        error?: string,
-    }) => {
-        if(result.error) {
-            errorTrigger(result.error);
-            return;
-        }
-        const data = result.data;
-        if(data) {
-            singleArtistStore.update((prevState) => {
-                return {
-                    ...prevState,
-                    artist: data,
-                }
-            });
-            successTrigger(`Обновлен художник: ${data.name}`);
+            successTrigger(`Добавлена картина: ${data.title}`);
         }
     }
 
     const clickAddButton = () => {
         const modal = prepareModal({
             ref: NewPaintingForm,
-            title: "Новая картина",
-            body: "Заполните форму, чтобы добавить новую картину",
             valueAttr: {
-                id: $singleArtistStore.artist?.id,
+                id: $singleArtistStore.data?.id,
             },
             callback: paintingAddCallback
-        });
-        modalStore.trigger(modal);
-    };
-
-    const clickEditButton = () => {
-        const modal = prepareModal({
-            ref: EditArtistForm,
-            title: "Редактировать автора",
-            valueAttr: {
-                name: $singleArtistStore?.artist?.name,
-                photo: $singleArtistStore?.artist?.photo,
-                biography: $singleArtistStore?.artist?.biography,
-                id: data.artist.data.id,
-            },
-            callback: artistEditCallback,
         });
         modalStore.trigger(modal);
     };
@@ -149,16 +112,29 @@
 
 
 <article class="card m-6">
-    <header class="card-header text-center font-bold text-2xl">{$singleArtistStore?.artist?.name}</header>
+    <header class="card-header text-center font-bold text-2xl">{$singleArtistStore?.data?.name}</header>
     <section class="p-4 grid grid-cols-1 lg:grid-cols-3 justify-items-center">
         <div class="flex flex-col">
-            <Avatar src={$singleArtistStore?.artist?.photo} width="w-56" rounded="rounded-full" class="col-span-1"/>
+            <Avatar src={$singleArtistStore?.data?.photo} width="w-56" rounded="rounded-full" class="col-span-1"/>
             {#if $sessionStore.user}
-                <button class="btn variant-ghost m-3" type="button" on:click={clickEditButton}>Редактировать</button>
-                <button class="btn variant-filled-primary m-3" type="button" on:click={clickAddButton}>Добавить картину</button>
+                <EditComponent
+                        {errorTrigger}
+                        {successTrigger}
+                        formComponent={EditArtistForm}
+                        store={singleArtistStore}
+                        dataKey="name"
+                        successMessage="Обновлен художник"
+                        formData={{
+                           name: $singleArtistStore?.data?.name,
+                           photo: $singleArtistStore?.data?.photo,
+                           biography: $singleArtistStore?.data?.biography,
+                           id: data.artist.data.id,
+                        }}
+                />
+                <button class="btn variant-filled-primary m-3 mx-auto block w-full" type="button" on:click={clickAddButton}>Добавить картину</button>
             {/if}
         </div>
-        <p class="col-span-2 w-4/5">{$singleArtistStore?.artist?.biography}</p>
+        <p class="col-span-2 w-4/5">{$singleArtistStore?.data?.biography}</p>
     </section>
     <section class="p-4">
         <ListWrapper data={$singleArtistStore.paintings}

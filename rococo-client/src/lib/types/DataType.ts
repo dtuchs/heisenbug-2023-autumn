@@ -4,3 +4,7 @@ export type StoreDataType<Type> = {
     isLoading: boolean,
     ignoreIds: string[],
 }
+
+export type SingleStoreDataType<Type> = {
+    data?: Type,
+}
