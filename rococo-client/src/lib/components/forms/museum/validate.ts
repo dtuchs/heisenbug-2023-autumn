@@ -25,9 +25,9 @@ export const validateForm = (
             countryId: !countryId ? Errors.COUNTRY_CONTRAINT_NOT_EMPTY : "",
 
             city: city?.length < 3
-                ? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MIN
+                ? Errors.CITY_LENGTH_CONSTRAINT_MIN
                 : description?.length > 255
-                    ? Errors.DESCRIPTION_LENGTH_CONSTRAINT_MAX
+                    ? Errors.CITY_LENGTH_CONSTRAINT_MAX
                     : "",
 
         }

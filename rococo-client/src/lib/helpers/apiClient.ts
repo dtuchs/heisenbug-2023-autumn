@@ -125,7 +125,6 @@ export const apiClient = {
         return commonFetch({
             method: "GET",
             urlPart: `country${query}`,
-            authenticated: false,
         });
     },
     loadSession: async() => {
