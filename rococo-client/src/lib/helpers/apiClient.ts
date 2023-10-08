@@ -4,7 +4,7 @@ import type {MuseumType, NewMuseumType} from "$lib/types/Museum";
 import type {UserType} from "$lib/types/User";
 import {clearSession} from "$lib/auth/authUtils";
 
-const BASE_URL = 'http://127.0.0.1:8080/api';
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 export const apiClient = {
     loadArtists: async ({ page = 0, size = 18, search}
@@ -191,7 +191,6 @@ const commonFetch = async (
             error: error?.message,
         }
     }
-
 };
 
 
