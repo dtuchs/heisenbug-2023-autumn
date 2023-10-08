@@ -3,4 +3,5 @@ import type {UserType} from "$lib/types/User";
 
 export const sessionStore = writable<{
     user: UserType | undefined,
-}>({user: undefined});
+    isLoading: boolean,
+}>({user: undefined, isLoading: false});

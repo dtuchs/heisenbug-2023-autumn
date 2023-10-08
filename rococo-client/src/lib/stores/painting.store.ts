@@ -1,9 +1,6 @@
 import { writable } from "svelte/store";
 import type {PaintingType} from "$lib/types/Painting";
+import type {StoreDataType} from "$lib/types/DataType";
 
-export const paintingsStore = writable<{
-    paintings: PaintingType[],
-    noMoreData: boolean,
-    isLoading: boolean,
-    ignoreIds: string [],
-}>({paintings: [], noMoreData: false, isLoading: false, ignoreIds: []});
+export const paintingsStore = writable<StoreDataType<PaintingType>>({
+    data: [], noMoreData: false, isLoading: false, ignoreIds: []});

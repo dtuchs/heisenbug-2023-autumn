@@ -8,10 +8,25 @@
     import {ProgressRadial} from "@skeletonlabs/skeleton";
     import {getTokenUrl} from "$lib/auth/authUtils";
 
+    const finishLoading = () => {
+        sessionStore.update((prevState) => {
+            return {
+                ...prevState,
+                isLoading: false,
+            }
+        });
+    }
+
     onMount(async () => {
         const searchParams = new URL(window.location.href).searchParams;
         const code = searchParams?.get("code");
         const verifier = sessionStorage.getItem("codeVerifier");
+        sessionStore.update((prevState) => {
+            return {
+                ...prevState,
+                isLoading: true,
+            }
+        });
         if (code && verifier) {
             const url = getTokenUrl(code, verifier);
             const res = await authClient.getToken(url);
@@ -21,14 +36,18 @@
                     const res = await apiClient.loadUser();
                     sessionStore.update(() => {
                         return {
-                            user: res,
+                            isLoading: false,
+                            user: res.data,
                         }
                     });
                     await goto("/");
                 }, 500);
             } else {
                 await goto("/");
+                finishLoading();
             }
+        } else {
+            finishLoading();
         }
     });
 

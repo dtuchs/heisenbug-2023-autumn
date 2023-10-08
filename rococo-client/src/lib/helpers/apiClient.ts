@@ -2,22 +2,25 @@ import type {ArtistType, NewArtistType} from "$lib/types/Artist";
 import type {NewPaintingType, PaintingType} from "$lib/types/Painting";
 import type {MuseumType, NewMuseumType} from "$lib/types/Museum";
 import type {UserType} from "$lib/types/User";
+import {clearSession} from "$lib/auth/authUtils";
 
 const BASE_URL = 'http://127.0.0.1:8080/api';
 
 export const apiClient = {
     loadArtists: async ({ page = 0, size = 18, search}
-        : { page?: number, size?: number, search?: string }) => {
+        : { page?: number, size?: number, search?: string, }) => {
         const query = search ? `?name=${search}` : `?size=${size}&page=${page}`;
-        return commonFetch({
+        return await commonFetch({
             method: "GET",
             urlPart: `artist${query}`,
+            authenticated: false,
         });
     },
     loadArtist: async(id: string) => {
         return commonFetch({
             method: "GET",
             urlPart: `artist/${id}`,
+            authenticated: false,
         });
     },
     addArtist: async(newArtist: NewArtistType) => {
@@ -43,6 +46,7 @@ export const apiClient = {
         return commonFetch({
             method: "GET",
             urlPart: `painting${query}`,
+            authenticated: false,
         });
     },
     loadPaintingsByAuthorId: async({ authorId, page = 0, size = 9, search}: {
@@ -56,12 +60,14 @@ export const apiClient = {
         return commonFetch({
             method: "GET",
             urlPart: `painting/author/${authorId}${query}`,
+            authenticated: false,
         });
     },
     loadPainting: async(id: string) => {
         return commonFetch({
             method: "GET",
             urlPart: `painting/${id}`,
+            authenticated: false,
         });
     },
     addPainting: async(newPainting: NewPaintingType) => {
@@ -87,12 +93,14 @@ export const apiClient = {
         return commonFetch({
             method: "GET",
             urlPart: `museum${query}`,
+            authenticated: false,
         });
     },
     loadMuseum: async(id: string) => {
         return commonFetch({
             method: "GET",
             urlPart: `museum/${id}`,
+            authenticated: false,
         });
     },
     addMuseum: async(newMuseum: NewMuseumType) => {
@@ -117,6 +125,7 @@ export const apiClient = {
         return commonFetch({
             method: "GET",
             urlPart: `country${query}`,
+            authenticated: false,
         });
     },
     loadSession: async() => {
@@ -140,30 +149,49 @@ export const apiClient = {
     }
 }
 const commonFetch = async (
-    { urlPart, method, body }: {
+    { urlPart, method, body, authenticated = true }: {
     urlPart: string,
     method: string,
     body?: BodyInit | null,
+    authenticated?: boolean
     }) => {
-    const token= sessionStorage.getItem("id_token");
     const headers= {
         "Accept": "application/json",
         "Content-Type": "application/json",
     };
-    if(token) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        headers["Authorization"] = `Bearer ${token}`;
+    if(authenticated) {
+        const token= sessionStorage.getItem("id_token");
+        if(token) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            headers["Authorization"] = `Bearer ${token}`;
+        }
     }
-    const response = await fetch(`${BASE_URL}/${urlPart}`, {
-        method,
-        credentials: "include",
-        headers,
-        body,
-    });
-    if (!response.ok) {
-        throw new Error("Failed loading data");
+    try {
+        const response = await fetch(`${BASE_URL}/${urlPart}`, {
+            method,
+            credentials: "include",
+            headers,
+            body,
+        });
+        if (!response.ok) {
+            if(response.status === 401) {
+                clearSession();
+            }
+            throw new Error(`Не получилось загрузить данные, ${response.status}`);
+        }
+        const data = await response.json();
+        return {
+            data,
+            error: undefined,
+        }
+    } catch (error: any) {
+        return {
+            data: undefined,
+            error: error?.message,
+        }
     }
-    return response.json();
+
 };
+
 

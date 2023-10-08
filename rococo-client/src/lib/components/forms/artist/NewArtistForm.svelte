@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getModalStore, getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
+	import { getModalStore } from "@skeletonlabs/skeleton";
 	import ModalButtonGroup from "../../ModalButtonGroup.svelte";
 	import { apiClient } from "$lib/helpers/apiClient";
 
@@ -13,7 +13,6 @@
 	import {validateForm} from "$lib/components/forms/artist/validate";
 
 	const modalStore = getModalStore();
-	const toastStore = getToastStore();
 
 	export let parent: any;
 	let files: FileList;
@@ -42,14 +41,10 @@
 
 		if(!Object.values($artistsFormErrorStore).some(v => v.length > 0)) {
 			const res = await apiClient.addArtist({name, biography, photo});
-			const t: ToastSettings = {
-				message: `Вы добавили художника: ${name}`,
-				background: 'variant-filled-primary',
-			};
-			toastStore.trigger(t);
+
 			if($modalStore[0].response) {
 				$modalStore[0].response(res);
-			} 
+			}
 			modalStore.close();
 		} 
 	}
@@ -57,7 +52,7 @@
 </script>
 
 {#if $modalStore[0]}
-	<FormWrapper modalTitle={$modalStore[0].title ?? ""} modalBody={$modalStore[0].body ?? ""}>
+	<FormWrapper modalTitle="Новый художник" modalBody="Заполните форму, чтобы добавить нового художника">
 		<form class="modal-form space-y-4" on:submit={onSubmit} enctype="multipart/form-data">
 			<Input 
 				label="Имя" 

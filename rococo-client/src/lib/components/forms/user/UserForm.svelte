@@ -55,17 +55,9 @@
                 lastname,
                 avatar,
                 });
-            const t: ToastSettings = {
-                message: `Вы обновили свой профиль`,
-                background: 'variant-filled-primary',
-            };
-            toastStore.trigger(t);
-
-            sessionStore.update(() => {
-                return {
-                    user: res,
-                }
-            });
+            if($modalStore[0].response) {
+                $modalStore[0].response(res);
+            }
             modalStore.close();
         }
     }

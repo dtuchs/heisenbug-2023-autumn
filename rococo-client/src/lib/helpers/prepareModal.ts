@@ -4,8 +4,8 @@ import type {ModalSettings, ModalComponent} from '@skeletonlabs/skeleton';
 export function prepareModal({ ref, title, body, callback, valueAttr = {}}:
      {
          ref: ComponentType,
-         title: string,
-         body: string,
+         title?: string,
+         body?: string,
          callback?: (data: any) => void,
          valueAttr?: Object,
      }): ModalSettings {

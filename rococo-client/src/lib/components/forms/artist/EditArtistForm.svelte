@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {Avatar, getModalStore, getToastStore, type ToastSettings} from "@skeletonlabs/skeleton";
+    import {Avatar, getModalStore} from "@skeletonlabs/skeleton";
     import ModalButtonGroup from "../../ModalButtonGroup.svelte";
     import { apiClient } from "$lib/helpers/apiClient";
     import { blobToBase64 } from "$lib/helpers/imageUtils";
@@ -13,7 +13,6 @@
     import type {ArtistType} from "$lib/types/Artist";
 
     const modalStore = getModalStore();
-    const toastStore = getToastStore();
 
     export let parent: any;
     let files: FileList;
@@ -45,11 +44,6 @@
         validateForm(name, biography);
         if(!Object.values($artistsFormErrorStore).some(v => v.length > 0)) {
             const res = await apiClient.updateArtist({id, name, biography, photo});
-            const t: ToastSettings = {
-                message: `Вы обновили художника: ${name}`,
-                background: 'variant-filled-primary',
-            };
-            toastStore.trigger(t);
             if($modalStore[0].response) {
                 $modalStore[0].response(res);
             }

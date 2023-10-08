@@ -10,7 +10,7 @@
     export let required = false;
     export let keyName = "id";
     export let valueName  = "name";
-    export let loadFunction: ({page}: {page?: number}) => Promise<Pageable<[]>>;
+    export let loadFunction: ({page}: {page?: number}) => Promise<{data?: Pageable<[]>, error?: string}>;
 
     let currentPage = 0;
     let data: any [] = [];
@@ -18,15 +18,29 @@
 
     onMount(async() => {
         const res = await loadFunction({page: currentPage});
-        data = res.content;
-        noMoreData =  currentPage === res.totalPages -1
+        if(res.error) {
+            console.warn(res.error);
+            return;
+        }
+        const resData = res.data;
+        if(resData){
+            data = resData.content;
+            noMoreData =  currentPage === resData.totalPages - 1;
+        }
     });
 
     const loadMore = async () => {
         const response = await loadFunction({page: ++currentPage});
-        let newBatch = response.content;
-        data = [...data, ...newBatch];
-        noMoreData = currentPage === response.totalPages -1;
+        if(response.error) {
+            console.warn(response.error);
+            return;
+        }
+        const resData= response.data;
+        if(resData){
+            const newBatch = resData.content;
+            data = [...data, ...newBatch];
+            noMoreData = currentPage === resData.totalPages - 1;
+        }
     }
 
 </script>

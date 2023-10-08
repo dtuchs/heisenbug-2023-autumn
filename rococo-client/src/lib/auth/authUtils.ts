@@ -29,8 +29,9 @@ const clearSession = () => {
     sessionStorage.removeItem('codeVerifier');
     sessionStorage.removeItem('codeChallenge');
     sessionStorage.removeItem('id_token');
-    sessionStore.update(() => {
+    sessionStore.update((prevState) => {
         return{
+            ...prevState,
             user: undefined,
         }
     });

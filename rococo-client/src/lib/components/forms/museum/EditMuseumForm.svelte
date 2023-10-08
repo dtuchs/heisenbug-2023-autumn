@@ -1,6 +1,5 @@
 <script lang="ts">
-    import {getModalStore, getToastStore} from "@skeletonlabs/skeleton";
-    import type {ToastSettings} from "@skeletonlabs/skeleton";
+    import {getModalStore} from "@skeletonlabs/skeleton";
     import FormWrapper from "../../FormWrapper.svelte";
     import ModalButtonGroup from "../../ModalButtonGroup.svelte";
     import Input from "$lib/components/formElements/Input.svelte";
@@ -14,7 +13,6 @@
     import {validateForm} from "$lib/components/forms/museum/validate";
     import type {MuseumType} from "$lib/types/Museum";
     const modalStore = getModalStore();
-    const toastStore = getToastStore();
 
     export let parent: any;
 
@@ -63,12 +61,6 @@
                     city,
                 }
             });
-            const t: ToastSettings = {
-                message: `Вы обновили музей: ${title}`,
-                background: 'variant-filled-primary',
-            };
-            toastStore.trigger(t);
-
             if($modalStore[0].response) {
                 $modalStore[0].response(res);
             }

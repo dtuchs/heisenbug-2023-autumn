@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getModalStore, getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
+    import { getModalStore } from "@skeletonlabs/skeleton";
     import FormWrapper from "../../FormWrapper.svelte";
     import ModalButtonGroup from "../../ModalButtonGroup.svelte";
     import Input from "../../formElements/Input.svelte";
@@ -14,8 +14,6 @@
     import {validateForm} from "$lib/components/forms/painting/validate";
 
     const modalStore = getModalStore();
-    const toastStore = getToastStore();
-
     export let parent: any;
     let data = $modalStore[0]?.valueAttr as Record<string, PaintingType>;
     let painting = data?.painting as PaintingType;
@@ -61,11 +59,6 @@
                 museum: {
                     id: museumId,
                 }});
-            const t: ToastSettings = {
-                message: `Вы обновили картину: ${title}`,
-                background: 'variant-filled-primary',
-            };
-            toastStore.trigger(t);
 
             if($modalStore[0].response) {
                 $modalStore[0].response(res);

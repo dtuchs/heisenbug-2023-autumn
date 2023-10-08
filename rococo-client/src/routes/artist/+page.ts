@@ -3,11 +3,9 @@ import type { PageLoad } from "./$types";
 
 export const load: PageLoad = async () => {
 
-	const artists = await apiClient.loadArtists({page: 0, size: 18});
+	const data = await apiClient.loadArtists({page: 0, size: 18});
 	
 	return {
-		artists: artists.content,
-		currentPage: artists.currentPage,
-		totalPages: artists.totalPages,
+		...data
 	};
 };
