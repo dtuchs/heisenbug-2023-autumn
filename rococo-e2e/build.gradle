@@ -31,6 +31,7 @@ dependencies {
     // REST
     testImplementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     testImplementation "com.squareup.retrofit2:converter-jackson:${retrofitVersion}"
+    testImplementation "com.squareup.okhttp3:okhttp-urlconnection:${okhttp3Version}"
     testImplementation "com.squareup.okhttp3:logging-interceptor:${okhttp3Version}"
     // Allure
     testImplementation("io.qameta.allure:allure-junit5:${allureVersion}") {
@@ -44,6 +45,8 @@ dependencies {
     // Lombok
     testAnnotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     testCompileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
+    // DB
+    runtimeOnly "mysql:mysql-connector-java:${project.ext.mysqlDriverVersion}"
 }
 
 tasks.withType(JavaCompile) {

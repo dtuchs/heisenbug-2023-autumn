@@ -26,7 +26,7 @@ export const validateForm = (
 
             city: city?.length < 3
                 ? Errors.CITY_LENGTH_CONSTRAINT_MIN
-                : description?.length > 255
+                : city?.length > 255
                     ? Errors.CITY_LENGTH_CONSTRAINT_MAX
                     : "",
 
