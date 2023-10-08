@@ -17,9 +17,9 @@ const modalStore = getModalStore();
 
 const onLoginClick = async () => {
     const codeVerifier = generateCodeVerifier();
-    sessionStorage.setItem('codeVerifier', codeVerifier);
+    localStorage.setItem('codeVerifier', codeVerifier);
     const codeChallenge = generateCodeChallenge();
-    sessionStorage.setItem('codeChallenge', codeChallenge);
+    localStorage.setItem('codeChallenge', codeChallenge);
 
     const link = getAuthLink(codeChallenge);
     await goto(link);

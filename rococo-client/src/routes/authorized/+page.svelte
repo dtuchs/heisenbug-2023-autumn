@@ -20,7 +20,7 @@
     onMount(async () => {
         const searchParams = new URL(window.location.href).searchParams;
         const code = searchParams?.get("code");
-        const verifier = sessionStorage.getItem("codeVerifier");
+        const verifier = localStorage.getItem("codeVerifier");
         sessionStore.update((prevState) => {
             return {
                 ...prevState,
@@ -31,7 +31,7 @@
             const url = getTokenUrl(code, verifier);
             const res = await authClient.getToken(url);
             if (res?.id_token) {
-                sessionStorage.setItem("id_token", res.id_token);
+                localStorage.setItem("id_token", res.id_token);
                 setTimeout(async () => {
                     const res = await apiClient.loadUser();
                     sessionStore.update(() => {

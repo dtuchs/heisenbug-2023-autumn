@@ -22,7 +22,7 @@ export const authClient = {
             credentials: "include",
             headers: {
                 "Content-type": "application/json",
-                "Authorization": `Bearer ${sessionStorage.getItem("id_token")}`,
+                "Authorization": `Bearer ${localStorage.getItem("id_token")}`,
             }
         });
         if (!response.ok) {

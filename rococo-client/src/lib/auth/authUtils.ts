@@ -12,7 +12,7 @@ const generateCodeVerifier = () => {
 }
 
 const generateCodeChallenge = () => {
-    const codeVerifier = sessionStorage.getItem("codeVerifier");
+    const codeVerifier = localStorage.getItem("codeVerifier");
     return base64Url(sha256(codeVerifier!));
 }
 
@@ -26,9 +26,9 @@ const getTokenUrl = (code: string, verifier: string) => {
 
 
 const clearSession = () => {
-    sessionStorage.removeItem('codeVerifier');
-    sessionStorage.removeItem('codeChallenge');
-    sessionStorage.removeItem('id_token');
+    localStorage.removeItem('codeVerifier');
+    localStorage.removeItem('codeChallenge');
+    localStorage.removeItem('id_token');
     sessionStore.update((prevState) => {
         return{
             ...prevState,

@@ -159,7 +159,7 @@ const commonFetch = async (
         "Content-Type": "application/json",
     };
     if(authenticated) {
-        const token= sessionStorage.getItem("id_token");
+        const token= localStorage.getItem("id_token");
         if(token) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
