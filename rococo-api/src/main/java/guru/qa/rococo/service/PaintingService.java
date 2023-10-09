@@ -131,13 +131,23 @@ public class PaintingService {
 
   private boolean isMuseumShouldBeUpdated(@Nonnull PaintingEntity paintingEntity,
                                           @Nullable UUID museumIdFromJson) {
-    return paintingEntity.getMuseum() == null ||
-        !Objects.equals(paintingEntity.getMuseum().getId(), museumIdFromJson);
+    if (museumIdFromJson == null) {
+      paintingEntity.setMuseum(null);
+      return false;
+    } else if (paintingEntity.getMuseum() == null) {
+      return true;
+    } else
+      return !Objects.equals(paintingEntity.getMuseum().getId(), museumIdFromJson);
   }
 
   private boolean isArtistShouldBeUpdated(@Nonnull PaintingEntity paintingEntity,
                                           @Nullable UUID artistIdFromJson) {
-    return paintingEntity.getArtist() == null ||
-        !Objects.equals(paintingEntity.getArtist().getId(), artistIdFromJson);
+    if (artistIdFromJson == null) {
+      paintingEntity.setArtist(null);
+      return false;
+    } else if (paintingEntity.getArtist() == null) {
+      return true;
+    } else
+      return !Objects.equals(paintingEntity.getArtist().getId(), artistIdFromJson);
   }
 }

@@ -5,6 +5,7 @@ buildscript {
         selenideVersion = '6.18.0'
         retrofitVersion = '2.9.0'
         okhttp3Version = '3.14.9'
+        springJdbcVersion = '6.0.12'
     }
 }
 
@@ -46,6 +47,7 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     testCompileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
     // DB
+    testImplementation "org.springframework:spring-jdbc:${springJdbcVersion}"
     runtimeOnly "mysql:mysql-connector-java:${project.ext.mysqlDriverVersion}"
 }
 
