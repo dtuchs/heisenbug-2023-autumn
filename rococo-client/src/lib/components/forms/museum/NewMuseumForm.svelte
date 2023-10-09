@@ -22,13 +22,13 @@
 	let city = "";
 	let countryId: string;
 
-	const errors: Record<string, string> = {
+	museumFormErrorStore.set({
 		title: "",
 		description: "",
 		photo: "",
 		city: "",
 		countryId: "",
-	}
+	});
 
 	const onSubmit = async (evt: SubmitEvent)=> {
 		evt.preventDefault();
@@ -70,7 +70,7 @@
 					name="title"
 					placeholder="Введите название музея..."
 					bind:value={title}
-					error={errors.title}
+					error={$museumFormErrorStore.title}
 					required={true}
 			/>
 			<Select
@@ -81,20 +81,20 @@
 					keyName="id"
 					valueName="name"
 					required={true}
-					error={errors.countryId}
+					error={$museumFormErrorStore.countryId}
 			/>
 			<Input
 					label="Укажите город"
 					name="city"
 					bind:value={city}
-					error={errors.city}
+					error={$museumFormErrorStore.city}
 					required={true}
 			/>
 			<ImageInput
 					label="Изображение музея"
 					name="photo"
 					bind:files={files}
-					error={errors.photo}
+					error={$museumFormErrorStore.photo}
 					required={true}
 			/>
 			<Textarea
@@ -102,7 +102,7 @@
 					name="description"
 					bind:value={description}
 					required={true}
-					error={errors.description}
+					error={$museumFormErrorStore.description}
 					placeholder="Описание музея"
 			/>
 			<ModalButtonGroup onClose={parent.onClose}/>
