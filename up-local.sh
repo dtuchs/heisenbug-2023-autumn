@@ -3,7 +3,7 @@
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 
-docker run --name rococo-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=secret -v rococo-mysql-data:/var/lib/postgresql/data -d mysql:8.1.0
+docker run --name rococo-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=secret -d mysql:8.1.0
 
 cd ./rococo-client
 npm i
