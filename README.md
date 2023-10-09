@@ -1,193 +1,68 @@
 # Rococo
 
-Приветствую тебя, мой дорогой друг!
-Если ты это читаешь - то ты собираешься сделать первый шаг в написании диплома QA.GURU Advanced.
-Далее я опишу основные направления работы, но помни, что этот диплом - не шаблонная работа, а место
-для творчества - прояви себя!
+Rococo - демонстрационное приложение для Heisenbug 2023 Autumn, доклад [The art of JUnit extensions](https://heisenbug.ru/talks/0ff39adbc2ff4e19b54a4bb5d8d2d766/)
 
-Кстати, Rococo - стиль в искусстве (живопись и не только), а значит дело пахнет микросервисами, 
-отвечающими за художников, их картины и музеи. И тестами на все это, которые должны быть искусством
+# Оглавление
+- [Используемые технологии](#используемые_технологии)
+- [Архитектура приложения](#архитектура_приложения)
+- [Архитектура базы данных](#архитектура_бд)
+- [Схема JUnit Extensions](#схема_junit)
+- [Запуск приложения локально в IDE](#запуск_приложения_в_ide)
+- [Запуск тестов локально](#запуск_тестов_локально)
 
-# Что будет являться готовым дипломом?
+<a name="используемые_технологии"></a>
+# Используемые технологии
 
-Тут все просто, диплом глобально требует от тебя реализовать три вещи:
+- [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
+- [Spring OAuth 2.0 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
+- [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+- [Spring Web](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#spring-web)
+- [MySql](https://www.mysql.com/)
+- [Svelte](https://svelte.dev/)
+- [SkeletonUI](https://www.skeleton.dev/)
+- [JUnit 5 (Extensions)](https://junit.org/junit5/docs/current/user-guide/)
+- [Selenide](https://selenide.org/)
+- [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- [Gradle 7.6](https://docs.gradle.org/7.6/release-notes.html)
 
-- Реализовать бэкенд на микросервисах (Spring boot, но если вдруг есть желание использовать что-то другое - мы не против)
-- Реализовать полноценное покрытие тестами микросервисов и frontend (если будут какие-то
-  unit-тесты - это большой плюс!)
-- Красиво оформить репозиторий на гихабе, что бы любой, кто зайдет на твою страничку, смог понять,
-  как все запустить, как прогнать тесты. Удели внимание этому пункту. Если я не смогу все запустить по твоему README - диплом останется без проверки
+<a name="архитектура_приложения"></a>
+# Архитектура приложения
 
-# С чего начать?
+Приложение Rococo построено на основе сервисов, реализующих Oauth 2.0 code flow:
+1. **rococo-auth** - аутентификация и авторизация (*authorization server*).
+2. **rococo-api** - бэкенд (*resource server*).
+6. **rococo-client** - интерфейс приложения, с которым взаимодействует пользователь (*frontend*).
 
-Мы подготовили для тебя полностью рабочий frontend, а так же страницы регистрации и логина. Кроме
-того, у тебя есть и простой бэкенд - по сути своей, мок. В этом бекенде есть контроллеры, по которым
-можно понять, какие микросервисы тебе предстоит реализовать. И самое главное - у тебя есть проект
-niffler, который будет выступать образцом для подражания в разработке микросервисов. Тестовое
-покрытие niffler, однако, является достаточно слабым - учтите это при написании тестов на Rococ - это,
-все-таки, диплом для SDET / Senior QA Automation и падать в грязь лицом с десятком тестов на весь сервис
-точно не стоит. Итак, приступим!
+![Архитектура приложения](static/services.jpg)
 
-#### 1. Запусти фронт Rococ, для этого перейти в соответсвующий каталог
+<a name="архитектура_бд"></a>
+# Архитектура базы данных
+- сервис **rococo-auth**
+  ![Архитектура бд rococo-auth](static/srococo-auth-db.png)
+- сервис **rococo-api**
+  ![Архитектура бд rococo-api](static/srococo-api-db.png)
 
+<a name="схема_junit"></a>
+# Схема JUnit Extensions
+  ![Схема extensions](static/extensions.jpg)
+
+<a name="запуск_приложения_в_ide"></a>
+# Запуск приложения локально в IDE
+
+#### 1. Запустить БД и frontend командой
 ```posh
-Dmitriis-MacBook-Pro rococo % cd rococo-client
+bash up-local.sh
 ```
+#### 2. Запустить backend сервисы Rococo командой Run в IDE в следующем порядке
 
-#### 2. Обнови зависимости и запускай фронт:
+*rococo-auth -> rococo-api
 
+<a name="запуск_тестов_локально"></a>
+# Запуск тестов локально
+
+#### 1. Запустить приложение rococo
+
+#### 2. Запустить все тесты 
 ```posh
-Dmitriis-MacBook-Pro rococo-client % npm i
-Dmitriis-MacBook-Pro rococo-client % npm run dev
+./gradlew :rococo-e2e:test
 ```
-
-Фронт стартанет в твоем браузере на порту 3000: http://127.0.0.1:3000/
-Обрати внимание! Надо использовать именно 127.0.0.1, а не localhost
-
-#### 3. Запустите бэкенд rococo-api
-
-```posh
-Dmitriis-MacBook-Pro rococo % ./gradlew :rococo-api:bootRun --args='--spring.profiles.active=local'
-```
-
-Бэк стартанет на порту 8080: http://127.0.0.1:8080/
-
-# Что дальше?
-
-#### 1. В первую очередь, необходимо реализовать сервис rococo-auth
-
-Фронтенд полностью готов к использованию сервиса auth на порту 9000,
-твоя задача взять сервис niffler-auth и аккуратно переделать его для работы с rococo.
-Страницы логина / регистрации, а так же стили и графику мы даем:
-
-- deer-logo.svg
-- favicon.ico
-- styles.css
-- login.html
-- register.html
-
-Основная задача - аккуратно заменить упоминания о niffler в этом сервисе, а в идеале - еще и
-разобраться, как он работает. В этом будет полезно
-видео
-[Implementing an OAuth 2 authorization server with Spring Security - the new way! by Laurentiu Spilca](https://youtu.be/DaUGKnA7aro)
-[Full Stack OAuth 2 - With Spring Security / React / Angular Part 1](https://youtu.be/SfNIjS_2H4M)
-[Full Stack OAuth 2 - With Spring Security / React / Angular Part 2](https://youtu.be/3bGer6-6mdY)
-
-#### 2. Как только у вас появилось уже 2 сервиса, есть смысл подумать о докеризации
-
-Чем раньше у ваc получится запустить в докере фронт и все бэкенды, тем проще будет дальше.
-На самом деле, докеризация не является строго обязательным требованием, но если вы хотите в будущем
-задеплоить свой сервис на прод, прикрутить CI/CD, без этого никак не обойдется
-
-#### 3. Подумать о необходимых микросервисах.
-
-У вас должен остаться основной бэкенд (rococ-api), куда будет ходить фронт, но он будет играть роль прокси,
-проверяющего вашу аутентифкацию. Все, как и в niffler. Это значит, что основная логика уйдет в свои
-микросервисы со своими БД. На мой вззгляд, здесь будут уместны сервисы rococo-artist,
-rococo-painting, rococo-museum, rococo-userdata. Возможно, у вас другие мысли, какие микросервисы создать - вы
-можете проявить свою фантазию
-
-#### 4. Выбрать протокол взаимодействия между сервисами
-
-В поставляемом фронтенде классический REST. Его можно поменять на GraphQL - но это потребует
-переписывания фронта, и тебе придется делать это самому. Поэтому я бы посоветовал оставить между
-фронтом и rococo-gateway старый добрый REST. А вот взаимодействие между микросервисами можно
-делать как угодно! REST, gRPC, SOAP. Делай проект я, однозначно взял бы gRPC - не писать руками кучу
-model-классов, получить перформанс и простое написание тестов. Стоит сказать, что здесь не
-понадобятся streaming rpc, и все ограничится простыми унарными запросами. Однако если вы хотите
-использовать REST или SOAP - мы не будем возражать.
-
-#### 5. Реализовать микросервисный backend
-
-Это место где, внезапно, СОВА НАРИСОВАНА! :)
-На самом деле, концептуально и технически каждый сервис будет похож на что-то из niffler, поэтому
-главное внимательность и аккуратность. Любые отхождения от niffler возможны - ты можешь захотеть
-использовать, например, NoSQL базы или по другому организовать конфигурацию / структуру проекта -
-никаких ограничений, лишь бы сервис выполнял свое прямое назначение
-
-##### Особенности реализации backend
-
-###### Сервис gateway
-
-1) Pageble контроллеры;
-Пример:
-```java
-  @GetMapping()
-  public Page<ArtistJson> getAll(@RequestParam(required = false) String name,
-                                 @PageableDefault Pageable pageable) {
-    return artistService.getAll(name, pageable);
-  }
-```
-Здесь объект `Pageable` - приходит в виде GET параметров с фронта. 
-Так же GET парметром может прийти (а может и нет) параметр name. Тогда запрос в БД должен включать фильтрацию по полю name (`ContainsIgnoreCase`)
-Пример репозитория с запросом к БД с учетом Pageable и name
-```java
-public interface ArtistRepository extends JpaRepository<ArtistEntity, UUID> {
-
-  @Nonnull
-  Page<ArtistEntity> findAllByNameContainsIgnoreCase(
-          @Nonnull String name,
-          @Nonnull Pageable pageable
-  );
-}
-```
-Почитать, дополнительно, тут: https://www.baeldung.com/spring-data-jpa-pagination-sorting
-
-
-2) необходим доступ без авторизации к эндпойнту `/api/session` без необходимости быть
-аторизованным, для этого пропишем его в security config:
-```java
-@EnableWebSecurity
-@Configuration
-@Profile("!local")
-public class SecurityConfigMain {
-
-    private final CorsCustomizer corsCustomizer;
-
-    @Autowired
-    public SecurityConfigMain(CorsCustomizer corsCustomizer) {
-        this.corsCustomizer = corsCustomizer;
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        corsCustomizer.corsCustomizer(http);
-
-        http.authorizeHttpRequests(customizer ->
-                customizer.requestMatchers(
-                                antMatcher("/session"),
-                                antMatcher("/actuator/health"))
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
-        ).oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
-        return http.build();
-    }
-}
-```
-Все прочие эндпойнты должны требовать авторизацию
-
-#### 6. Подготовить структуру тестового "фреймворка", подумать о том какие прекондишены и как вы будете создавать
-
-Здесь однозначно понадобится возможность API-логина и работы со всеми возможными preconditions проекта - картинами,
-художниками, музеями. 
-
-#### 7. Реализовать достаточное, на твой взгляд, покрытие e-2-e тестами
-
-На наш взгляд, только основны позитивных сценариев тут не менее трех десятков.
-
-#### 8. Оформить все красиво!
-
-Да, тут еще раз намекну про важность ридми, важность нарисовать топологию (схему) твоих сервисов, важность скриншотиков и прочих красот
-
-
-
-
-
-
-
-
-
-
-
-
