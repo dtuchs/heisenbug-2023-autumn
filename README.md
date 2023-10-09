@@ -38,9 +38,9 @@ Rococo - демонстрационное приложение для Heisenbug 
 <a name="архитектура_бд"></a>
 # Архитектура базы данных
 - сервис **rococo-auth**
-  ![Архитектура бд rococo-auth](static/srococo-auth-db.png)
+  ![Архитектура бд rococo-auth](static/rococo-auth-db.png)
 - сервис **rococo-api**
-  ![Архитектура бд rococo-api](static/srococo-api-db.png)
+  ![Архитектура бд rococo-api](static/rococo-api-db.png)
 
 <a name="схема_junit"></a>
 # Схема JUnit Extensions
