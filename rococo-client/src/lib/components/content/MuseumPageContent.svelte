@@ -25,6 +25,7 @@
             <div class="text-center">{$singleMuseumStore.data?.geo.country.name}, {$singleMuseumStore.data?.geo?.city}</div>
             <div class="w-56 m-3 mx-auto">
                 <EditComponent
+                        dataTestId="edit-museum"
                         {errorTrigger}
                         {successTrigger}
                         formComponent={EditMuseumForm}

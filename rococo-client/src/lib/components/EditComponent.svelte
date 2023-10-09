@@ -18,6 +18,8 @@ export let formData: Record<string, any>;
 
 export let dataKey: string;
 
+export let dataTestId = "edit";
+
 const clickEditButton = () => {
     const modal = prepareModal({
         ref: formComponent,
@@ -54,5 +56,5 @@ const dataEditCallback = async (result: {
 </script>
 
 {#if $sessionStore.user}
-    <button class="btn variant-ghost m-3 mx-auto block w-full" type="button" on:click={clickEditButton}>Редактировать</button>
+    <button data-testid={dataTestId} class="btn variant-ghost m-3 mx-auto block w-full" type="button" on:click={clickEditButton}>Редактировать</button>
 {/if}

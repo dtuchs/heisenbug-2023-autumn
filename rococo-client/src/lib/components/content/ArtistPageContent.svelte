@@ -124,6 +124,7 @@
                         store={singleArtistStore}
                         dataKey="name"
                         successMessage="Обновлен художник"
+                        dataTestId="edit-artist"
                         formData={{
                            name: $singleArtistStore?.data?.name,
                            photo: $singleArtistStore?.data?.photo,

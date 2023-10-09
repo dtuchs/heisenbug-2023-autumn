@@ -26,6 +26,7 @@
                 <div class="text-center">{$singlePaintingStore?.data?.artist?.name}</div>
                 <div class="w-56 m-3 mx-auto">
                     <EditComponent
+                            dataTestId="edit-painting"
                             {errorTrigger}
                             {successTrigger}
                             formComponent={EditPaintingForm}
