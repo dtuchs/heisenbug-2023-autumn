@@ -7,6 +7,7 @@ spring:
   mvc:
     log-request-details: true
   datasource:
+    url: jdbc:mysql://localhost:3306/rococo-auth?serverTimezone=UTC&createDatabaseIfNotExist=true
     username: root
     password: secret
     hikari:
@@ -42,26 +43,8 @@ logging:
 oauth2:
   client-id: client
   client-secret: '{noop}secret'
----
-spring:
-  config:
-    activate:
-      on-profile: local
-  datasource:
-    url: jdbc:mysql://localhost:3306/rococo-auth?serverTimezone=UTC&createDatabaseIfNotExist=true
+
 rococo-ui:
   uri: http://127.0.0.1:3000
 rococo-auth:
   uri: http://127.0.0.1:9000
----
-spring:
-  config:
-    activate:
-      on-profile: docker
-  datasource:
-    url: jdbc:mysql://rococo-db:3306/rococo-auth?serverTimezone=UTC&createDatabaseIfNotExist=true
-rococo-ui:
-  uri: http://ui.rococo.docker
-rococo-auth:
-  uri: http://auth.rococo.docker
----

@@ -4,8 +4,14 @@ server:
 spring:
   application:
     name: rococo-api
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:9000
 
   datasource:
+    url: jdbc:mysql://localhost:3306/rococo-api?serverTimezone=UTC&createDatabaseIfNotExist=true
     username: root
     password: secret
     hikari:
@@ -38,34 +44,5 @@ logging:
     org.springframework.security.oauth2: INFO
 #    org.springframework.boot.autoconfigure: DEBUG
 
----
-spring:
-  config:
-    activate:
-      on-profile: local
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://127.0.0.1:9000
-  datasource:
-    url: jdbc:mysql://localhost:3306/rococo-api?serverTimezone=UTC&createDatabaseIfNotExist=true
-
 rococo-ui:
   uri: http://127.0.0.1:3000
----
-spring:
-  config:
-    activate:
-      on-profile: docker
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://auth.rococo.docker:9000
-  datasource:
-    url: jdbc:mysql://rococo-db:3306/rococo-api?serverTimezone=UTC&createDatabaseIfNotExist=true
-
-rococo-ui:
-  uri: http://ui.rococo.docker
----

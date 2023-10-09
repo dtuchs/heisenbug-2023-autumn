@@ -19,6 +19,9 @@ create table if not exists `authority`
     constraint fk_authorities_users foreign key (user_id) references `user` (id)
 );
 
+delete from `rococo-auth`.authority;
+delete from `rococo-auth`.user;
+
 insert into `rococo-auth`.user (id, username, password, enabled, account_non_expired, account_non_locked, credentials_non_expired) values (0x1ACEC3FD2569434188929AAE56653EA7, 'dima', '{bcrypt}$2a$10$I0OfayQFt7JH2L36QrClae.GBmqb3Vkg6ygNK/F98LG4/GteWxnAe', 1, 1, 1, 1);
 insert into `rococo-auth`.user (id, username, password, enabled, account_non_expired, account_non_locked, credentials_non_expired) values (0x845EB95B4C384ADEAFC7209D4B2ADED2, 'valentin', '{bcrypt}$2a$10$EkKgBosHKp90/Fd4b1qbPOIqRdO3BenUqEuIfMqsHS62RuyqWWZIe', 1, 1, 1, 1);
 insert into `rococo-auth`.user (id, username, password, enabled, account_non_expired, account_non_locked, credentials_non_expired) values (0x854400E56046431494E8300A1B380D76, 'ivan', '{bcrypt}$2a$10$K0i2MKCT5vFbxtqvVuXmd.JygXkDKvMqF/p7qiNrFq3R5kDi7b.7a', 1, 1, 1, 1);
