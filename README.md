@@ -1,6 +1,7 @@
 # Rococo
 
 Rococo - демонстрационное приложение для Heisenbug 2023 Autumn, доклад [The art of JUnit extensions](https://heisenbug.ru/talks/0ff39adbc2ff4e19b54a4bb5d8d2d766/)
+[Презентация в PDF](static/HB_23_Autumn.pdf) 
 
 # Оглавление
 - [Используемые технологии](#используемые_технологии)

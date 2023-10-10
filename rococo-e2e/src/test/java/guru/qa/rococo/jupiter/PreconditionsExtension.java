@@ -11,14 +11,20 @@ import java.sql.SQLException;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class PreconditionsExtension implements ArroundAll {
+public class PreconditionsExtension implements SuiteExtension {
 
   private static final String connectionUrl = "jdbc:mysql://localhost:3306/rococo-api?serverTimezone=UTC";
 
   @Override
   public void beforeAllTests(ExtensionContext context) {
     try (Connection conn = DriverManager.getConnection(connectionUrl, "root", "secret")) {
-      ScriptUtils.executeSqlScript(conn, new EncodedResource(new ClassPathResource("setup.sql"), UTF_8));
+      ScriptUtils.executeSqlScript(
+          conn,
+          new EncodedResource(
+              new ClassPathResource("setup.sql"),
+              UTF_8
+          )
+      );
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }

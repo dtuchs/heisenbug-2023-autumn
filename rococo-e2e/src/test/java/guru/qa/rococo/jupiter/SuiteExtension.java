@@ -3,7 +3,7 @@ package guru.qa.rococo.jupiter;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-public interface ArroundAll extends BeforeAllCallback {
+public interface SuiteExtension extends BeforeAllCallback {
 
   @Override
   default void beforeAll(ExtensionContext context) throws Exception {
@@ -11,11 +11,14 @@ public interface ArroundAll extends BeforeAllCallback {
         .getOrComputeIfAbsent(this.getClass(),
             k -> {
               beforeAllTests(context);
-              return (ExtensionContext.Store.CloseableResource) this::afterAllTests;
+              return new ExtensionContext.Store.CloseableResource() {
+                @Override
+                public void close() throws Throwable {
+                  afterAllTests();
+                }
+              };
             });
   }
-
-  ;
 
   default void beforeAllTests(ExtensionContext context) {
 

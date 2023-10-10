@@ -13,9 +13,12 @@ public class CodeInterceptor implements Interceptor {
   public Response intercept(Chain chain) throws IOException {
     final Response response = chain.proceed(chain.request());
     if (response.isRedirect() && response.header("Location").contains("code=")) {
-      ApiLoginExtension.setCode(ContextHolderExtension.Holder.INSTANCE.get(), StringUtils.substringAfter(
-          response.header("Location"), "code="
-      ));
+      ApiLoginExtension.setCode(
+          ContextHolderExtension.Holder.INSTANCE.get(),
+          StringUtils.substringAfter(
+              response.header("Location"), "code="
+          )
+      );
     }
     return response;
   }

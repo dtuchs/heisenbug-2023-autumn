@@ -12,8 +12,7 @@ public class ApiClient extends RestService {
   public ApiClient() {
     super(
         "http://127.0.0.1:8080",
-        false,
-        null
+        false
     );
   }
 
@@ -22,7 +21,7 @@ public class ApiClient extends RestService {
   @SneakyThrows
   public MuseumJson createMuseum(ExtensionContext context, MuseumJson museumJson) {
     return api.createMuseum(
-        ApiLoginExtension.getJsessionidCookieAsString(),
+        ApiLoginExtension.getJsessionIdCookieAsString(),
         ApiLoginExtension.getBearerToken(context),
         museumJson
     ).execute().body();
@@ -31,7 +30,7 @@ public class ApiClient extends RestService {
   @SneakyThrows
   public ArtistJson createArtist(ExtensionContext context, ArtistJson artistJson) {
     return api.createArtist(
-        ApiLoginExtension.getJsessionidCookieAsString(),
+        ApiLoginExtension.getJsessionIdCookieAsString(),
         ApiLoginExtension.getBearerToken(context),
         artistJson
     ).execute().body();
@@ -40,7 +39,7 @@ public class ApiClient extends RestService {
   @SneakyThrows
   public PaintingJson createPainting(ExtensionContext context, PaintingJson paintingJson) {
     return api.createPainting(
-        ApiLoginExtension.getJsessionidCookieAsString(),
+        ApiLoginExtension.getJsessionIdCookieAsString(),
         ApiLoginExtension.getBearerToken(context),
         paintingJson
     ).execute().body();

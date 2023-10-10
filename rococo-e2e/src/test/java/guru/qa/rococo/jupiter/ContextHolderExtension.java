@@ -5,14 +5,15 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 public class ContextHolderExtension implements BeforeEachCallback, AfterEachCallback {
-  @Override
-  public void afterEach(ExtensionContext context) throws Exception {
-    Holder.INSTANCE.remove();
-  }
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
     Holder.INSTANCE.set(context);
+  }
+
+  @Override
+  public void afterEach(ExtensionContext context) throws Exception {
+    Holder.INSTANCE.remove();
   }
 
   public enum Holder {

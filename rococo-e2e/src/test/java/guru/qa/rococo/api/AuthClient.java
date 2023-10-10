@@ -34,7 +34,7 @@ public class AuthClient extends RestService {
     auth.login(
         username,
         password,
-        ApiLoginExtension.getXsrf()
+        ApiLoginExtension.getCsrf()
     ).execute();
 
     JsonNode response = auth.token(
@@ -46,7 +46,10 @@ public class AuthClient extends RestService {
         ApiLoginExtension.getCodeVerifier(context)
     ).execute().body();
 
-    ApiLoginExtension.setToken(context, response.get("id_token").asText());
+    ApiLoginExtension.setToken(
+        context,
+        response.get("id_token").asText()
+    );
   }
 
   public void register(String username, String password) throws IOException {
@@ -55,7 +58,7 @@ public class AuthClient extends RestService {
         username,
         password,
         password,
-        ApiLoginExtension.getXsrf()
+        ApiLoginExtension.getCsrf()
     ).execute();
   }
 }
