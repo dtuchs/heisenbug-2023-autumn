@@ -6,13 +6,13 @@ import jakarta.validation.constraints.Size;
 
 @EqualPasswords
 public record RegistrationModel(
-    @NotNull(message = "Username can not be null")
-    @NotEmpty(message = "Username can not be empty")
-    @Size(max = 50, message = "Username can`t be longer than 50 characters")
+    @NotNull(message = "Имя пользователя не может быть пустым")
+    @NotEmpty(message = "Имя пользователя не может быть пустым")
+    @Size(max = 50, message = "Имя пользователя не может быть длиннее 50 символов")
     String username,
-    @NotNull(message = "Password can not be null")
-    @Size(min = 3, max = 12, message = "Allowed password length should be from 3 to 12 characters")
+    @NotNull(message = "Пароль не может быть пустым")
+    @Size(min = 3, max = 12, message = "Длина пароля должна быть от 3 до 12 символов")
     String password,
-    @NotNull(message = "Password submit can not be null")
+    @NotNull(message = "Подтверждение пароля не может быть пустым")
     String passwordSubmit) {
 }

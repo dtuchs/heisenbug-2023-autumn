@@ -68,7 +68,7 @@ public class RegisterController {
         addErrorToRegistrationModel(
             registrationModel,
             model,
-            "username", "Username `" + registrationModel.username() + "` already exists"
+            "username", "Имя пользователя `" + registrationModel.username() + "` уже существует"
         );
       }
     } else {

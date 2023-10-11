@@ -15,21 +15,24 @@
                 <h1 class="form__header">Ro<span class="form__text_gold">coco</span></h1>
                 <label class="form__element">
                     <span class="form__label">Имя пользователя</span>
+                    <span class="error__indicator error__username" th:if="${#fields.hasErrors('username')}"></span>
                     <input class="form__input" type="text" id="username" th:field="*{username}" name="username"
                         placeholder="Введите имя пользователя..." required/>
-                    <span class="form__error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                    <span class="form__error error__username" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
                 </label>
                 <label class="form__element">
                     <span class="form__label">Пароль</span>
+                    <span class="error__indicator error__password" th:if="${#fields.hasErrors('password')}"></span>
                     <input class="form__input" type="password" id="password" name="password" th:field="*{password}"
                         placeholder="Введите пароль..." required/>
-                    <span class="form__error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                    <span class="form__error error__password" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </label>
                 <label class="form__element">
                     <span class="form__label">Повторите пароль</span>
+                    <span class="error__indicator error__passwordSubmit" th:if="${#fields.hasErrors('passwordSubmit')}"></span>
                     <input class="form__input" type="password" id="passwordSubmit" name="passwordSubmit"
                         th:field="*{passwordSubmit}" placeholder="Повторите пароль..." required/>
-                    <span class="form__error" th:if="${#fields.hasErrors('passwordSubmit')}"
+                    <span class="form__error error__passwordSubmit" th:if="${#fields.hasErrors('passwordSubmit')}"
                         th:errors="*{passwordSubmit}"></span>
                 </label>
                 <button class="form__submit" type="submit">
@@ -45,5 +48,25 @@
         </section>
     </div>
 </main>
+<script>
+    const usernameInput = document.querySelector("#username");
+    const passwordInput = document.querySelector("#password");
+    const passwordSubmitInput = document.querySelector("#passwordSubmit");
+
+    usernameInput.addEventListener("input", () => {
+       const error = document.querySelectorAll(".error__username");
+       error.forEach(err => err.remove());
+    });
+
+    passwordInput.addEventListener("input", () => {
+        const error = document.querySelectorAll(".error__password");
+        error.forEach(err => err.remove());
+    });
+
+    passwordSubmitInput.addEventListener("input", () => {
+        const error = document.querySelectorAll(".error__passwordSubmit");
+        error.forEach(err => err.remove());
+    });
+</script>
 </body>
 </html>

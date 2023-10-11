@@ -13,6 +13,8 @@ body {
     --color-surface-500: 116 74 161;
     --color-surface-50: 250 248 252;
     --color-secondary-500: 6 114 229;
+    --color-error-200: 227 195 200;
+    --color-error-400: 177 87 100;
     --color-error-500: 143 15 34;
     --theme-font-color-dark: var(--color-surface-50);
     --theme-rounded-container: 4px;
@@ -90,6 +92,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .form__header {
@@ -110,6 +113,7 @@ main {
 
 .form__element {
     display: flex;
+    position: relative;
     width: 100%;
     padding: 8px 12px;
     flex-direction: column;
@@ -157,12 +161,13 @@ main {
     background-image: url("../images/eye.svg");
     background-size: contain;
     background-color: transparent;
-    right: 10px;
-    top: 25px;
+    right: 20px;
+    top: 56px;
     border: none;
     width: 25px;
     height: 25px;
     z-index: 5;
+    cursor: pointer;
 }
 
 .form__password-button_active {
@@ -198,5 +203,22 @@ main {
 }
 
 .form__error {
+    color: rgb(var(--color-error-400) / 1);
+}
 
+.login__error {
+    position: absolute;
+    top: 130px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(var(--color-error-200) / 1);
+    padding: 3px;
+    border-radius: 2px;
+    font-weight: 800;
+}
+
+.error__indicator + .form__input {
+    border-color: rgb(var(--color-error-500) / 1);
+    background-color: rgb(var(--color-error-200) / 1);
+    color: rgb(var(--color-error-500) / 1);
 }
