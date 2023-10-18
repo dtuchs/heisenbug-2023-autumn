@@ -1,7 +1,6 @@
 <script lang="ts">
     import ContentPageHeading from "$lib/components/ContentPageHeading.svelte";
     import ListWrapper from "$lib/components/ListWrapper.svelte";
-    import type {PageData} from "../../../../.svelte-kit/types/src/routes/artist/$types.js";
     import {getModalStore} from "@skeletonlabs/skeleton";
     import {checkDuplicates} from "$lib/helpers/dataUtils.js";
     import {prepareModal} from "$lib/helpers/prepareModal.js";
@@ -9,9 +8,9 @@
     import type {Pageable} from "$lib/types/Pageable";
     import type {StoreDataType} from "$lib/types/DataType";
     import type {ComponentType} from "svelte";
+    import {onMount} from "svelte";
 
     type Type = $$Generic<{ id: string }>;
-    export let data: PageData;
     export let errorTrigger: (message: string) => void;
     export let successTrigger: (message: string) => void;
     export let store: Writable<StoreDataType<Type>>;
@@ -33,46 +32,60 @@
 
     let currentPage = 0;
 
-    if(data.error) {
-        errorTrigger(data.error);
-    } else {
-        store.set({
-            data: data.data.content,
-            noMoreData: currentPage === data.data.totalPages - 1,
-            isLoading: false,
-            ignoreIds: [],
+    const handleError = (error: string) => {
+        store.update((prevState) => {
+            return {
+                ...prevState,
+                isLoading: false,
+            }
         });
+        errorTrigger(error);
     }
 
-    const loadData = async (search: string) => {
+    const load = async({page, search}: {page?: number, search?: string}) =>{
         store.update((prevState) => {
             return {
                 ...prevState,
                 isLoading: true,
+                noMoreData: true,
             }
         });
-        const response = await loadFunction({search});
+        const response = await loadFunction({page, search});
         if (response.error) {
-            store.update((prevState) => {
-                return {
-                    ...prevState,
-                    isLoading: false,
-                }
-            });
-            errorTrigger(response.error);
+            handleError(response.error);
             return;
         }
         const resData = response.data;
-        if(resData){
+        if(resData) {
+            const newBatch = checkDuplicates<Type>(resData.content, store, $store.ignoreIds);
+
             store.update((prevState) => {
+                const data = search ? resData.content : [
+                    ...prevState.data,
+                    ...newBatch
+                ];
+                const noMoreData = search
+                    ? true
+                    : resData.totalPages ? currentPage === resData.totalPages - 1 : true
                 return {
                     ...prevState,
-                    data: resData.content,
+                    data,
+                    noMoreData,
                     isLoading: false,
-                    noMoreData: true,
                 }
             });
         }
+    }
+
+    const loadSearch = async (search: string) => {
+        store.update((prevState) => {
+            return {
+                ...prevState,
+                data: [],
+                isLoading: true,
+            }
+        });
+        await load({search})
         isSearchNotEmpty = search.length > 0;
     };
 
@@ -84,33 +97,7 @@
                 noMoreData: true,
             }
         });
-        const response = await loadFunction({page: ++currentPage});
-        if (response.error) {
-            store.update((prevState) => {
-                return {
-                    ...prevState,
-                    isLoading: false,
-                }
-            });
-            errorTrigger(response.error);
-            return;
-        }
-
-        const resData = response.data;
-        if(resData) {
-            const newBatch = checkDuplicates<Type>(resData.content, store, $store.ignoreIds);
-            store.update((prevState) => {
-                return {
-                    ...prevState,
-                    data: [
-                        ...prevState.data,
-                        ...newBatch
-                    ],
-                    noMoreData: currentPage === resData.totalPages - 1,
-                    isLoading: false,
-                }
-            });
-        }
+        await load({page: ++currentPage});
     }
 
     const addCallback = async (result: {
@@ -145,6 +132,16 @@
             callback: addCallback});
         modalStore.trigger(modal);
     }
+
+    onMount(async () => {
+        store.set({
+            data: [],
+            noMoreData: true,
+            isLoading: true,
+            ignoreIds: [],
+        });
+        await load({page: 0});
+    });
 </script>
 
 <ContentPageHeading
@@ -152,7 +149,7 @@
         searchPlaceholder={searchPlaceholder}
         addButtonName={addButtonName}
         onAddButtonClick={clickAddButton}
-        loadFunction={loadData}
+        loadFunction={loadSearch}
 />
 <ListWrapper data={$store.data}
              {isSearchNotEmpty}

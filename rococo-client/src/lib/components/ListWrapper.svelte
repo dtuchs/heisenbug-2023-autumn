@@ -38,12 +38,12 @@
 {:else}
     <div class="w-100">
         <slot/>
-        {#if !noMoreData}
-            <div use:viewport on:viewportenter={() => loadMore()}>
-                {#if isLoading}
-                    <Loader/>
-                {/if}
-            </div>
+    </div>
+{/if}
+{#if !noMoreData}
+    <div use:viewport on:viewportenter={() => loadMore()}>
+        {#if isLoading}
+            <Loader/>
         {/if}
     </div>
 {/if}

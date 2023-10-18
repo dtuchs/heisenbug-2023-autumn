@@ -3,5 +3,5 @@ import { writable } from "svelte/store";
 import type {StoreDataType} from "$lib/types/DataType";
 
 export const artistsStore = writable<StoreDataType<ArtistType>>(
-    {data: [], noMoreData: false, isLoading: false, ignoreIds: []});
+    {data: [], noMoreData: true, isLoading: false, ignoreIds: []});
 

@@ -1,20 +1,25 @@
 <script lang="ts">
     import {singlePaintingStore} from "$lib/stores/singlePainting.store.js";
     import EditPaintingForm from "$lib/components/forms/painting/EditPaintingForm.svelte";
-    import type {PageData} from "../../../../.svelte-kit/types/src/routes/painting/[id]/$types.js";
     import EditComponent from "$lib/components/EditComponent.svelte";
-    export let data: PageData;
+    import { page } from '$app/stores';
+    import {onMount} from "svelte";
+    import {apiClient} from "$lib/helpers/apiClient";
 
     export let errorTrigger: (message: string) => void;
     export let successTrigger: (message: string) => void;
 
-    if(data.error) {
-        errorTrigger(data.error);
-    } else {
-        singlePaintingStore.set({
-            data: data.data,
-        });
-    }
+    onMount(async () => {
+        const data = await apiClient.loadPainting($page.params.id);
+        if(data.error) {
+            errorTrigger(data.error);
+        } else {
+            singlePaintingStore.set({
+                data: data.data,
+            });
+        }
+    });
+
 </script>
 
 <article class="card m-8 p-4 min-h-[90%]">

@@ -1,22 +1,26 @@
 <script lang="ts">
     import EditMuseumForm from "$lib/components/forms/museum/EditMuseumForm.svelte";
     import {singleMuseumStore} from "$lib/stores/singleMuseum.store";
-    import type {PageData} from "../../../../.svelte-kit/types/src/routes/museum/[id]/$types.js";
+    import { page } from '$app/stores';
     import EditComponent from "$lib/components/EditComponent.svelte";
+    import {onMount} from "svelte";
+    import {apiClient} from "$lib/helpers/apiClient";
 
-    export let data: PageData;
     export let errorTrigger: (message: string) => void;
     export let successTrigger: (message: string) => void;
 
-    if(data.error) {
-        errorTrigger(data.error);
-    } else {
-        singleMuseumStore.set({
-            data: data.data,
-        });
-    }
-</script>
+    onMount(async () => {
+        const data = await apiClient.loadMuseum($page.params.id);
+        if(data.error) {
+            errorTrigger(data.error);
+        } else {
+            singleMuseumStore.set({
+                data: data.data,
+            });
+        }
+    });
 
+</script>
 
 <article class="card m-8 p-4 min-h-[90%]">
     <div class="grid grid-cols-1 lg:grid-cols-2 m-4 min-h-full">
