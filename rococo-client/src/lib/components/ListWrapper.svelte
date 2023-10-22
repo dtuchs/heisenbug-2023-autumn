@@ -21,19 +21,23 @@
 </script>
 
 {#if !data?.length}
-    {#if isSearchNotEmpty}
-        <EmptySearch
-                text={emptySearchText}
-                description={emptySearchDescription}
-        />
+    {#if isLoading}
+        <Loader/>
     {:else}
-        <EmptyState
-                text={emptyStateTitle}
-                buttonName={emptyStateButtonName}
-                onButtonClick={clickAddButton}
-                {bordered}
-                {fullPage}
-        />
+        {#if isSearchNotEmpty}
+            <EmptySearch
+                    text={emptySearchText}
+                    description={emptySearchDescription}
+            />
+        {:else}
+            <EmptyState
+                    text={emptyStateTitle}
+                    buttonName={emptyStateButtonName}
+                    onButtonClick={clickAddButton}
+                    {bordered}
+                    {fullPage}
+            />
+        {/if}
     {/if}
 {:else}
     <div class="w-100">

@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
 
@@ -11,9 +11,7 @@ const config = {
 		inspector: true,
 	},
 	kit: {
-		adapter: adapter({
-			fallback: true
-		})
+		adapter: adapter()
 	},
 };
 export default config;
