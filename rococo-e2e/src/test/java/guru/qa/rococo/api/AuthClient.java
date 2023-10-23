@@ -13,7 +13,7 @@ public class AuthClient extends RestService {
 
   public AuthClient() {
     super(
-        "http://127.0.0.1:9000",
+        CFG.authUrl(),
         true,
         new CodeInterceptor()
     );
@@ -26,7 +26,7 @@ public class AuthClient extends RestService {
         "code",
         "client",
         "openid",
-        "http://127.0.0.1:3000/authorized",
+        CFG.frontUrl() + "/authorized",
         ApiLoginExtension.getCodeChallenge(context),
         "S256"
     ).execute();
@@ -40,7 +40,7 @@ public class AuthClient extends RestService {
     JsonNode response = auth.token(
         "Basic " + new String(Base64.getEncoder().encode("client:secret".getBytes(UTF_8))),
         "client",
-        "http://127.0.0.1:3000/authorized",
+        CFG.frontUrl() + "/authorized",
         "authorization_code",
         ApiLoginExtension.getCode(context),
         ApiLoginExtension.getCodeVerifier(context)

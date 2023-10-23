@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import guru.qa.rococo.api.AuthClient;
 import guru.qa.rococo.api.ThreadLocalCookieStore;
+import guru.qa.rococo.config.Config;
 import guru.qa.rococo.utils.OauthUtils;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -12,6 +13,8 @@ import org.junit.platform.commons.support.AnnotationSupport;
 import org.openqa.selenium.Cookie;
 
 public class ApiLoginExtension implements BeforeEachCallback, AfterEachCallback {
+
+  public static final Config CFG = Config.getInstance();
 
   public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(ApiLoginExtension.class);
 
@@ -32,7 +35,7 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterEachCallback 
       setCodeVerifier(context, OauthUtils.generateCodeVerifier());
       setCodeChallenge(context, OauthUtils.generateCodeChallenge(getCodeVerifier(context)));
       authClient.doLogin(context, apiLogin.username(), apiLogin.password());
-      Selenide.open("http://127.0.0.1:3000");
+      Selenide.open(CFG.frontUrl());
       Selenide.localStorage().setItem("id_token", getToken(context));
       WebDriverRunner.getWebDriver().manage().addCookie(getJsessionIdCookie());
       Selenide.refresh();

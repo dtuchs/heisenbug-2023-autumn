@@ -1,5 +1,6 @@
 package guru.qa.rococo.jupiter;
 
+import guru.qa.rococo.config.Config;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.EncodedResource;
@@ -13,11 +14,14 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class PreconditionsExtension implements SuiteExtension {
 
-  private static final String connectionUrl = "jdbc:mysql://localhost:3306/rococo-api?serverTimezone=UTC";
+  private static final Config CFG = Config.getInstance();
 
   @Override
   public void beforeAllTests(ExtensionContext context) {
-    try (Connection conn = DriverManager.getConnection(connectionUrl, "root", "secret")) {
+    try (Connection conn = DriverManager.getConnection(
+        CFG.apiJdbcUrl(),
+        "root",
+        "secret")) {
       ScriptUtils.executeSqlScript(
           conn,
           new EncodedResource(

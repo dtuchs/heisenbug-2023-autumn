@@ -11,7 +11,7 @@ public class ApiClient extends RestService {
 
   public ApiClient() {
     super(
-        "http://127.0.0.1:8080",
+        CFG.apiUrl(),
         false
     );
   }

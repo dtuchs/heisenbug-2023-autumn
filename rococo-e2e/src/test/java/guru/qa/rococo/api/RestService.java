@@ -1,5 +1,6 @@
 package guru.qa.rococo.api;
 
+import guru.qa.rococo.config.Config;
 import okhttp3.Interceptor;
 import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
@@ -11,6 +12,8 @@ import java.net.CookieManager;
 import java.net.CookiePolicy;
 
 public abstract class RestService {
+
+  protected static final Config CFG = Config.getInstance();
 
   protected final OkHttpClient httpClient;
   protected final Retrofit retrofit;
