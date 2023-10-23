@@ -173,13 +173,14 @@ const commonFetch = async (
             headers,
             body,
         });
+        const data = await response.json();
         if (!response.ok) {
             if(response.status === 401) {
                 clearSession();
             }
-            throw new Error(`Что-то пошло не так, код ошибки: ${response.status}`);
+            const errorText = data?.errors.join(". ");
+            throw new Error(`${errorText ?? "Что-то пошло не так"}`);
         }
-        const data = await response.json();
         return {
             data,
             error: undefined,

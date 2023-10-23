@@ -8,4 +8,4 @@ export const singleArtistStore = writable<SingleStoreDataType<ArtistType> & {
     noMoreData: boolean,
     isLoading: boolean,
     ignoreIds: string [],
-}>({data: undefined, paintings: [], noMoreData: false, isLoading: false, ignoreIds: []});
+}>({data: undefined, paintings: [], noMoreData: true, isLoading: false, ignoreIds: []});

@@ -23,18 +23,36 @@
     const authorId = $page.params.id;
 
     onMount(async () => {
+        singleArtistStore.set({
+            data: undefined,
+            paintings: [],
+            noMoreData: true,
+            isLoading: true,
+            ignoreIds: [],
+        });
         const artistData = await apiClient.loadArtist(authorId);
         const paintingsData = await apiClient.loadPaintingsByAuthorId({authorId: $page.params.id});
         if(artistData.error || paintingsData.error) {
             errorTrigger(artistData.error ?? paintingsData.error);
+            singleArtistStore.update(() => {
+                return {
+                    noMoreData: true,
+                    data: artistData?.data,
+                    paintings: paintingsData?.data?.content,
+                    isLoading: false,
+                    ignoreIds: [],
+                }
+            });
         }
         if(artistData.data && paintingsData.data) {
-            singleArtistStore.set({
-                data: artistData.data,
-                paintings: paintingsData.data.content,
-                noMoreData: currentPage === paintingsData.data.totalPages - 1,
-                isLoading: false,
-                ignoreIds: [],
+            singleArtistStore.update(() => {
+                return {
+                    data: artistData.data,
+                    paintings: paintingsData.data?.content,
+                    noMoreData: paintingsData.data ? currentPage === paintingsData.data?.totalPages - 1: true,
+                    isLoading: false,
+                    ignoreIds: [],
+                }
             });
         }
     });
@@ -68,7 +86,7 @@
                         ...prevState.paintings,
                         ...newBatch
                     ],
-                    noMoreData: currentPage === resData.totalPages -1,
+                    noMoreData: resData.data ? currentPage === resData.data?.totalPages - 1: true,
                     isLoading: false,
                 }
             });
@@ -138,7 +156,7 @@
                 <button class="btn variant-filled-primary m-3 mx-auto block w-full" type="button" on:click={clickAddButton}>Добавить картину</button>
             {/if}
         </div>
-        <p class="col-span-2 w-4/5">{$singleArtistStore?.data?.biography}</p>
+        <p class="col-span-2 w-4/5 m-2">{$singleArtistStore?.data?.biography}</p>
     </section>
     <section class="p-4">
         <ListWrapper data={$singleArtistStore.paintings}
