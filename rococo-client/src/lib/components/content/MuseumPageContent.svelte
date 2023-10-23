@@ -5,6 +5,7 @@
     import EditComponent from "$lib/components/EditComponent.svelte";
     import {onMount} from "svelte";
     import {apiClient} from "$lib/helpers/apiClient";
+    import {goto} from "$app/navigation";
 
     export let errorTrigger: (message: string) => void;
     export let successTrigger: (message: string) => void;
@@ -13,6 +14,7 @@
         const data = await apiClient.loadMuseum($page.params.id);
         if(data.error) {
             errorTrigger(data.error);
+            await goto("/not-found");
         } else {
             singleMuseumStore.set({
                 data: data.data,

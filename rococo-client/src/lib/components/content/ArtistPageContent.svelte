@@ -13,6 +13,7 @@
     import {sessionStore} from "$lib/stores/sessionStore";
     import EditComponent from "$lib/components/EditComponent.svelte";
     import {onMount} from "svelte";
+    import {goto} from "$app/navigation";
 
     const modalStore = getModalStore();
 
@@ -43,6 +44,7 @@
                     ignoreIds: [],
                 }
             });
+            await goto("/not-found");
         }
         if(artistData.data && paintingsData.data) {
             singleArtistStore.update(() => {
