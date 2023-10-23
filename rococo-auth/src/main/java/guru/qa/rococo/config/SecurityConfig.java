@@ -34,8 +34,7 @@ public class SecurityConfig {
                 antMatcher("/register"),
                 antMatcher("/images/**"),
                 antMatcher("/styles/**"),
-                antMatcher("/fonts/**"),
-                antMatcher("/actuator/health")
+                antMatcher("/fonts/**")
             ).permitAll()
             .anyRequest()
             .authenticated()

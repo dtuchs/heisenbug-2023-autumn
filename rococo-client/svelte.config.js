@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapterStatic from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
 
@@ -11,7 +11,13 @@ const config = {
 		inspector: true,
 	},
 	kit: {
-		adapter: adapter()
+		adapter: adapterStatic({
+			pages: 'build',
+			assets: 'build',
+			fallback: 'index.html',
+			precompress: false,
+			strict: true
+		})
 	},
 };
 export default config;
