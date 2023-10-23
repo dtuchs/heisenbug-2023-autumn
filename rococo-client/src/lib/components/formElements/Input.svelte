@@ -15,6 +15,7 @@
     <input 
         {name}
         class="input"
+        autocomplete="off"
         class:input-error={error.length}
         type="text" 
         bind:value={value} 

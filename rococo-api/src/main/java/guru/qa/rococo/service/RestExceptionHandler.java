@@ -59,4 +59,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             List.of("Объект не найден в БД", ex.getMessage())
         ));
   }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<ErrorJson> handleIllegalArgumentException(@Nonnull IllegalArgumentException ex) {
+    return ResponseEntity
+        .status(HttpStatus.BAD_REQUEST)
+        .body(new ErrorJson(
+            new Date(),
+            HttpStatus.BAD_REQUEST.value(),
+            List.of("Невалидные параметры запроса", ex.getMessage())
+        ));
+  }
 }
