@@ -173,11 +173,11 @@ const commonFetch = async (
             headers,
             body,
         });
+        if (response.status === 401) {
+            clearSession();
+        }
         const data = await response.json();
         if (!response.ok) {
-            if(response.status === 401) {
-                clearSession();
-            }
             const errorText = data?.errors.join(". ");
             return {
                 data: undefined,
