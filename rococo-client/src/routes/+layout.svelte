@@ -14,12 +14,22 @@
 	import ToastHandler from "$lib/components/ToastHandler.svelte";
 	import HeaderMenu from "$lib/components/HeaderMenu.svelte";
 	import MainTitle from "$lib/components/MainTitle.svelte";
+	import {goto} from "$app/navigation";
 
 	initializeStores();
 	let isMenuVisible = false;
 
+	const checkCurrentUrlAndRedirectToPreConfiguredUrl = async (currentUrl: URL) => {
+		if (currentUrl.host !== import.meta.env.VITE_FRONT_HOST){
+			await goto(import.meta.env.VITE_FRONT_URL);
+		}
+	}
+
 	onMount(async () => {
-		if (location.pathname === "/authorized") {
+		const currentUrl = new URL(window.location.href);
+		// required check for local development (modes: dev and docker)
+		await checkCurrentUrlAndRedirectToPreConfiguredUrl(currentUrl);
+		if (currentUrl.pathname === "/authorized") {
 			return;
 		}
 		sessionStore.update((prevState) => {
