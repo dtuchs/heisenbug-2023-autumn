@@ -5,7 +5,7 @@ import {Avatar, getModalStore, LightSwitch} from "@skeletonlabs/skeleton";
 import PagesNavigation from "$lib/components/PagesNavigation.svelte";
 import {
     initLocalStorageAndRedirectToAuth
-} from "$lib/auth/authUtils";
+} from "$lib/api/authUtils";
 import {prepareModal} from "$lib/helpers/prepareModal";
 import UserForm from "$lib/components/forms/user/UserForm.svelte";
 import type {UserType} from "$lib/types/User";

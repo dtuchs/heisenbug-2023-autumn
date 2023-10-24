@@ -8,7 +8,7 @@
 		Toast,
 	} from '@skeletonlabs/skeleton';
 	import {onMount} from "svelte";
-	import {apiClient} from "$lib/helpers/apiClient";
+	import {apiClient} from "$lib/api/apiClient";
 	import {sessionStore} from "$lib/stores/sessionStore.js";
 	import PagesNavigation from "$lib/components/PagesNavigation.svelte";
 	import ToastHandler from "$lib/components/ToastHandler.svelte";

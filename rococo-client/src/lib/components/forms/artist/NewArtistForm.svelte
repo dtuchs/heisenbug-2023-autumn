@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getModalStore } from "@skeletonlabs/skeleton";
 	import ModalButtonGroup from "../../ModalButtonGroup.svelte";
-	import { apiClient } from "$lib/helpers/apiClient";
+	import { apiClient } from "$lib/api/apiClient";
 
 	import { blobToBase64 } from "$lib/helpers/imageUtils";
 	import FormWrapper from "../../FormWrapper.svelte";

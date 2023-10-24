@@ -5,7 +5,7 @@
     import Input from "../../formElements/Input.svelte";
     import Select from "../../formElements/Select.svelte";
     import ImageInput from "../../formElements/ImageInput.svelte";
-    import { apiClient } from "$lib/helpers/apiClient";
+    import { apiClient } from "$lib/api/apiClient";
     import Textarea from "../../formElements/Textarea.svelte";
     import { blobToBase64 } from "$lib/helpers/imageUtils";
     import {validateImage} from "$lib/helpers/validate";

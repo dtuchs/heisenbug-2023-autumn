@@ -5,7 +5,7 @@
 	import Input from "$lib/components/formElements/Input.svelte";
 	import Textarea from "$lib/components/formElements/Textarea.svelte";
 	import ImageInput from "$lib/components/formElements/ImageInput.svelte";
-	import {apiClient} from "$lib/helpers/apiClient";
+	import {apiClient} from "$lib/api/apiClient";
 	import Select from "$lib/components/formElements/Select.svelte";
 	import {blobToBase64} from "$lib/helpers/imageUtils";
 	import {museumFormErrorStore} from "$lib/components/forms/museum/museum-form.error.store";

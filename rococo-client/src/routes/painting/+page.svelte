@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ToastHandler from "$lib/components/ToastHandler.svelte";
-	import {apiClient} from "$lib/helpers/apiClient";
+	import {apiClient} from "$lib/api/apiClient";
 	import CommonPage from "$lib/components/content/CommonPage.svelte";
 	import PaintingList from "$lib/components/PaintingList.svelte";
 	import {paintingsStore} from "$lib/stores/painting.store";

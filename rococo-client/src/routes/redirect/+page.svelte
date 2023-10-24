@@ -2,7 +2,7 @@
     import {onMount} from "svelte";
     import {
         initLocalStorageAndRedirectToAuth
-    } from "$lib/auth/authUtils";
+    } from "$lib/api/authUtils";
     import Loader from "$lib/components/Loader.svelte";
 
     onMount(async () => {

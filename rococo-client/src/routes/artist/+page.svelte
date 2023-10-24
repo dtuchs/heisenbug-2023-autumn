@@ -1,7 +1,7 @@
 <script lang="ts">
     import ToastHandler from "$lib/components/ToastHandler.svelte";
     import {artistsStore} from "$lib/stores/artist.store";
-    import {apiClient} from "$lib/helpers/apiClient";
+    import {apiClient} from "$lib/api/apiClient";
     import NewArtistForm from "$lib/components/forms/artist/NewArtistForm.svelte";
     import CommonPage from "$lib/components/content/CommonPage.svelte";
     import ArtistList from "$lib/components/ArtistList.svelte";

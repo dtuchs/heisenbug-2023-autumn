@@ -10,9 +10,9 @@
     import {validateImage} from "$lib/helpers/validate";
     import {blobToBase64} from "$lib/helpers/imageUtils";
     import {validateForm} from "$lib/components/forms/user/validate";
-    import {apiClient} from "$lib/helpers/apiClient";
-    import {authClient} from "$lib/helpers/authClient";
-    import {clearSession} from "$lib/auth/authUtils";
+    import {apiClient} from "$lib/api/apiClient";
+    import {authClient} from "$lib/api/authClient";
+    import {clearSession} from "$lib/api/authUtils";
     import ModalButtonGroup from "$lib/components/ModalButtonGroup.svelte";
 
     const modalStore = getModalStore();

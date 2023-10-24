@@ -3,7 +3,7 @@
     import NewPaintingForm from '$lib/components/forms/painting/NewPaintingForm.svelte';
     import { prepareModal } from '$lib/helpers/prepareModal';
     import {singleArtistStore} from "$lib/stores/singleArtist.store";
-    import {apiClient} from "$lib/helpers/apiClient";
+    import {apiClient} from "$lib/api/apiClient";
     import {checkDuplicates} from "$lib/helpers/dataUtils";
     import type {PaintingType} from "$lib/types/Painting";
     import ListWrapper from "$lib/components/ListWrapper.svelte";

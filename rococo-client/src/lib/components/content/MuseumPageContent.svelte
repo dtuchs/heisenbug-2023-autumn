@@ -4,8 +4,8 @@
     import { page } from '$app/stores';
     import EditComponent from "$lib/components/EditComponent.svelte";
     import {onMount} from "svelte";
-    import {apiClient} from "$lib/helpers/apiClient";
     import {goto} from "$app/navigation";
+    import {apiClient} from "$lib/api/apiClient";
 
     export let errorTrigger: (message: string) => void;
     export let successTrigger: (message: string) => void;

@@ -1,11 +1,11 @@
 <script lang="ts">
 
     import {onMount} from "svelte";
-    import {authClient} from "$lib/helpers/authClient";
-    import {apiClient} from "$lib/helpers/apiClient";
+    import {authClient} from "$lib/api/authClient";
+    import {apiClient} from "$lib/api/apiClient";
     import {goto} from "$app/navigation";
     import {sessionStore} from "$lib/stores/sessionStore";
-    import {getTokenUrl} from "$lib/auth/authUtils";
+    import {getTokenUrl} from "$lib/api/authUtils";
     import Loader from "$lib/components/Loader.svelte";
 
     const finishLoading = () => {

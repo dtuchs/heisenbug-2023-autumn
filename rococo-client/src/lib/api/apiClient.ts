@@ -2,7 +2,7 @@ import type {ArtistType, NewArtistType} from "$lib/types/Artist";
 import type {NewPaintingType, PaintingType} from "$lib/types/Painting";
 import type {MuseumType, NewMuseumType} from "$lib/types/Museum";
 import type {UserType} from "$lib/types/User";
-import {clearSession} from "$lib/auth/authUtils";
+import {clearSession} from "$lib/api/authUtils";
 
 const BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
 
@@ -179,7 +179,10 @@ const commonFetch = async (
                 clearSession();
             }
             const errorText = data?.errors.join(". ");
-            throw new Error(`${errorText ?? "Что-то пошло не так"}`);
+            return {
+                data: undefined,
+                error:`${errorText ?? "Что-то пошло не так"}`
+            }
         }
         return {
             data,
