@@ -20,8 +20,11 @@
 	let isMenuVisible = false;
 
 	const checkCurrentUrlAndRedirectToPreConfiguredUrl = async (currentUrl: URL) => {
-		if (currentUrl.host !== import.meta.env.VITE_FRONT_HOST){
-			await goto(import.meta.env.VITE_FRONT_URL);
+		const preconfiguredHost = import.meta.env.VITE_FRONT_HOST;
+		if (currentUrl.host !== preconfiguredHost){
+			currentUrl.host = preconfiguredHost;
+			currentUrl.hostname = preconfiguredHost;
+			await goto(currentUrl);
 		}
 	}
 
