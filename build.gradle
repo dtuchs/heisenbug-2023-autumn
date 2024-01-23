@@ -14,8 +14,7 @@ subprojects {
 
         springKafkaVersion = '3.0.11'
         mysqlDriverVersion = '8.0.33'
-        oauth2AuthorizationServerVersion = '1.1.2'
-        oauth2ResourceServerVersion = '3.1.4'
+        oauth2AuthorizationServerVersion = '1.2.1'
         lombokVersion = '1.18.30'
         jsr305Version = '3.0.2'
         dockerImage = System.getProperty("os.arch") == "arm64" ? "arm64v8/eclipse-temurin:19-jre" : "eclipse-temurin:19-jre"
