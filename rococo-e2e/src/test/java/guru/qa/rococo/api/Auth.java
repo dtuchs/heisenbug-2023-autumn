@@ -30,13 +30,14 @@ public interface Auth {
   );
 
   @POST("oauth2/token")
+  @FormUrlEncoded
   Call<JsonNode> token(
       @Header("Authorization") String basicAuthorization,
-      @Query("client_id") String clientId,
-      @Query(value = "redirect_uri", encoded = true) String redirectUri,
-      @Query("grant_type") String grantType,
-      @Query("code") String code,
-      @Query("code_verifier") String codeVerifier
+      @Field("client_id") String clientId,
+      @Field(value = "redirect_uri", encoded = true) String redirectUri,
+      @Field("grant_type") String grantType,
+      @Field("code") String code,
+      @Field("code_verifier") String codeVerifier
   );
 
   @GET("register")

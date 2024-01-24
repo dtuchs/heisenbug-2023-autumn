@@ -5,7 +5,7 @@
     import {apiClient} from "$lib/api/apiClient";
     import {goto} from "$app/navigation";
     import {sessionStore} from "$lib/stores/sessionStore";
-    import {getTokenUrl} from "$lib/api/authUtils";
+    import {getTokenFromUrlEncodedParams} from "$lib/api/authUtils";
     import Loader from "$lib/components/Loader.svelte";
 
     export let triggerError: (message: string) => void;
@@ -30,8 +30,8 @@
             }
         });
         if (code && verifier) {
-            const url = getTokenUrl(code, verifier);
-            const res = await authClient.getToken(url);
+            const data = getTokenFromUrlEncodedParams(code, verifier);
+            const res = await authClient.getToken("oauth2/token", data);
             if (res?.id_token) {
                 localStorage.setItem("id_token", res.id_token);
                 setTimeout(async () => {
