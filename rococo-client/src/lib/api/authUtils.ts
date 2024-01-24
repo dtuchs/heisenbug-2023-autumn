@@ -25,7 +25,7 @@ const getTokenFromUrlEncodedParams = (code: string, verifier: string) => {
     return new URLSearchParams({
         "code": code,
         "redirect_uri": `${import.meta.env.VITE_FRONT_URL}/authorized`,
-        "code_verifier": `${verifier}`,
+        "code_verifier": verifier,
         "grant_type": "authorization_code",
         "client_id": `${import.meta.env.VITE_CLIENT_ID}`,
     });
