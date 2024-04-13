@@ -67,7 +67,7 @@ public class MuseumService {
   @Transactional
   public MuseumJson add(MuseumJson museum) {
     MuseumEntity museumEntity = museum.toEntity();
-    museumEntity.setCountry(getRequiredCountry(museum.geo().country().id()));
+    museumEntity.setCountry(getRequiredCountry(museum.geo().country().name()));
     return MuseumJson.fromEntity(
         museumRepository.save(
             museumEntity
@@ -84,6 +84,12 @@ public class MuseumService {
   private @Nonnull CountryEntity getRequiredCountry(@Nonnull UUID id) {
     return countryRepository.findById(id).orElseThrow(
         () -> new NotFoundException("Страна не найдена по id: " + id)
+    );
+  }
+
+  private @Nonnull CountryEntity getRequiredCountry(@Nonnull String name) {
+    return countryRepository.findByName(name).orElseThrow(
+        () -> new NotFoundException("Страна не найдена по name: " + name)
     );
   }
 }

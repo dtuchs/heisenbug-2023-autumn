@@ -1,4 +1,4 @@
-package guru.qa.rococo.jupiter;
+package guru.qa.rococo.jupiter.first;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;

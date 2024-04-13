@@ -1,4 +1,4 @@
-package guru.qa.rococo.jupiter;
+package guru.qa.rococo.jupiter.first;
 
 import guru.qa.rococo.config.Config;
 import org.junit.jupiter.api.extension.ExtensionContext;

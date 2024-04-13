@@ -1,4 +1,4 @@
-package guru.qa.rococo.jupiter;
+package guru.qa.rococo.jupiter.first;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;

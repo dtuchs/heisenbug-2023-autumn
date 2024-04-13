@@ -1,8 +1,12 @@
 package guru.qa.rococo;
 
-import guru.qa.rococo.jupiter.ApiLogin;
-import guru.qa.rococo.jupiter.ApiLoginExtension;
-import guru.qa.rococo.jupiter.ContextHolderExtension;
+import guru.qa.rococo.jupiter.first.ApiLogin;
+import guru.qa.rococo.jupiter.first.ApiLoginExtension;
+import guru.qa.rococo.jupiter.first.ContextHolderExtension;
+import guru.qa.rococo.model.CountryJson;
+import guru.qa.rococo.model.GeoJson;
+import guru.qa.rococo.model.MuseumJson;
+import guru.qa.rococo.utils.ImgUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 

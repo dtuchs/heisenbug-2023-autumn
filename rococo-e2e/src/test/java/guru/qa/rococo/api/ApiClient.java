@@ -1,6 +1,6 @@
 package guru.qa.rococo.api;
 
-import guru.qa.rococo.jupiter.ApiLoginExtension;
+import guru.qa.rococo.jupiter.first.ApiLoginExtension;
 import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.model.PaintingJson;
@@ -19,28 +19,28 @@ public class ApiClient extends RestService {
   private final Api api = retrofit.create(Api.class);
 
   @SneakyThrows
-  public MuseumJson createMuseum(ExtensionContext context, MuseumJson museumJson) {
+  public MuseumJson createMuseum(String cookie, String token, MuseumJson museumJson) {
     return api.createMuseum(
-        ApiLoginExtension.getJsessionIdCookieAsString(),
-        ApiLoginExtension.getBearerToken(context),
+        cookie,
+        token,
         museumJson
     ).execute().body();
   }
 
   @SneakyThrows
-  public ArtistJson createArtist(ExtensionContext context, ArtistJson artistJson) {
+  public ArtistJson createArtist(String cookie, String token, ArtistJson artistJson) {
     return api.createArtist(
-        ApiLoginExtension.getJsessionIdCookieAsString(),
-        ApiLoginExtension.getBearerToken(context),
+        cookie,
+        token,
         artistJson
     ).execute().body();
   }
 
   @SneakyThrows
-  public PaintingJson createPainting(ExtensionContext context, PaintingJson paintingJson) {
+  public PaintingJson createPainting(String cookie, String token, PaintingJson paintingJson) {
     return api.createPainting(
-        ApiLoginExtension.getJsessionIdCookieAsString(),
-        ApiLoginExtension.getBearerToken(context),
+        cookie,
+        token,
         paintingJson
     ).execute().body();
   }

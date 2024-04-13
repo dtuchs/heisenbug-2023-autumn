@@ -1,7 +1,7 @@
 package guru.qa.rococo.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import guru.qa.rococo.jupiter.ApiLoginExtension;
+import guru.qa.rococo.jupiter.first.ApiLoginExtension;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.io.IOException;

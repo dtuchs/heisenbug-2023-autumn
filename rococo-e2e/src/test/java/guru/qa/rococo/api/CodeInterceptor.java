@@ -1,7 +1,7 @@
 package guru.qa.rococo.api;
 
-import guru.qa.rococo.jupiter.ApiLoginExtension;
-import guru.qa.rococo.jupiter.ContextHolderExtension;
+import guru.qa.rococo.jupiter.first.ApiLoginExtension;
+import guru.qa.rococo.jupiter.first.ContextHolderExtension;
 import okhttp3.Interceptor;
 import okhttp3.Response;
 import org.apache.commons.lang3.StringUtils;
