@@ -9,10 +9,16 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Museum {
   boolean fake() default false;
+
   String title() default "";
+
   String description() default "";
+
   String photoPath() default "";
+
   String city() default "";
+
   String country() default "";
+
   Painting[] paintings() default {};
 }

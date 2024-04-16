@@ -7,17 +7,17 @@ import java.io.IOException;
 
 public class GhApiClient extends RestService {
 
-    public GhApiClient() {
-        super("https://api.github.com/", false);
-    }
+  public GhApiClient() {
+    super("https://api.github.com/", false);
+  }
 
-    private final GhApi ghApi = retrofit.create(GhApi.class);
+  private final GhApi ghApi = retrofit.create(GhApi.class);
 
-    public String getIssueState(String issueNumber) throws IOException {
-        JsonNode responseBody = ghApi.issue(
-                "Bearer " + System.getenv("GITHUB_TOKEN"),
-                issueNumber
-        ).execute().body();
-        return responseBody.get("state").asText();
-    }
+  public String getIssueState(String issueNumber) throws IOException {
+    JsonNode responseBody = ghApi.issue(
+        "Bearer " + System.getenv("GITHUB_TOKEN"),
+        issueNumber
+    ).execute().body();
+    return responseBody.get("state").asText();
+  }
 }

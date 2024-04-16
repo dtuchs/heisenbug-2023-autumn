@@ -1,11 +1,11 @@
 package guru.qa.rococo.api;
 
 import guru.qa.rococo.jupiter.first.ApiLoginExtension;
+import guru.qa.rococo.jupiter.first.ContextHolderExtension;
 import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.model.PaintingJson;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.extension.ExtensionContext;
 
 public class ApiClient extends RestService {
 
@@ -28,6 +28,15 @@ public class ApiClient extends RestService {
   }
 
   @SneakyThrows
+  public MuseumJson createMuseum(MuseumJson museumJson) {
+    return api.createMuseum(
+        ApiLoginExtension.getJsessionIdCookieAsString(),
+        ApiLoginExtension.getBearerToken(ContextHolderExtension.Holder.INSTANCE.get()),
+        museumJson
+    ).execute().body();
+  }
+
+  @SneakyThrows
   public ArtistJson createArtist(String cookie, String token, ArtistJson artistJson) {
     return api.createArtist(
         cookie,
@@ -37,10 +46,28 @@ public class ApiClient extends RestService {
   }
 
   @SneakyThrows
+  public ArtistJson createArtist(ArtistJson artistJson) {
+    return api.createArtist(
+        ApiLoginExtension.getJsessionIdCookieAsString(),
+        ApiLoginExtension.getBearerToken(ContextHolderExtension.Holder.INSTANCE.get()),
+        artistJson
+    ).execute().body();
+  }
+
+  @SneakyThrows
   public PaintingJson createPainting(String cookie, String token, PaintingJson paintingJson) {
     return api.createPainting(
         cookie,
         token,
+        paintingJson
+    ).execute().body();
+  }
+
+  @SneakyThrows
+  public PaintingJson createPainting(PaintingJson paintingJson) {
+    return api.createPainting(
+        ApiLoginExtension.getJsessionIdCookieAsString(),
+        ApiLoginExtension.getBearerToken(ContextHolderExtension.Holder.INSTANCE.get()),
         paintingJson
     ).execute().body();
   }

@@ -19,6 +19,15 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterEachCallback 
   public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(ApiLoginExtension.class);
 
   private final AuthClient authClient = new AuthClient();
+  private final boolean startBrowser;
+
+  public ApiLoginExtension() {
+    this(true);
+  }
+
+  public ApiLoginExtension(boolean startBrowser) {
+    this.startBrowser = startBrowser;
+  }
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
@@ -35,10 +44,12 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterEachCallback 
       setCodeVerifier(context, OauthUtils.generateCodeVerifier());
       setCodeChallenge(context, OauthUtils.generateCodeChallenge(getCodeVerifier(context)));
       authClient.doLogin(context, apiLogin.username(), apiLogin.password());
-      Selenide.open(CFG.frontUrl());
-      Selenide.localStorage().setItem("id_token", getToken(context));
-      WebDriverRunner.getWebDriver().manage().addCookie(getJsessionIdCookie());
-      Selenide.refresh();
+      if (startBrowser) {
+        Selenide.open(CFG.frontUrl());
+        Selenide.localStorage().setItem("id_token", getToken(context));
+        WebDriverRunner.getWebDriver().manage().addCookie(getJsessionIdCookie());
+        Selenide.refresh();
+      }
     }
   }
 

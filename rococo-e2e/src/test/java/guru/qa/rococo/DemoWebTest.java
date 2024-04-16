@@ -1,34 +1,41 @@
 package guru.qa.rococo;
 
 import guru.qa.rococo.jupiter.first.ApiLogin;
-import guru.qa.rococo.jupiter.first.ApiLoginExtension;
-import guru.qa.rococo.jupiter.first.ContextHolderExtension;
-import guru.qa.rococo.model.CountryJson;
-import guru.qa.rococo.model.GeoJson;
-import guru.qa.rococo.model.MuseumJson;
-import guru.qa.rococo.utils.ImgUtils;
+import guru.qa.rococo.jupiter.second.AllureParamId;
+import guru.qa.rococo.jupiter.second.WebTest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-@ExtendWith({ContextHolderExtension.class, ApiLoginExtension.class})
-public class WebTest {
+@WebTest
+public class DemoWebTest {
 
   @ApiLogin(username = "dima", password = "12345")
   @Test
-  void usernameShouldBeVisivleInProfile() {
+  void usernameShouldBeVisibleInProfile() {
     $("[data-testid='avatar']").click();
     $("h4.text-center").should(text("dima"));
   }
 
+  @BeforeEach
+  void doSmth() {
+    throw new RuntimeException();
+  }
+
+  @CsvSource({
+      "123, Утро в сосновом лесу",
+      "124, Над вечным покоем"
+  })
   @ApiLogin(username = "ivan", password = "12345")
-  @Test
-  void paintingNameShouldEditedByAuthorizedUser() {
+  @ParameterizedTest
+  void paintingNameShouldEditedByAuthorizedUser(@AllureParamId String allureId, String painting) {
     $$("nav.list-nav a").find(text("Картины")).click();
-    $$("div.text-center").find(text("Утро в сосновом лесу")).parent().click();
+    $$("div.text-center").find(text(painting)).parent().click();
     $("[data-testid='edit-painting']").click();
     $("input[name='title']").setValue("Edited");
     $("button[type='submit']").click();
