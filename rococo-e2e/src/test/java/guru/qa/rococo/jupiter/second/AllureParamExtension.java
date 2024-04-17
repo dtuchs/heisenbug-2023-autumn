@@ -24,7 +24,10 @@ public class AllureParamExtension implements LifecycleMethodExecutionExceptionHa
         .findFirst()
         .orElse(null);
 
-    if (dataProviderAnnotation != null) {
+    boolean testWithAllureParam = Arrays.stream(context.getRequiredTestMethod().getParameters())
+        .anyMatch(p -> AnnotationSupport.isAnnotated(p, AllureParamId.class));
+
+    if (dataProviderAnnotation != null && testWithAllureParam) {
 
       Class<? extends ArgumentsProvider> handlerClass = AnnotationSupport.findAnnotation(dataProviderAnnotation.annotationType(), ArgumentsSource.class)
           .orElseThrow()
