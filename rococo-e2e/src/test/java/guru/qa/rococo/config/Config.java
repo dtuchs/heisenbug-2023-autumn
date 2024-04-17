@@ -2,18 +2,18 @@ package guru.qa.rococo.config;
 
 public interface Config {
 
-    static Config getInstance() {
-        return "docker".equals(System.getProperty("test.env"))
-            ? DockerConfig.INSTANCE
-            : LocalConfig.INSTANCE;
-    }
+  static Config getInstance() {
+    return "docker".equals(System.getProperty("test.env"))
+        ? DockerConfig.INSTANCE
+        : LocalConfig.INSTANCE;
+  }
 
-    String authUrl();
+  String authUrl();
 
-    String frontUrl();
+  String frontUrl();
 
-    String apiUrl();
+  String apiUrl();
 
-    String apiJdbcUrl();
+  String apiJdbcUrl();
 
 }
