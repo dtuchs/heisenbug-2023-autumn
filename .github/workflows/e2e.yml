@@ -7,6 +7,11 @@ on:
 jobs:
   deploy-services:
     runs-on: self-hosted
+    steps:
+      - name: Push required props to GITHUB_ENV
+        run: |
+          echo "PROFILE=stage" >> $GITHUB_ENV
+
       - name: Check changes path
         uses: dorny/paths-filter@v3
         id: changes
