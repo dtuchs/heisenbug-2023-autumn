@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'guru.qa'
-sourceCompatibility = '17'
+sourceCompatibility = '21'
 
 subprojects {
     repositories {
@@ -12,12 +12,11 @@ subprojects {
     ext {
         registry = 'dtuchs'
 
-        springKafkaVersion = '3.0.11'
         mysqlDriverVersion = '8.0.33'
-        oauth2AuthorizationServerVersion = '1.2.1'
-        lombokVersion = '1.18.30'
+        oauth2AuthorizationServerVersion = '1.3.1'
+        lombokVersion = '1.18.32'
         jsr305Version = '3.0.2'
-        dockerImage = System.getProperty("os.arch") == "arm64" ? "arm64v8/eclipse-temurin:19-jre" : "eclipse-temurin:19-jre"
+        dockerImage = System.getProperty("os.arch") == "arm64" ? "arm64v8/eclipse-temurin:21-jre" : "eclipse-temurin:21-jre"
         dockerArch = System.getProperty("os.arch") == "arm64" ? "arm64" : "amd64"
     }
 }

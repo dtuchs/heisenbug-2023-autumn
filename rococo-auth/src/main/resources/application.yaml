@@ -4,8 +4,6 @@ server:
 spring:
   application:
     name: rococo-auth
-  mvc:
-    log-request-details: true
   datasource:
     username: root
     password: secret
@@ -30,17 +28,6 @@ spring:
   sql:
     init:
       mode: always
-
-logging:
-  level:
-    root: INFO
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    org.springframework.security.oauth2: INFO
-
-oauth2:
-  client-id: client
-  client-secret: '{noop}secret'
 
 ---
 spring:

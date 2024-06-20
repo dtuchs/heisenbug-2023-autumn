@@ -18,7 +18,7 @@ fi
 
 echo "### Build backend images ###"
 bash ./gradlew jibDockerBuild -x :rococo-e2e:test
-cd rococo-client || exit
+cd rococo-client || exit 1
 echo "### Build frontend image ###"
 docker build -t ${IMAGE_PREFIX}/rococo-client:${FRONT_VERSION} -t ${IMAGE_PREFIX}/rococo-client:latest .
 

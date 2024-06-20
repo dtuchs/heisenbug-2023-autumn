@@ -5,9 +5,6 @@ import guru.qa.rococo.jupiter.first.ApiLoginExtension;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.io.IOException;
-import java.util.Base64;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class AuthClient extends RestService {
 
@@ -38,7 +35,6 @@ public class AuthClient extends RestService {
     ).execute();
 
     JsonNode response = auth.token(
-        "Basic " + new String(Base64.getEncoder().encode("client:secret".getBytes(UTF_8))),
         "client",
         CFG.frontUrl() + "/authorized",
         "authorization_code",
