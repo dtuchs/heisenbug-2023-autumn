@@ -3,7 +3,7 @@ version: '3.9'
 services:
   rococo-db:
     container_name: rococo-db
-    image: mysql:8.1.0
+    image: mysql:8.3.0
     environment:
       - MYSQL_ROOT_PASSWORD=secret
     healthcheck:
@@ -19,7 +19,7 @@ services:
 
   auth.rococo.dc:
     container_name: auth.rococo.dc
-    image: ${PREFIX}/rococo-auth:latest
+    image: ${PREFIX}/rococo-auth-${PROFILE}:latest
     ports:
       - "9000:9000"
     restart: always
@@ -32,7 +32,7 @@ services:
 
   api.rococo.dc:
     container_name: api.rococo.dc
-    image: ${PREFIX}/rococo-api:latest
+    image: ${PREFIX}/rococo-api-${PROFILE}:latest
     ports:
       - "8080:8080"
     restart: always
@@ -45,7 +45,7 @@ services:
 
   client.rococo.dc:
     container_name: client.rococo.dc
-    image: ${PREFIX}/rococo-client:latest
+    image: ${PREFIX}/rococo-client-${PROFILE}:latest
     ports:
       - "80:80"
     restart: always

@@ -4,8 +4,6 @@ server:
 spring:
   application:
     name: rococo-auth
-  mvc:
-    log-request-details: true
   datasource:
     username: root
     password: secret
@@ -30,17 +28,6 @@ spring:
   sql:
     init:
       mode: always
-
-logging:
-  level:
-    root: INFO
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    org.springframework.security.oauth2: INFO
-
-oauth2:
-  client-id: client
-  client-secret: '{noop}secret'
 
 ---
 spring:
@@ -68,4 +55,17 @@ rococo-ui:
   uri: http://client.rococo.dc
 rococo-auth:
   uri: http://auth.rococo.dc:9000
+---
+spring:
+  config:
+    activate:
+      on-profile: 'stage'
+
+  datasource:
+    url: jdbc:mysql://rococo-db:3306/rococo-auth?serverTimezone=UTC&createDatabaseIfNotExist=true
+
+rococo-ui:
+  uri: https://rococo.website
+rococo-auth:
+  uri: https://auth.rococo.website
 ---

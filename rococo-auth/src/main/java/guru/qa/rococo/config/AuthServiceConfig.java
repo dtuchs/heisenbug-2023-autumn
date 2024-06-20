@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
@@ -26,12 +27,13 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
-import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.security.web.PortMapperImpl;
+import org.springframework.security.web.PortResolverImpl;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
+import java.util.Map;
 import java.util.UUID;
 
 @Configuration
@@ -40,23 +42,21 @@ public class AuthServiceConfig {
   private final KeyManager keyManager;
   private final String frontUri;
   private final String authUri;
-  private final String clientId;
-  private final String clientSecret;
   private final CorsCustomizer corsCustomizer;
+  private final String serverPort;
+  private final String defaultHttpsPort = "443";
 
   @Autowired
   public AuthServiceConfig(KeyManager keyManager,
                            @Value("${rococo-ui.uri}") String frontUri,
                            @Value("${rococo-auth.uri}") String authUri,
-                           @Value("${oauth2.client-id}") String clientId,
-                           @Value("${oauth2.client-secret}") String clientSecret,
-                           CorsCustomizer corsCustomizer) {
+                           CorsCustomizer corsCustomizer,
+                           @Value("${server.port}") String serverPort) {
     this.keyManager = keyManager;
     this.frontUri = frontUri;
     this.authUri = authUri;
-    this.clientId = clientId;
-    this.clientSecret = clientSecret;
     this.corsCustomizer = corsCustomizer;
+    this.serverPort = serverPort;
   }
 
   @Bean
@@ -75,23 +75,45 @@ public class AuthServiceConfig {
 
   @Bean
   public RegisteredClientRepository registeredClientRepository() {
-    RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-        .clientId(clientId)
-        .clientSecret(clientSecret)
-        .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+    RegisteredClient publicClient = RegisteredClient.withId(UUID.randomUUID().toString())
+        .clientId("client")
+        .clientAuthenticationMethod(ClientAuthenticationMethod.NONE)
         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-        .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
         .redirectUri(frontUri + "/authorized")
         .scope(OidcScopes.OPENID)
+        .scope(OidcScopes.PROFILE)
         .clientSettings(ClientSettings.builder()
-            .requireAuthorizationConsent(true).build())
-        .tokenSettings(TokenSettings.builder()
-            .accessTokenTimeToLive(Duration.ofHours(1))
-            .refreshTokenTimeToLive(Duration.ofHours(10))
-            .build())
+            .requireAuthorizationConsent(true)
+            .requireProofKey(true)
+            .build()
+        )
         .build();
 
-    return new InMemoryRegisteredClientRepository(registeredClient);
+    return new InMemoryRegisteredClientRepository(publicClient);
+  }
+
+  @Bean
+  @Profile({"stage"})
+  public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPointHttps() {
+    LoginUrlAuthenticationEntryPoint entryPoint = new LoginUrlAuthenticationEntryPoint("/login");
+    PortMapperImpl portMapper = new PortMapperImpl();
+    portMapper.setPortMappings(Map.of(
+        serverPort, defaultHttpsPort,
+        "80", defaultHttpsPort,
+        "8080", "8443"
+    ));
+    PortResolverImpl portResolver = new PortResolverImpl();
+    portResolver.setPortMapper(portMapper);
+    entryPoint.setForceHttps(true);
+    entryPoint.setPortMapper(portMapper);
+    entryPoint.setPortResolver(portResolver);
+    return entryPoint;
+  }
+
+  @Bean
+  @Profile({"local", "docker"})
+  public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPointHttp() {
+    return new LoginUrlAuthenticationEntryPoint("/login");
   }
 
   @Bean

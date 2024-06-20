@@ -3,7 +3,6 @@ package guru.qa.rococo;
 import guru.qa.rococo.jupiter.first.ApiLogin;
 import guru.qa.rococo.jupiter.second.AllureParamId;
 import guru.qa.rococo.jupiter.second.WebTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -20,11 +19,6 @@ public class DemoWebTest {
   void usernameShouldBeVisibleInProfile() {
     $("[data-testid='avatar']").click();
     $("h4.text-center").should(text("dima"));
-  }
-
-  @BeforeEach
-  void doSmth() {
-    throw new RuntimeException();
   }
 
   @CsvSource({
