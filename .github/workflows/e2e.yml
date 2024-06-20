@@ -8,6 +8,9 @@ jobs:
   deploy-services:
     runs-on: self-hosted
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Push required props to GITHUB_ENV
         run: |
           echo "PROFILE=stage" >> $GITHUB_ENV
@@ -33,7 +36,7 @@ jobs:
         working-directory: ./
         run: |
           pwd
-          bash ./gradlew :rococo-auth:jib -Pskipjaxb -x :rococo-e2e:test
+          bash ./gradlew :rococo-auth:jib -x :rococo-e2e:test
           docker-compose pull auth.rococo.dc
           docker-compose stop auth.rococo.dc && docker-compose up -d --no-deps auth.rococo.dc
           docker system prune -a -f
@@ -44,7 +47,7 @@ jobs:
         working-directory: ./
         run: |
           pwd
-          bash ./gradlew :rococo-api:jib -Pskipjaxb -x :rococo-e2e:test
+          bash ./gradlew :rococo-api:jib -x :rococo-e2e:test
           docker-compose pull api.rococo.dc
           docker-compose stop api.rococo.dc && docker-compose up -d --no-deps api.rococo.dc
           docker system prune -a -f
