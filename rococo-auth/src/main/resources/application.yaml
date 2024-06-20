@@ -56,3 +56,16 @@ rococo-ui:
 rococo-auth:
   uri: http://auth.rococo.dc:9000
 ---
+spring:
+  config:
+    activate:
+      on-profile: 'stage'
+
+  datasource:
+    url: jdbc:mysql://rococo-db:3306/rococo-auth?serverTimezone=UTC&createDatabaseIfNotExist=true
+
+rococo-ui:
+  uri: https://rococo.website
+rococo-auth:
+  uri: https://auth.rococo.website
+---

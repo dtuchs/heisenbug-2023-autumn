@@ -72,3 +72,19 @@ spring:
 rococo-ui:
   uri: http://client.rococo.dc
 ---
+spring:
+  config:
+    activate:
+      on-profile: 'stage'
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://auth.rococo.website
+
+  datasource:
+    url: jdbc:mysql://rococo-db:3306/rococo-api?serverTimezone=UTC&createDatabaseIfNotExist=true
+
+rococo-ui:
+  uri: https://rococo.website
+---

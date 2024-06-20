@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
@@ -26,10 +27,13 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.web.PortMapperImpl;
+import org.springframework.security.web.PortResolverImpl;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import java.util.UUID;
 
 @Configuration
@@ -39,16 +43,20 @@ public class AuthServiceConfig {
   private final String frontUri;
   private final String authUri;
   private final CorsCustomizer corsCustomizer;
+  private final String serverPort;
+  private final String defaultHttpsPort = "443";
 
   @Autowired
   public AuthServiceConfig(KeyManager keyManager,
                            @Value("${rococo-ui.uri}") String frontUri,
                            @Value("${rococo-auth.uri}") String authUri,
-                           CorsCustomizer corsCustomizer) {
+                           CorsCustomizer corsCustomizer,
+                           @Value("${server.port}") String serverPort) {
     this.keyManager = keyManager;
     this.frontUri = frontUri;
     this.authUri = authUri;
     this.corsCustomizer = corsCustomizer;
+    this.serverPort = serverPort;
   }
 
   @Bean
@@ -82,6 +90,30 @@ public class AuthServiceConfig {
         .build();
 
     return new InMemoryRegisteredClientRepository(publicClient);
+  }
+
+  @Bean
+  @Profile({"stage"})
+  public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPointHttps() {
+    LoginUrlAuthenticationEntryPoint entryPoint = new LoginUrlAuthenticationEntryPoint("/login");
+    PortMapperImpl portMapper = new PortMapperImpl();
+    portMapper.setPortMappings(Map.of(
+        serverPort, defaultHttpsPort,
+        "80", defaultHttpsPort,
+        "8080", "8443"
+    ));
+    PortResolverImpl portResolver = new PortResolverImpl();
+    portResolver.setPortMapper(portMapper);
+    entryPoint.setForceHttps(true);
+    entryPoint.setPortMapper(portMapper);
+    entryPoint.setPortResolver(portResolver);
+    return entryPoint;
+  }
+
+  @Bean
+  @Profile({"local", "docker"})
+  public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPointHttp() {
+    return new LoginUrlAuthenticationEntryPoint("/login");
   }
 
   @Bean
