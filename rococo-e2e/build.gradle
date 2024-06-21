@@ -36,6 +36,9 @@ dependencies {
     testImplementation("io.qameta.allure:allure-junit5:${allureVersion}") {
         exclude group: "org.junit.jupiter"
     }
+    testImplementation("io.qameta.allure:allure-selenide:${allureVersion}") {
+        exclude group: "com.codeborne"
+    }
     // WEB
     testImplementation "com.codeborne:selenide:${selenideVersion}"
     // Utils
