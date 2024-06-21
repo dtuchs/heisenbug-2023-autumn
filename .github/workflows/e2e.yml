@@ -14,6 +14,7 @@ jobs:
       - name: Push required props to GITHUB_ENV
         run: |
           echo "PROFILE=stage" >> $GITHUB_ENV
+          echo "PREFIX=dtuchs" >> $GITHUB_ENV
 
       - name: Check changes path
         uses: dorny/paths-filter@v3
@@ -58,9 +59,9 @@ jobs:
         working-directory: ./rococo-client
         run: |
           pwd
-          docker build -t ${{ vars.DOCKER_HUB_ACC }}/rococo-client:0.0.1-SNAPSHOT -t ${{ vars.DOCKER_HUB_ACC }}/rococo-client:latest .
-          docker push ${{ vars.DOCKER_HUB_ACC }}/rococo-client:0.0.1-SNAPSHOT
-          docker push ${{ vars.DOCKER_HUB_ACC }}/rococo-client:latest
+          docker build -t ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:0.0.1-SNAPSHOT -t ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:latest .
+          docker push ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:0.0.1-SNAPSHOT
+          docker push ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:latest
           cd ../ || exit 1
           docker-compose pull client.rococo.dc
           docker-compose stop client.rococo.dc && docker-compose up -d --no-deps client.rococo.dc

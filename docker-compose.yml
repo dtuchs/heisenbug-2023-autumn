@@ -47,7 +47,7 @@ services:
     container_name: client.rococo.dc
     image: ${PREFIX}/rococo-client-${PROFILE}:latest
     ports:
-      - "80:80"
+      - "81:81"
     restart: always
     depends_on:
       api.rococo.dc:
