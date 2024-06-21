@@ -2,7 +2,7 @@
 source ./docker.properties
 export PROFILE="${PROFILE:=docker}"
 
-PREFIX="${IMAGE_PREFIX}" PROFILE="${PROFILE}" docker-compose down
+PREFIX="${IMAGE_PREFIX}" PROFILE="${PROFILE}" docker compose down
 
 docker_containers="$(docker ps -a -q)"
 docker_images="$(docker images --format '{{.Repository}}:{{.Tag}}' | grep 'rococo')"
@@ -25,5 +25,5 @@ docker build -t ${IMAGE_PREFIX}/rococo-client-${PROFILE}:${FRONT_VERSION} -t ${I
 
 cd ../
 docker images
-PREFIX="${IMAGE_PREFIX}" PROFILE="${PROFILE}" docker-compose up -d
+PREFIX="${IMAGE_PREFIX}" PROFILE="${PROFILE}" docker compose up -d
 docker ps -a
