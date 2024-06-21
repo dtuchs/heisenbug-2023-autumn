@@ -59,7 +59,7 @@ jobs:
         working-directory: ./rococo-client
         run: |
           pwd
-          docker build -t ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:0.0.1-SNAPSHOT -t ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:latest .
+          docker build --build-arg PROFILE=${{ env.PROFILE }} -t ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:0.0.1-SNAPSHOT -t ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:latest .
           docker push ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:0.0.1-SNAPSHOT
           docker push ${{ vars.DOCKER_HUB_ACC }}/rococo-client-${{ env.PROFILE }}:latest
           cd ../ || exit 1
