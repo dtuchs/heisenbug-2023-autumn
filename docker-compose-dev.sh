@@ -21,7 +21,7 @@ echo "### Build backend images ###"
 bash ./gradlew jibDockerBuild -x :rococo-e2e:test
 cd rococo-client || exit 1
 echo "### Build frontend image ###"
-docker build -t ${IMAGE_PREFIX}/rococo-client-${PROFILE}:${FRONT_VERSION} -t ${IMAGE_PREFIX}/rococo-client-${PROFILE}:latest .
+docker build --build-arg PROFILE=${PROFILE} -t ${IMAGE_PREFIX}/rococo-client-${PROFILE}:${FRONT_VERSION} -t ${IMAGE_PREFIX}/rococo-client-${PROFILE}:latest .
 
 cd ../
 docker images
