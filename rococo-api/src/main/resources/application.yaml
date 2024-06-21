@@ -80,11 +80,11 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://auth.rococo.website
+          issuer-uri: http://auth.rococo.website
 
   datasource:
     url: jdbc:mysql://rococo-db:3306/rococo-api?serverTimezone=UTC&createDatabaseIfNotExist=true
 
 rococo-ui:
-  uri: https://rococo.website
+  uri: http://rococo.website
 ---
