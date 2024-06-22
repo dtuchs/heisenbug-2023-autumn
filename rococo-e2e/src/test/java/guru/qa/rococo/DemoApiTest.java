@@ -22,7 +22,7 @@ public class DemoApiTest {
 
   private final ApiClient apiClient = new ApiClient();
 
-  @DisabledByIssue("3")
+  //  @DisabledByIssue("3")
   @ApiLogin(username = "dima", password = "12345")
   @Test
   void museumShouldBeCreated(@Cookie String cookie, @Token String token) {

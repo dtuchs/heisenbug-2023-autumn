@@ -1,6 +1,5 @@
 package guru.qa.rococo;
 
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import guru.qa.rococo.jupiter.first.ApiLogin;
 import guru.qa.rococo.jupiter.second.AllureParamId;
