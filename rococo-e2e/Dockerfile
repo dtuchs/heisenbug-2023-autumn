@@ -10,5 +10,6 @@ COPY ./gradlew ./
 COPY ./rococo-e2e ./rococo-e2e
 COPY ./build.gradle ./
 COPY ./settings.gradle ./
+COPY ./gradle.properties ./
 
 CMD ./gradlew test -Dtest.env=docker

@@ -32,9 +32,7 @@ jobs:
           docker build --build-arg PROFILE=${{ env.PROFILE }} -t ${{ env.PREFIX }}/rococo-client-${{ env.PROFILE }}:0.0.1-SNAPSHOT -t ${{ env.PREFIX }}/rococo-client-${{ env.PROFILE }}:latest .
           cd ../ || exit 1
           : # build container with tests `rococo-e2e:latest` 
-          cd ./rococo-e2e || exit 1
-          docker build --build-arg ALLURE_DOCKER_API=${{ env.ALLURE_DOCKER_API }} -t dtuchs/rococo-e2e:latest .
-          cd ../ || exit 1
+          docker build --build-arg ALLURE_DOCKER_API=${{ env.ALLURE_DOCKER_API }} -t dtuchs/rococo-e2e:latest -f ./rococo-e2e/Dockerfile .
           : # pull browser (see browsers.json)        
           docker pull selenoid/vnc_chrome:125.0
           : # run e2e tests
@@ -75,6 +73,7 @@ jobs:
 
   deploy-services:
     runs-on: self-hosted
+    needs: e2e
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
