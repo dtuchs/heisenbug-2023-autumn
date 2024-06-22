@@ -64,8 +64,6 @@ jobs:
               repo: context.repo.repo,
               body: '👋 There is the last [Allure report](http://allure.rococo.website/allure-docker-service/projects/rococo/reports/latest/index.html)\n🕓 All reports [history](http://allureui.rococo.website/ui/allure-docker-service-ui/projects/rococo)'
             })        
-        
-
 
   deploy:
     runs-on: self-hosted
