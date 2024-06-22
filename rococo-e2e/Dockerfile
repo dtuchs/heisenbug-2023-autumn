@@ -1,6 +1,6 @@
 ARG ALLURE_DOCKER_API
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jdk
 
 ENV ALLURE_DOCKER_API=${ALLURE_DOCKER_API}
 
