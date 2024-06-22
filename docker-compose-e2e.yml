@@ -65,7 +65,7 @@ services:
     ports:
       - "4444:4444"
     networks:
-      - test-network
+      - rococo-network
     dns_search: .
 
   rococo-e2e:
