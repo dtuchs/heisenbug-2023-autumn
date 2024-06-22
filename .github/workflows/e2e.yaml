@@ -2,9 +2,6 @@ name: e2e
 on:
   pull_request:
     types: [ opened, reopened, synchronize ]
-  push:
-    branches-ignore:
-      - master
 
 jobs:
   e2e:
