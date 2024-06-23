@@ -1,9 +1,7 @@
-name: auth-stage
+name: e2e
 on:
   pull_request:
     types: [opened, reopened, synchronize]
-    branches-ignore:
-      - master
 
 jobs:
   e2e:
