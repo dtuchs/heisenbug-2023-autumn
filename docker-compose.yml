@@ -17,7 +17,7 @@ services:
 
   auth.rococo.dc:
     container_name: auth.rococo.dc
-    image: ${PREFIX}/rococo-auth-${PROFILE}:latest
+    image: dtuchs/rococo-auth-${PROFILE}:latest
     ports:
       - "9000:9000"
     restart: always
@@ -30,7 +30,7 @@ services:
 
   api.rococo.dc:
     container_name: api.rococo.dc
-    image: ${PREFIX}/rococo-api-${PROFILE}:latest
+    image: dtuchs/rococo-api-${PROFILE}:latest
     ports:
       - "8080:8080"
     restart: always
@@ -43,7 +43,7 @@ services:
 
   client.rococo.dc:
     container_name: client.rococo.dc
-    image: ${PREFIX}/rococo-client-${PROFILE}:latest
+    image: dtuchs/rococo-client-${PROFILE}:latest
     ports:
       - "81:81"
     restart: always

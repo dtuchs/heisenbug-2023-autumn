@@ -17,11 +17,10 @@ jobs:
       - name: Push required props to GITHUB_ENV
         run: |
           echo "PROFILE=stage" >> $GITHUB_ENV
-          echo "PREFIX=dtuchs" >> $GITHUB_ENV
 
       - name: Docker login
         run: |
-          docker login --username ${{ vars.DOCKER_HUB_ACC }} --password "${{ secrets.DOCKER_HUB_PASSWORD }}"
+          docker login --username dtuchs --password "${{ secrets.DOCKER_HUB_PASSWORD }}"
 
       - name: Deploy api
         working-directory: ./
