@@ -1,0 +1,118 @@
+name: e2e
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      PROFILE: docker
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.6
+      - name: Build back
+        working-directory: ./
+        run: |
+          gradle jibDockerBuild -x :rococo-e2e:test
+      - name: Build frontend
+        working-directory: ./rococo-client
+        run: |
+          pwd
+          docker build --build-arg PROFILE=${{ env.PROFILE }} -t dtuchs/rococo-client-${{ env.PROFILE }}:0.0.1-SNAPSHOT -t dtuchs/rococo-client-${{ env.PROFILE }}:latest .
+          cd ../ || exit 1
+      - name: Build tests
+        working-directory: ./
+        run: |
+          pwd
+          docker build --build-arg ALLURE=${{ secrets.ALLURE_DOCKER_API }} -t dtuchs/rococo-e2e:latest -f ./rococo-e2e/Dockerfile .
+      - name: Pull chrome
+        run: |
+          docker pull selenoid/vnc_chrome:125.0 
+
+      - name: Run tests
+        run: |
+          docker-compose -f docker-compose-e2e.yml up -d
+          docker ps -a
+          docker wait rococo-e2e
+          exit_code=$(docker inspect -f '{{.State.ExitCode}}' rococo-e2e)
+          echo "### Test logs ###"
+          docker logs rococo-e2e
+          docker-compose -f docker-compose-e2e.yml down
+          docker system prune -a -f
+          if [ "$exit_code" -eq "0" ]; then
+            echo "Tests passed successfully!"
+            exit 0
+          else
+            echo "Tests failed!"
+            exit 1
+          fi
+
+      - name: Comment
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
+
+  deploy:
+    runs-on: self-hosted
+    needs: e2e
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Check Changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            auth:
+              - 'rococo-auth/**'
+            api:
+              - 'rococo-api/**'
+            client:
+              - 'rococo-client/**'            
+
+      - name: Push required props to GITHUB_ENV
+        run: |
+          echo "PROFILE=stage" >> $GITHUB_ENV
+
+      - name: Docker login
+        run: |
+          docker login --username dtuchs --password "${{ secrets.DOCKER_HUB_PASSWORD }}"
+
+      - name: Deploy auth
+        working-directory: ./
+        if: steps.changes.outputs.auth == 'true'
+        run: |
+          pwd
+          gradle :rococo-auth:jib -x :rococo-e2e:test
+          docker compose pull auth.rococo.dc
+          docker compose stop auth.rococo.dc && docker compose up -d --no-deps auth.rococo.dc
+          docker system prune -a -f
+          echo "Deploy auth to stage done!"
+
+      - name: Deploy api
+        working-directory: ./
+        if: steps.changes.outputs.api == 'true'
+        run: |
+          pwd
+          gradle :rococo-api:jib -x :rococo-e2e:test
+          docker compose pull api.rococo.dc
+          docker compose stop api.rococo.dc && docker compose up -d --no-deps api.rococo.dc
+          docker system prune -a -f
+          echo "Deploy api to stage done!"
