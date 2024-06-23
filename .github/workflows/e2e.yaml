@@ -23,8 +23,7 @@ jobs:
       - name: Build back
         working-directory: ./
         run: |
-          pwd
-          gradle jib -x :rococo-e2e:test
+          gradle jibDockerBuild -x :rococo-e2e:test
       - name: Build frontend
         working-directory: ./rococo-client
         run: |
