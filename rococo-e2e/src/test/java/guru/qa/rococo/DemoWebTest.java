@@ -1,11 +1,8 @@
 package guru.qa.rococo;
 
-import com.codeborne.selenide.logevents.SelenideLogger;
 import guru.qa.rococo.jupiter.first.ApiLogin;
 import guru.qa.rococo.jupiter.second.AllureParamId;
 import guru.qa.rococo.jupiter.second.WebTest;
-import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,16 +13,6 @@ import static com.codeborne.selenide.Selenide.$$;
 
 @WebTest
 public class DemoWebTest {
-
-  @BeforeEach
-  void addAllureSelenide() {
-    SelenideLogger.addListener(
-        "AllureSelenide",
-        new AllureSelenide()
-            .screenshots(true)
-            .savePageSource(true)
-    );
-  }
 
   @ApiLogin(username = "dima", password = "12345")
   @Test

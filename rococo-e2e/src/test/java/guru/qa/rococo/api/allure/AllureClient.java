@@ -4,20 +4,32 @@ import guru.qa.rococo.api.RestService;
 import guru.qa.rococo.model.allure.AllureProject;
 import guru.qa.rococo.model.allure.AllureResults;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Optional;
 
 public class AllureClient extends RestService {
 
-  private static final Logger LOG = LoggerFactory.getLogger(AllureClient.class);
   private final AllureApi allureDockerApi;
 
   public AllureClient() {
-    super(Optional.ofNullable(System.getenv("ALLURE_DOCKER_API")).orElse("http://127.0.0.1:5050/"), false);
+    super(
+        Optional.ofNullable(
+            System.getenv("ALLURE_DOCKER_API")
+        ).orElse("http://127.0.0.1:5050/"),
+        false);
     this.allureDockerApi = retrofit.create(AllureApi.class);
+  }
+
+  public void clean(String projectId) throws IOException {
+    allureDockerApi.cleanResults(projectId).execute();
+  }
+
+  public void generateReport(String projectId,
+                             String executionName,
+                             String executionFrom,
+                             String executionType) throws IOException {
+    allureDockerApi.generateReport(projectId, executionName, executionFrom, executionType).execute();
   }
 
   public void sendResultsToAllure(String projectId, AllureResults allureResults) throws IOException {

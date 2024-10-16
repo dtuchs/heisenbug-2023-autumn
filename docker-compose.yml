@@ -10,29 +10,29 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "3306:3306"
+      - 3306:3306
     networks:
       - rococo-network
     dns_search: .
 
   auth.rococo.dc:
     container_name: auth.rococo.dc
-    image: dtuchs/rococo-auth-${PROFILE}:latest
+    image: dtuchs/rococo-auth:latest
     ports:
-      - "9000:9000"
+      - 9000:9000
     restart: always
     depends_on:
       rococo-db:
-        condition: service_healthy
+        condition: service_started
     networks:
       - rococo-network
     dns_search: .
 
   api.rococo.dc:
     container_name: api.rococo.dc
-    image: dtuchs/rococo-api-${PROFILE}:latest
+    image: dtuchs/rococo-api:latest
     ports:
-      - "8080:8080"
+      - 8080:8080
     restart: always
     depends_on:
       auth.rococo.dc:
@@ -43,16 +43,17 @@ services:
 
   client.rococo.dc:
     container_name: client.rococo.dc
-    image: dtuchs/rococo-client-${PROFILE}:latest
+    image: dtuchs/rococo-client:latest
+    build:
+      context: ./rococo-client
+      dockerfile: ./Dockerfile
     ports:
-      - "81:81"
-    restart: always
+      - 80:80
     depends_on:
       api.rococo.dc:
         condition: service_started
     networks:
       - rococo-network
-    dns_search: .
 
 networks:
   rococo-network:
