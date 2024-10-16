@@ -60,7 +60,7 @@ services:
     image: dtuchs/rococo-e2e:latest
     build:
       context: ./
-      dockerfile: ./rococo-client/Dockerfile
+      dockerfile: ./rococo-e2e/Dockerfile
       args:
         ALLURE_DOCKER_API: ${ALLURE_DOCKER_API}
         BUILD_URL: ${BUILD_URL}
