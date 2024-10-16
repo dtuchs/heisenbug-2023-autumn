@@ -61,11 +61,6 @@ services:
     build:
       context: ./
       dockerfile: ./rococo-e2e/Dockerfile
-      args:
-        ALLURE_DOCKER_API: ${ALLURE_DOCKER_API}
-        BUILD_URL: ${BUILD_URL}
-        HEAD_COMMIT_MESSAGE: ${HEAD_COMMIT_MESSAGE}
-        EXECUTION_TYPE: ${EXECUTION_TYPE}
     environment:
       ALLURE_DOCKER_API: ${ALLURE_DOCKER_API}
       BUILD_URL: ${BUILD_URL}

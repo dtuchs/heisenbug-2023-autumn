@@ -60,8 +60,8 @@ jobs:
             const reportUrl = 'https://allure.niffler-stage.qa.guru/api/allure-docker-service/projects/rococo/reports/latest/index.html'
             const historyUrl = 'https://allure.niffler-stage.qa.guru/allure-docker-service-ui/projects/rococo'
             const message = exitCode == '0' ?
-              '✅ Good bye, ROCOCO ✅ There is the [report](${reportUrl})\n🕓 All reports [history](${historyUrl})' :
-              '🔴 TEST RUN FAILED 🔴 There is the [report](${reportUrl})\n🕓 All reports [history](${historyUrl})'
+              `✅ Good bye, ROCOCO ✅ There is the [report](${reportUrl})\n🕓 All reports [history](${historyUrl})` :
+              `🔴 TEST RUN FAILED 🔴 There is the [report](${reportUrl})\n🕓 All reports [history](${historyUrl})`
             github.rest.issues.createComment({
               issue_number: pr,
               owner: context.repo.owner,
