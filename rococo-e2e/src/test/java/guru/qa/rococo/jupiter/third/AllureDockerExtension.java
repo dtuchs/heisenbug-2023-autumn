@@ -26,7 +26,6 @@ public class AllureDockerExtension implements SuiteExtension {
   private static final String projectId = "rococo";
   private static final AllureClient allureApi = new AllureClient();
 
-
   @SneakyThrows
   @Override
   public void beforeAllTests(ExtensionContext context) {
