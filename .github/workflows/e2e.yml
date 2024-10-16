@@ -1,0 +1,23 @@
+name: e2e
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      ARCH: amd64
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup jdk
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Build backend
+        run: |
+          ./gradlew jibDockerBuild -x :rococo-e2e:test
+          docker image ls
