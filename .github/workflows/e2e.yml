@@ -11,7 +11,6 @@ jobs:
       ARCH: amd64
       ALLURE_DOCKER_API: ${{ secrets.ALLURE_DOCKER_API }}
       BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      HEAD_COMMIT_MESSAGE: ${{ github.event.pull_request.head.sha || github.sha }}
       EXECUTION_TYPE: github
     steps:
       - name: Checkout code
@@ -21,6 +20,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+      - name: Get the last commit message
+        run: |
+          MESSAGE=$(git log -1 --pretty=%B)
+          echo "HEAD_COMMIT_MESSAGE=$MESSAGE" >> $GITHUB_ENV
       - name: Build backend
         run: |
           ./gradlew jibDockerBuild -x :rococo-e2e:test
@@ -68,4 +71,35 @@ jobs:
               repo: context.repo.repo,
               body: message
             })
+
+  deploy:
+    needs: e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check changes path
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            auth:
+              - 'rococo-auth/**'
+            api:
+              - 'rococo-api/**'
+            front:
+              - 'rococo-client/**'
+
+      - name: deploy auth to staging
+        if: steps.changes.outputs.auth == 'true'
+        run: |
+          echo "Deploy auth will be here..."
+      - name: deploy api to staging
+        if: steps.changes.outputs.auth == 'true'
+        run: |
+          echo "Deploy api will be here..."
+      - name: deploy client to staging
+        if: steps.changes.outputs.auth == 'true'
+        run: |
+          echo "Deploy client will be here..."
 
