@@ -35,7 +35,7 @@ jobs:
           MESSAGE=$(git log -1 --pretty=%B)
           echo "HEAD_COMMIT_MESSAGE=$MESSAGE" >> $GITHUB_ENV
       - name: Run tests
-        id: e2e-test
+        id: e2e-tests
         run: |
           docker compose -f docker-compose-e2e.yml up -d
           docker wait rococo-e2e
