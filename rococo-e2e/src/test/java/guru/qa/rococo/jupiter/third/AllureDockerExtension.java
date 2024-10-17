@@ -55,10 +55,7 @@ public class AllureDockerExtension implements SuiteExtension {
             )
         );
         allureClient.generateReport(
-            projectId,
-            System.getenv("HEAD_COMMIT_MESSAGE"),
-            System.getenv("BUILD_URL"),
-            System.getenv("EXECUTION_TYPE")
+            projectId
         );
       } catch (Exception e) {
         throw new RuntimeException(e);
