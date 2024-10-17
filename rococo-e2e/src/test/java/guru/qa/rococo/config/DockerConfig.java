@@ -21,7 +21,7 @@ public class DockerConfig implements Config {
 
   @Override
   public String frontUrl() {
-    return "http://client.rococo.dc:81";
+    return "http://client.rococo.dc";
   }
 
   @Override
