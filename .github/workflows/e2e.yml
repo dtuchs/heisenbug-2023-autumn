@@ -36,7 +36,7 @@ jobs:
           echo "e2e_exit_code=$exit_code" >> $GITHUB_OUTPUT
           docker logs rococo-e2e
           docker compose -f docker-compose-e2e.yml down
-          if ["$exit_code" -eq "0"]; then
+          if [ "$exit_code" -eq "0" ]; then
             echo "Tests passed!"
             exit 0
           else 
