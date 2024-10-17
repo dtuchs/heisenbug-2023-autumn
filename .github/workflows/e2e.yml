@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ARCH: amd64
+      ALLURE_DOCKER_API: ${{ secrets.ALLURE_DOCKER_API }}
+      BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      EXECUTION_TYPE: github
     steps:
       - name: Setup java
         uses: actions/setup-java@v4
@@ -17,6 +20,10 @@ jobs:
           java-version: '21'
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Get the last commit message
+        run: |
+          MESSAGE=$(git log -1 --pretty=%B)
+          echo "HEAD_COMMIT_MESSAGE=$MESSAGE" >> $GITHUB_ENV
       - name: Build backend
         run: |
           bash ./gradlew jibDockerBuild -x :rococo-e2e:test
