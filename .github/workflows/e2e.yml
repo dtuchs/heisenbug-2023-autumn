@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ARCH: amd64
+      ALLURE_DOCKER_API: ${{ secrets.ALLURE_DOCKER_API }}
+      BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      EXECUTION_TYPE: github
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,6 +30,10 @@ jobs:
       - name: Pull browsers
         run: |
           docker pull selenoid/vnc_chrome:125.0
+      - name: Get the last commit message
+        run: |
+          MESSAGE=$(git log -1 --pretty=%B)
+          echo "HEAD_COMMIT_MESSAGE=$MESSAGE" >> $GITHUB_ENV
       - name: Run tests
         id: e2e-test
         run: |

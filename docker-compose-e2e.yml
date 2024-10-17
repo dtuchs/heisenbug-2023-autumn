@@ -61,6 +61,11 @@ services:
     build:
       context: ./
       dockerfile: ./rococo-e2e/Dockerfile
+    environment:
+      - ALLURE_DOCKER_API=${ALLURE_DOCKER_API}
+      - BUILD_URL=${BUILD_URL}
+      - EXECUTION_TYPE=${EXECUTION_TYPE}
+      - HEAD_COMMIT_MESSAGE=${HEAD_COMMIT_MESSAGE}
     depends_on:
       client.rococo.dc:
         condition: service_started
