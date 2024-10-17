@@ -25,11 +25,13 @@ public class AllureClient extends RestService {
     allureDockerApi.cleanResults(projectId).execute();
   }
 
-  public void generateReport(String projectId,
-                             String executionName,
-                             String executionFrom,
-                             String executionType) throws IOException {
-    allureDockerApi.generateReport(projectId, executionName, executionFrom, executionType).execute();
+  public void generateReport(String projectId) throws IOException {
+    allureDockerApi.generateReport(
+        projectId,
+        System.getenv("HEAD_COMMIT_MESSAGE"),
+        System.getenv("BUILD_URL"),
+        System.getenv("EXECUTION_TYPE")
+    ).execute();
   }
 
   public void sendResultsToAllure(String projectId, AllureResults allureResults) throws IOException {
