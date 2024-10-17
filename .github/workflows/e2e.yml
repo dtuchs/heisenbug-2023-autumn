@@ -1,0 +1,70 @@
+name: e2e
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      ARCH: amd64
+      ALLURE_DOCKER_API: ${{ secrets.ALLURE_DOCKER_API }}
+      BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      EXECUTION_TYPE: github
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+      - name: Build back
+        run: |
+          ./gradlew jibDockerBuild -x :rococo-e2e:test
+          docker image ls
+      - name: Pull browsers
+        run: |
+          docker pull selenoid/vnc_chrome:125.0
+      - name: Get the last commit message
+        run: |
+          MESSAGE=$(git log -1 --pretty=%B)
+          echo "HEAD_COMMIT_MESSAGE=$MESSAGE" >> $GITHUB_ENV
+      - name: Run tests
+        id: e2e-tests
+        run: |
+          docker compose -f docker-compose-e2e.yml up -d
+          docker wait rococo-e2e
+          exit_code=$(docker inspect -f '{{.State.ExitCode}}' rococo-e2e)
+          echo "e2e_exit_code=$exit_code" >> $GITHUB_OUTPUT
+          docker logs rococo-e2e
+          docker compose -f docker-compose-e2e.yml down
+          if [ "$exit_code" -eq "0" ]; then
+            echo "Tests passed!"
+            exit 0
+          else 
+            echo "Tests failed!"
+            exit 1
+          fi
+
+      - name: Add comment to PR
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const exitCode = ${{ steps.e2e-tests.outputs.e2e_exit_code }}
+            const reportUrl = 'https://allure.niffler-stage.qa.guru/api/allure-docker-service/projects/rococo/reports/latest/index.html'
+            const historyUrl = 'https://allure.niffler-stage.qa.guru/allure-docker-service-ui/projects/rococo'
+            const message = exitCode == '0' ?
+              `✅ Goodbye, ROCOCO ✅ There is the [report](${reportUrl})\n🕓 All reports [history](${historyUrl})` :
+              `🔴 TEST RUN FAILED 🔴 There is the [report](${reportUrl})\n🕓 All reports [history](${historyUrl})`
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            })
