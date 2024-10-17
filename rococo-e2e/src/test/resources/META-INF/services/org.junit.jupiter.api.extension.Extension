@@ -1,2 +1,3 @@
 guru.qa.rococo.jupiter.first.ContextHolderExtension
 guru.qa.rococo.jupiter.first.PreconditionsExtension
+guru.qa.rococo.jupiter.third.AllureDockerExtension
