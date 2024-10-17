@@ -73,7 +73,8 @@ services:
       - rococo-network
 
   selenoid:
-    image: aerokube/selenoid:latest-release
+    image: aerokube/selenoid:1.11.2
+    platform: linux/${ARCH}
     volumes:
       - "/selenoid:/etc/selenoid"
       - "/var/run/docker.sock:/var/run/docker.sock"
